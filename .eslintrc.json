@@ -1,0 +1,25 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "next",
+    "next/core-web-vitals",
+    "prettier"
+  ],
+  "rules": {
+    "no-console": 1, // Means warning
+    "prettier/prettier": 2 // Means error
+  },
+  "overrides": [
+    {
+      "files": ["src/components/ui/**/*.{js,ts,jsx,tsx}"],
+      "rules": {
+        // Disable ESLint's formatting rules for these files
+        "prettier/prettier": "off"
+      }
+    }
+  ]
+}

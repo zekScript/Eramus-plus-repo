@@ -1,0 +1,4 @@
+# .prettierignore
+
+# Exclude the src/components/ui folder
+./src/components/ui
