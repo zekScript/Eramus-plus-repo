@@ -13,15 +13,15 @@ const Page: React.FC = () => {
   <h1>Armandas Latanauskas</h1><br></br>
     <p className="w-5/12 ml-16">I'm a frontend developer, motivated, optimist programmer. I'm currently unemployed, and looking to learn more about programming and discover new things </p>
     {/* Content to blogs */}
-      <ul className="ml-32 mt-10">
+    <h1 className="font-semibold text-2xl mr-4 relative mt-4">My Portfolio</h1>
+      <ul className="ml-32 mt-10 g">
         {/* Placeholder */}
-        <h1>My Portfolio</h1>
-        <Link href="/blog1"><li>On developer experience</li></Link>
-        <Link href="/blog2"><li>On Developer Marketing</li></Link>
-        <Link href="/blog3"><li>On Developer Relations</li></Link>
-        <Link href="/blog4"><li>Blog 4</li></Link>
-        <Link href="/blog5"><li>Blog 5</li></Link>
-        <Link href="/blog6"><li>Blog 6</li></Link>
+        <Link href="/page/dx"><li>On developer experience</li></Link>
+        <Link href="/page/dm"><li>On Developer Marketing</li></Link>
+        <Link href="/page/dr"><li>On Developer Relations</li></Link>
+        <Link href="/page/dp"><li>On Developer Products</li></Link>
+        <Link href="/page/cm"><li>On Community Moderation</li></Link>
+        <Link href="/page/risej"><li>Rust is Eating JavaScript</li></Link>
 
       </ul>
     </div>
