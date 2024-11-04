@@ -29,7 +29,7 @@ export function TopBar() {
   }, [])
   // TODO set color of topbar to same as background light and dark so that tranparency works ( example: bg-[#FFFF] )
   return (
-    <div className='fixed left-0 top-0 z-10 w-full bg-[#FAFAFA] bg-opacity-60 backdrop-blur-sm dark:bg-[#0e0e0e] dark:bg-opacity-50'>
+    <div className='left-0 top-0 w-full bg-[#FAFAFA] bg-opacity-60 backdrop-blur-sm dark:bg-[#0e0e0e] dark:bg-opacity-50'>
       <div
         className={cn(
           'shadow-transition border-border duration-300',
@@ -42,7 +42,7 @@ export function TopBar() {
             isScrolled ? 'py-1' : 'py-2'
           )}
         >
-          <div className='flex w-full items-center justify-between gap-x-4 text-sm'>
+          <div className='flex items-center justify-center gap-x-4 text-sm'>
             {/* LOGO */}
             <Link href='/'>
               <Icons.logo className='mr-3 w-40 cursor-pointer fill-primary pb-1' />
