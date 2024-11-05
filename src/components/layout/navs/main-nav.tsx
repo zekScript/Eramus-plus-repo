@@ -5,7 +5,6 @@ import { NavItem } from '@/types'
 import SignIn from './sign-in'
 import Link from 'next/link'
 import { topNav } from '@/config/site'
-import { title } from 'process'
 
 
 interface MainNavProps {
@@ -18,19 +17,25 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
   // console.log('🚀 ~ segment:', segment)
 
   const topNavItems = topNav.items[0].title;
+  const itemsList = items?.map(item => <Link  
+                                        key={item.title} 
+                                        href={item.href}>
+                                        {item.title}
+                                        </Link>
+                              )
+
+          
+
+      
 
   return (
     <>
     {/* This SHOULD BE HIDDEN */}
-    <div className=' lg:flex'>
+    <div className='hidden lg:flex'>
       {/* MENU */}
       <div className='flex gap-12 mr-12' >
-        <Link href='#'>{topNavItems}</Link>
-        <Link href='/create'>Create</Link>
-  
+      {itemsList}
       </div>
-      
-      
     </div>
   {/* <div className=' w-full'>
       <div className="w-auto flex gap-6 text-end ">
