@@ -3,18 +3,7 @@
 import * as React from 'react'
 
 import { NavItem } from '@/types'
-import { Mail } from "lucide-react"
-import { Button } from "@/components/ui/button"
 
-export function ButtonWithIcon() {
-  return (
-    <>
-    <Button>
-      <Mail /> Login with Email
-    </Button>
-    </>
-  )
-}
 
 
 import Link from 'next/link'
@@ -28,14 +17,21 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
   // const segment = useSelectedLayoutSegment()
   // console.log('🚀 ~ segment:', segment)
 
+
+  
+
   return (
+    <>
     <div className='hidden lg:flex'>
       {/* MENU */}
       <div>
         <Link href='/'>Home</Link>
         <Link href='/create'>Create</Link>
+        <Link href='/create-account'>Register</Link>
+        <Link href='/log-account'>Log in</Link>
       </div>
     </div>
+    </>
   )
 }
 
