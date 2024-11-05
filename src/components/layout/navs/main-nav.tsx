@@ -16,7 +16,6 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
   // const segment = useSelectedLayoutSegment()
   // console.log('🚀 ~ segment:', segment)
 
-  const topNavItems = topNav.items[0].title;
   const itemsList = items?.map(item => <Link  
                                         key={item.title} 
                                         href={item.href}>
@@ -24,25 +23,19 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
                                         </Link>
                               )
 
+
+
           
-
-      
-
+        
   return (
     <>
-    {/* This SHOULD BE HIDDEN */}
+    {/* This SHOULD BE HIDDEN BY DEFAULT*/}
     <div className='hidden lg:flex'>
       {/* MENU */}
       <div className='flex gap-12 mr-12' >
       {itemsList}
       </div>
     </div>
-  {/* <div className=' w-full'>
-      <div className="w-auto flex gap-6 text-end ">
-      <Link href='/log-account'>Log in</Link>
-      <SignIn></SignIn>
-      </div>
-  </div> */}
     </>
   )
 }
