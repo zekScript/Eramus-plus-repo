@@ -3,6 +3,19 @@
 import * as React from 'react'
 
 import { NavItem } from '@/types'
+import { Mail } from "lucide-react"
+import { Button } from "@/components/ui/button"
+
+export function ButtonWithIcon() {
+  return (
+    <>
+    <Button>
+      <Mail /> Login with Email
+    </Button>
+    </>
+  )
+}
+
 
 import Link from 'next/link'
 
@@ -20,6 +33,7 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
       {/* MENU */}
       <div>
         <Link href='/'>Home</Link>
+        <Link href='/create'>Create</Link>
       </div>
     </div>
   )

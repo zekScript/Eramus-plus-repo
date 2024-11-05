@@ -1,0 +1,4 @@
+So the project idea is about creating a article like blog and posting it to the main page list
+
+
+and everyone can review it by clicking on it but at the same time making it into an portfolio
