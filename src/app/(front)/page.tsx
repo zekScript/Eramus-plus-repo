@@ -14,9 +14,12 @@ const Page: React.FC = () => {
     </div>
     {/* Line */}
     <div className="w-4/12 [height:_0.4px] bg-black flex justify-center m-auto"></div>
-    <div className="w-8/12 flex justify-center m-auto">
-    <p>Hey</p>
+    <div className="w-7/12 flex justify-center m-auto mt-4 ">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint ipsa a voluptates natus consequatur veritatis adipisci officia ea iusto, repellat dicta placeat odio. Sit vel quae rerum repellendus quod nam!</p>
     </div>
+    
+
+
 
     </>
   )

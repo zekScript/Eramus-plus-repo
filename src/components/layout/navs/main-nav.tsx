@@ -2,7 +2,6 @@
 
 import * as React from 'react'
 import { NavItem } from '@/types'
-import SignIn from './sign-in'
 import Link from 'next/link'
 import { topNav } from '@/config/site'
 

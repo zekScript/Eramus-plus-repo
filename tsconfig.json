@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "src/app/(front)/content/jobs/page.mdx", "src/app/(front)/content/our-work/page.mdx", "src/app/(front)/content/media/page.mdx"  ],
   "exclude": [
     "node_modules"
   ]

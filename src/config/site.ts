@@ -24,15 +24,15 @@ export const topNav: Navigation = {
   items: [
     {
       title: 'Projects',
-      href: '/our-work',
+      href: '/content/our-work',
     },
     {
       title: 'Media',
-      href: '/media',
+      href: '/content/media',
     },
     {
       title: 'Jobs',
-      href: '/jobs',
+      href: '/content/jobs',
     },
   ],
 }
