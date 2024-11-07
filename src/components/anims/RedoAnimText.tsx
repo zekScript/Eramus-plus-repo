@@ -9,7 +9,23 @@ export interface IRedoAnimTextProps {
 export default function RedoAnimText({ delay }: IRedoAnimTextProps) {
   const textIndex = useMotionValue(0);
   const texts = [
-    "I am writing to you because I want a job."
+  "I'm reaching out to express my interest in joining your team.",
+  "I'm excited about the opportunity to bring my skills to your company.",
+  "I'd love to discuss how my experience aligns with your needs.",
+  "I believe my background makes me a great fit for this role.",
+  "I'm eager to contribute my expertise and passion for [industry] at [company].",
+  "I'm drawn to this role as it aligns well with my skills and career goals.",
+  "After reviewing the job description, I’m excited to apply for this position.",
+  "I’m motivated to bring my skills to a team like yours.",
+  "I am writing to you because I want a job.",
+  "I am the best candidate for this job.",
+  "In my grand adventure as a seasoned designer...",
+  "Knock knock! Who's there? Your new employee!",
+  "Walking the tightrope balance of project management...",
+  "I find myself compelled to express my interest due to...",
+  "My pen (or should I say, keyboard) is at work today because...",
+  "Inspired by the alluring challenge in the job posting, I am writing...",
+  "Stirred to my keyboard by the tantalizing nature of the role…"
   ];
 
   const baseText = useTransform(textIndex, (latest) => texts[latest] || "");
@@ -28,7 +44,7 @@ export default function RedoAnimText({ delay }: IRedoAnimTextProps) {
       ease: "easeIn",
       repeat: Infinity,
       repeatType: "reverse",
-      repeatDelay: 1,
+      repeatDelay: 4,
       onUpdate(latest) {
         if (updatedThisRound.get() === true && latest > 0) {
           updatedThisRound.set(false);

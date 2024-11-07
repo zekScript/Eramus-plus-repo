@@ -17,8 +17,7 @@ const Page: React.FC = () => {
     {/* Line */}
     <div className="w-4/12 [height:_0.4px] bg-black flex justify-center m-auto"></div>
     <div className="w-10/12 flex justify-center m-auto mt-4 ">
-    {/* Content about me */}
-    <p className="text-2xl font-serif font-medium "><TextLayout></TextLayout></p>
+    <TextLayout></TextLayout>
     </div>
     <h1 className="ml-12 mt-24 mb-4 text-4xl font-bold">Media</h1>
     <div className="w-56 mb-24 ml-12 [height:_0.4px] bg-black flex justify-center"></div>
@@ -39,7 +38,7 @@ const Page: React.FC = () => {
 
       <div className="w-72 h-96 [border:_2px_solid_black] rounded-lg bg-neutral-500">
         
-        <h1 className="text-center mt-3 [font-family: cursive] text-2xl font-bold [text-shadow:_1px_2px_3px_rgba(0,0,0,0.3);]">Blog 1</h1>
+        <h1 className="text-center mt-3 [font-family: cursive] text-2xl font-bold [text-shadow:_1px_2px_3px_rgba(0,0,0,0.3);]">Blog 2</h1>
         {/* Posted User*/}
         <p className="ml-6  font-medium text-xs mt-3 [text-shadow:_1px_2px_2px_rgba(0,0,0,0.2);]">By Armandas</p>
         {/* Text Box */}
@@ -50,7 +49,7 @@ const Page: React.FC = () => {
 
       <div className="w-72 h-96 [border:_2px_solid_black] rounded-lg bg-neutral-500">
         
-        <h1 className="text-center mt-3 [font-family: cursive] text-2xl font-bold [text-shadow:_1px_2px_3px_rgba(0,0,0,0.3);]">Blog 1</h1>
+        <h1 className="text-center mt-3 [font-family: cursive] text-2xl font-bold [text-shadow:_1px_2px_3px_rgba(0,0,0,0.3);]">Blog 3</h1>
         {/* Posted User*/}
         <p className="ml-6  font-medium text-xs mt-3 [text-shadow:_1px_2px_2px_rgba(0,0,0,0.2);]">By Armandas</p>
         {/* Text Box */}

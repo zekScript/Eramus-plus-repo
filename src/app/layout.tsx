@@ -11,6 +11,7 @@ const cal = localFont({
   variable: '--font-cal',
 })
 
+
 export const metadata: Metadata = {
   title: 'Portfolio with articles',
   description: 'rSQ template',

@@ -12,7 +12,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     // Allows customizing built-in components, e.g. to add styling.
     h1: ({ children }) => (
-      <h1 style={{ color: 'black', fontFamily: 'sans-serif', fontSize: '23px', fontWeight: 'bold' }}>{children}</h1>
+      <h1 style={{ color: 'black', fontFamily: 'sans-serif', fontSize: '29px', fontWeight: 'bold' }}>{children}</h1>
+    ),
+    a: ({ children, ...props }) => (
+      <a style={{ color: 'blue', fontFamily: 'sans-serif', cursor: 'pointer' }} {...props}>{children}</a>
     ),
 
     img: (props) => (

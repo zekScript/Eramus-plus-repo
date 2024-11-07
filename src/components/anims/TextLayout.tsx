@@ -41,7 +41,7 @@ export default function A4Animation() {
         variants={containerVariants}
         animate="visible"
         initial="hidden"
-        className="flex aspect-[1/1.41] h-[400px] md:h-[500px] flex-col rounded-2xl bg-white p-2"
+        className="flex aspect-[1.3/1.41] w-96 h-[200px]  flex-col rounded-2xl bg-white p-2"
       >
         <motion.div
           variants={itemVariants}
@@ -57,7 +57,7 @@ export default function A4Animation() {
         </motion.div>
         <motion.span
           variants={itemVariants}
-          className="inline h-full w-full p-8 text-lg text-slate-900"
+          className="inline w-full text-lg text-slate-900"
         >
           <AnimText delay={1} />
         </motion.span>
