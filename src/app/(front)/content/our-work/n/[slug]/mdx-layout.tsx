@@ -3,16 +3,8 @@ export default function Introduction( { params } : {
 } ){
       
       if(params.slug == "dx"){
-
+            console.log(true)
       
       }
-
-
-      return(
-
-            <>
-            Hello world from NOT MDX
-            </>
-      )
       
 }
