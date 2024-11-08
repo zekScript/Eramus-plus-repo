@@ -18,7 +18,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <a style={{ color: 'blue', fontFamily: 'sans-serif', cursor: 'pointer' }} {...props}>{children}</a>
     ),
     p: ({ children }) => (
-      <p style={{ color: 'black', fontFamily: 'sans-serif', margin: '32px' }}>{children}</p>
+      <p style={{ color: 'black', fontFamily: 'sans-serif', margin: '32px', width: '70%' }}>{children}</p>
     ),
     li: ({ children }) => (
       <li style={{ color: 'black', fontFamily: 'sans-serif', margin: '32px' }}>{children}</li>
@@ -30,8 +30,18 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <h3 style={{ color: 'black', fontFamily: 'sans-serif', margin: '32px', fontSize: '22px'}}>{children}</h3>
     ),
     ul: ({ children }) => (
-      <ul style={{ width: '50%'}}>{children}</ul>
+      <ul style={{ width: '50%', listStyle: 'initial', marginLeft: '1rem'}}>{children}</ul>
     ),
+    blockquote: ({ children }) => (
+      <blockquote  style={{ width: '50%', listStyle: 'initial', marginLeft: '46px', borderLeft: '4px solid gray', paddingLeft: '12px'}}>{children}</blockquote>
+    ),
+    details: ({ children }) => (
+      <details  style={{ cursor:'pointer', marginLeft: '32px'}}>{children}</details>
+    ),
+    pre: ({ children }) => (
+      <pre  style={{ color: 'white', backgroundColor: '#16161e', borderRadius: '1rem', width: 'auto', margin: '1.5rem 0', padding: '1rem', lineHeight: '1', overflowX: 'auto'}}>{children}</pre>
+    ),
+    
 
     img: (props) => (
       <Image
