@@ -30,9 +30,11 @@ export const topNav: Navigation = {
       title: 'Media',
       href: '/content/media',
     },
-    {
-      title: 'Jobs',
-      href: '/content/jobs',
-    },
+
+    // I dont know what is the purpose of this
+    // { 
+    //   title: 'Jobs',
+    //   href: '/content/jobs',
+    // },
   ],
 }

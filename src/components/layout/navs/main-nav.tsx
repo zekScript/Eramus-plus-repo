@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { NavItem } from '@/types'
 import Link from 'next/link'
-import { topNav } from '@/config/site'
+import ModeToggle from './color-theme'
 
 
 interface MainNavProps {
@@ -31,10 +31,14 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
     {/* This SHOULD BE HIDDEN BY DEFAULT*/}
     <div className='hidden lg:flex'>
       {/* MENU */}
-      <div className='flex gap-12 mr-12' >
+      <div className='flex gap-6 mr-3 justify-center items-center' >
       {itemsList}
+
       </div>
+      
     </div>
+    <ModeToggle></ModeToggle>
+
     </>
   )
 }

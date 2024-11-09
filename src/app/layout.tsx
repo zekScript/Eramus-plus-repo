@@ -4,6 +4,8 @@ import localFont from 'next/font/local'
 import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
 import { cn } from '@/lib/utils'
+import { ThemeProvider } from "@/components/theme-provider"
+
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const cal = localFont({
@@ -25,13 +27,20 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased',
-          inter.variable,
-          cal.variable
-        )}
+        // className={cn(
+        //   'min-h-screen bg-background font-sans antialiased',
+        //   inter.variable,
+        //   cal.variable
+        // )}
       >
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
         {children}
+        </ThemeProvider>
         <Toaster />
       </body>
     </html>

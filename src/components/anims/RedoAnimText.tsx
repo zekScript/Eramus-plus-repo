@@ -40,11 +40,11 @@ export default function RedoAnimText({ delay }: IRedoAnimTextProps) {
     animate(count, 60, {
       type: "tween",
       delay: delay,
-      duration: 1,
+      duration: 2,
       ease: "easeIn",
       repeat: Infinity,
       repeatType: "reverse",
-      repeatDelay: 4,
+      repeatDelay: 2,
       onUpdate(latest) {
         if (updatedThisRound.get() === true && latest > 0) {
           updatedThisRound.set(false);
