@@ -1,13 +1,3 @@
-export default function MediaPage(){
-
-      
-
-
-      return(
-            <>
-            
-            
-            
-            </>
-      )
+export default function MediaPage() {
+  return <></>
 }

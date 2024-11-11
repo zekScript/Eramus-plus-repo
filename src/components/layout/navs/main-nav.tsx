@@ -5,7 +5,6 @@ import { NavItem } from '@/types'
 import Link from 'next/link'
 import ModeToggle from './color-theme'
 
-
 interface MainNavProps {
   items?: NavItem[]
 }
@@ -15,30 +14,22 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
   // const segment = useSelectedLayoutSegment()
   // console.log('🚀 ~ segment:', segment)
 
-  const itemsList = items?.map(item => <Link  
-                                        key={item.title} 
-                                        href={item.href}>
-                                        {item.title}
-                                        </Link>
-                              )
+  const itemsList = items?.map((item) => (
+    <Link key={item.title} href={item.href}>
+      {item.title}
+    </Link>
+  ))
 
-
-
-          
-        
   return (
     <>
-    {/* This SHOULD BE HIDDEN BY DEFAULT*/}
-    <div className='hidden lg:flex'>
-      {/* MENU */}
-      <div className='flex gap-6 mr-3 justify-center items-center' >
-      {itemsList}
-
+      {/* This SHOULD BE HIDDEN BY DEFAULT*/}
+      <div className='hidden lg:flex'>
+        {/* MENU */}
+        <div className='mr-3 flex items-center justify-center gap-6'>
+          {itemsList}
+        </div>
       </div>
-      
-    </div>
-    <ModeToggle></ModeToggle>
-
+      <ModeToggle></ModeToggle>
     </>
   )
 }

@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,9 +18,7 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "target": "ES2017"
   },
@@ -32,9 +26,11 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
-, "src/app/(front)/content/jobs/page.mdx", "src/app/(front)/content/our-work/page.mdx", "src/app/(front)/content/media/page.mdx", "src/app/(front)/content/our-work/n/[slug]/page.mdx"  ],
-  "exclude": [
-    "node_modules"
-  ]
+    ".next/types/**/*.ts",
+    "src/app/(front)/content/jobs/page.mdx",
+    "src/app/(front)/content/our-work/page.mdx",
+    "src/app/(front)/content/media/page.mdx",
+    "src/app/(front)/content/our-work/n/[slug]/page.mdx"
+  ],
+  "exclude": ["node_modules"]
 }

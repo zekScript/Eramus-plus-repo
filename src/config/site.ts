@@ -32,7 +32,7 @@ export const topNav: Navigation = {
     },
 
     // I dont know what is the purpose of this
-    // { 
+    // {
     //   title: 'Jobs',
     //   href: '/content/jobs',
     // },

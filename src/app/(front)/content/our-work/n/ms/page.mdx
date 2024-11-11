@@ -1,6 +1,5 @@
 # My Stack
 
-
 ## Here's where I'm currently most productive:
 
 ## 1. Framework (Next.js and React)
@@ -8,9 +7,6 @@
 I’ve been working with Next.js since 2018 (and React since 2015) so I'm most productive here. I start all my projects with TypeScript.
 
 For data fetching, I use newer React patterns:
-
-
-
 
 <details>
 <summary>Majority: Server Components</summary>
@@ -39,7 +35,6 @@ export default async function Page() {
 <summary>Occasionally: React ` use + ` Context</summary>
 
 A newer pattern I've started using is forwarding Promises to a Context provider, and then "unwrapping" the Promise with React’s use.
-
 
 <pre>
 ```
@@ -93,15 +88,11 @@ export function BlogPosts() {
 
 This can work well if you have global data you need to use deep in the component tree (especially if there are lots of client components).
 
-
-
 </details>
-
 
 For forms, I use React 19 features like Server Actions and `useActionState`. I’ll also use Zod to validate objects inside my actions.
 
 ## 2. Styling (Tailwind CSS and shadcn/ui)
-
 
 Building flexible, accessible components is difficult. You either use (and extend) a component library, or build your own. This is why I now use shadcn/ui.
 
@@ -117,6 +108,7 @@ Tailwind uses a compiler to generate only the classes used. So while the utility
 Assuming you only write Tailwind code, your bundle will never be larger than the total set of used Tailwind classes. It's extremely unlikely you would use them all. This means you have a fixed upper bound on the size of the generated CSS file, which is then minified, compressed, and cached for the best performance.
 
 You don't have to only write Tailwind styles. Tailwind classes are just utilities that adhere to a design system and work alongside normal CSS. You can mix and match Tailwind with CSS Modules, for example.
+
 </details>
 
 3. Database (Postgres and Drizzle)
@@ -126,7 +118,6 @@ Postgres is my go-to database. Drizzle makes working with Postgres easy, type-sa
 The best part? Drizzle works perfectly with TypeScript.
 
 4. AI (v0)
-
 
 v0 helps me edit, refactor, and debug code.
 
