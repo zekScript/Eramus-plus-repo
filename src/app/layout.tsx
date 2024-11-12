@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
 // import { cn } from '@/lib/utils'
-import { ThemeProvider } from '@/components/theme-provider'
+// import { ThemeProvider } from '@/components/theme-provider'
 
 // const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 // const cal = localFont({
@@ -31,14 +31,14 @@ export default function RootLayout({
       //   cal.variable
       // )}
       >
-        <ThemeProvider
+        {/* <ThemeProvider
           attribute='class'
           defaultTheme='system'
           enableSystem
           disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+         >  */}
+        {children}
+        {/* </ThemeProvider> */}
         <Toaster />
       </body>
     </html>
