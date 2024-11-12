@@ -15,7 +15,7 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
   // console.log('🚀 ~ segment:', segment)
 
   const itemsList = items?.map((item) => (
-    <Link key={item.title} href={item.href}>
+    <Link  key={item.title} href={item.href}>
       {item.title}
     </Link>
   ))
