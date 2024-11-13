@@ -6,7 +6,7 @@ const Page: React.FC = () => {
       {/* Main text */}
       <div className='mb-20'>
         <h1 className='text-wrap text-center text-9xl font-medium'>
-          Hello To My World
+          Hello To My World Edited by Armandas
         </h1>
       </div>
       {/* Line */}

@@ -2,3 +2,7 @@ So the project idea is about creating a article like blog and posting it to the 
 
 
 and everyone can review it by clicking on it but at the same time making it into an portfolio
+
+
+So for every markdown page written type in terminal this: git commit -m "Made new page"
+Then: git push originCopy ArmandasCode to github, then redeploy on varcel and then there should be a markdown page written
