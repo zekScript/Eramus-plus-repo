@@ -19,13 +19,33 @@ const Page: React.FC = () => {
       <h1 className='mb-4 ml-12 mt-24 text-4xl font-bold'>Media</h1>
       <div className='mb-24 ml-12 flex w-56 justify-center bg-gray-400 [height:_0.4px]'></div>
       {/* Container for blog post */}
-      <div className='m-auto p-9 grid h-full w-full grid-cols-subgrid gap-4'>
+      <div className='m-auto p-9 grid h-full w-full grid-cols-5 gap-4'>
         {/* Placeholder blog post  */}        
           <div className='text-break w-[200px] h-[200px] font-bold text-xl'>
             <img src='https://placehold.co/1920x728'></img>
             <h1 className='p-2'>Placeholder Placeholder Placeholder Placeholder</h1>
           </div>
-        
+          <div className='text-break w-[200px] h-[200px] font-bold text-xl'>
+            <img src='https://placehold.co/1920x728'></img>
+            <h1 className='p-2'>Placeholder Placeholder Placeholder Placeholder</h1>
+          </div>
+          <div className='text-break w-[200px] h-[200px] font-bold text-xl'>
+            <img src='https://placehold.co/1920x728'></img>
+            <h1 className='p-2'>Placeholder Placeholder Placeholder Placeholder</h1>
+          </div>
+          <div className='text-break w-[200px] h-[200px] font-bold text-xl'>
+            <img src='https://placehold.co/1920x728'></img>
+            <h1 className='p-2'>Placeholder Placeholder Placeholder Placeholder</h1>
+          </div>
+          <div className='text-break w-[200px] h-[200px] font-bold text-xl'>
+            <img src='https://placehold.co/1920x728'></img>
+            <h1 className='p-2'>Placeholder Placeholder Placeholder Placeholder</h1>
+          </div>
+          <div className='text-break w-[200px] h-[200px] font-bold text-xl'>
+            <img src='https://placehold.co/1920x728'></img>
+            <h1 className='p-2'>Placeholder Placeholder Placeholder Placeholder</h1>
+          </div>
+
       </div>
     </>
   )
