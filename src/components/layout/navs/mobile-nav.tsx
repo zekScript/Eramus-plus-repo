@@ -16,7 +16,7 @@ interface NavProps {
 const MobileNav: React.FC<NavProps> = ({ items }) => {
 
   const itemsList = items?.map((item) => (
-    <Link className='flex flex-col' key={item.title} href={item.href}>
+    <Link key={item.title} href={item.href}>
       {item.title}
     </Link>
   ))
@@ -32,8 +32,12 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
             <Icons.logo className='w-40 cursor-pointer fill-primary pb-6' />
           </Link>
           {/* MENU Items */}
+          <div className='flex flex-col gap-y-4 font-bold text-xl w-14'>
           {itemsList}
+          </div>
+        <div className='w-full h-[75%] flex justify-end items-end'>
           <ModeToggle></ModeToggle>
+        </div>
         </SheetContent>
       </Sheet>
     </div>
