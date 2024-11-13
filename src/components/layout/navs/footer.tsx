@@ -12,7 +12,7 @@ type Props = {
 
 const Footer: React.FC<Props> = ({ className }) => {
   return (
-    <footer className={cn(className, 'space-y-10 pb-10 mt-12')}>
+    <footer className={cn(className, 'mt-12 space-y-10 pb-10')}>
       <div className='container'>
         <Separator orientation='horizontal' />
       </div>

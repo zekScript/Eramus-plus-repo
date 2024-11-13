@@ -25,23 +25,22 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-      className={cn(
-        'mt-20 min-h-screen bg-background font-sans antialiased',
-        inter.variable,
-        cal.variable
-      )}
+        className={cn(
+          'mt-20 min-h-screen bg-background font-sans antialiased',
+          inter.variable,
+          cal.variable
+        )}
       >
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
           enableSystem
           disableTransitionOnChange
-         > 
-        {children}
+        >
+          {children}
         </ThemeProvider>
         <Toaster />
       </body>
     </html>
   )
 }
-

@@ -14,7 +14,6 @@ interface NavProps {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const MobileNav: React.FC<NavProps> = ({ items }) => {
-
   const itemsList = items?.map((item) => (
     <Link key={item.title} href={item.href}>
       {item.title}
@@ -32,12 +31,12 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
             <Icons.logo className='w-40 cursor-pointer fill-primary pb-6' />
           </Link>
           {/* MENU Items */}
-          <div className='flex flex-col gap-y-4 font-bold text-xl w-14'>
-          {itemsList}
+          <div className='flex w-14 flex-col gap-y-4 text-xl font-bold'>
+            {itemsList}
           </div>
-        <div className='w-full h-[75%] flex justify-end items-end'>
-          <ModeToggle></ModeToggle>
-        </div>
+          <div className='flex h-[75%] w-full items-end justify-end'>
+            <ModeToggle></ModeToggle>
+          </div>
         </SheetContent>
       </Sheet>
     </div>
