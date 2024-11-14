@@ -1,20 +1,19 @@
-import TextLayout from '@/components/anims/TextLayout'
+// import TextLayout from '@/components/anims/TextLayout'
+import TextFadeIn from '@/components/anims/TextFadeIn'
+export default function Page() {
 
-const Page: React.FC = () => {
+ 
   return (
     <>
-      {/* Main text */}
-      <div className='mb-20'>
-        <h1 className='text-wrap text-center text-7xl font-medium md:text-9xl'>
-          Hello To My World
-        </h1>
-      </div>
+      <section className='inline-flex w-full'>
+        <TextFadeIn></TextFadeIn>
+
+      </section>
       {/* Line */}
-      <div className='m-auto flex w-4/12 justify-center bg-gray-400 [height:_0.4px]'></div>
+      {/* <div className='m-auto flex w-4/12 justify-center bg-gray-400 [height:_0.4px]'></div>
       <div className='m-auto mt-4 flex w-10/12 justify-center'>
         <TextLayout></TextLayout>
-      </div>
-
+      </div> */}
       <h1 className='mb-4 ml-12 mt-24 text-4xl font-bold'>Media</h1>
       <div className='mb-24 ml-12 flex w-56 justify-center bg-gray-400 [height:_0.4px]'></div>
       {/* Container for blog post */}
@@ -29,4 +28,4 @@ const Page: React.FC = () => {
     </>
   )
 }
-export default Page
+

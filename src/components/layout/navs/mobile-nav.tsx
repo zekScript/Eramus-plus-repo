@@ -36,10 +36,6 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
           <div className='flex w-14 flex-col gap-y-4 text-xl font-bold'>
             {items?.map((item) => {
               const isActive = item.href === pathname
-              // <motion.div
-              //   aria-hidden='true'
-              //   transition={{ type: 'spring', duration: 0.5 }}
-              // ></motion.div>
 
               return (
                 <Link
@@ -54,7 +50,7 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
               )
             })}
           </div>
-          <div className='flex h-[65%] w-full items-end justify-end'>
+          <div className='mt-4'>
             <ModeToggle></ModeToggle>
           </div>
         </SheetContent>
