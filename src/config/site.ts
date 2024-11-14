@@ -23,6 +23,10 @@ export const siteConfig: SiteConfig = {
 export const topNav: Navigation = {
   items: [
     {
+      title: 'Home',
+      href: '/'
+    },
+    {
       title: 'Projects',
       href: '/content/our-work',
     },
