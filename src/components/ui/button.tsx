@@ -20,7 +20,7 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         // Custom button
-        custom: 'shadow-sm'
+        custom: 'shadow-sm',
       },
       size: {
         default: 'h-9 px-4 py-2',

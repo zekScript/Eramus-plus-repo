@@ -24,7 +24,7 @@ export const topNav: Navigation = {
   items: [
     {
       title: 'Home',
-      href: '/'
+      href: '/',
     },
     {
       title: 'Projects',

@@ -7,9 +7,7 @@ import { NavItem } from '@/types'
 import Link from 'next/link'
 import { Icons } from '@/components/icons'
 import ModeToggle from './color-theme'
-import { usePathname } from "next/navigation";
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 interface NavProps {
   items?: NavItem[]
@@ -17,19 +15,12 @@ interface NavProps {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const MobileNav: React.FC<NavProps> = ({ items }) => {
-  
-  
   // const itemsList = items?.map((item) => (
   //   <Link key={item.title} href={item.href}>
   //     {item.title}
   //   </Link>
   // ))
-  let pathname = usePathname() || "/";
-  const [animationProps, __] = useState({
-    left: 0,
-    width: 0,
-  }); 
-
+  const pathname = usePathname() || '/'
 
   return (
     <div className='flex items-center lg:hidden'>
@@ -43,36 +34,25 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
           </Link>
           {/* MENU Items */}
           <div className='flex w-14 flex-col gap-y-4 text-xl font-bold'>
+            {items?.map((item) => {
+              const isActive = item.href === pathname
+              // <motion.div
+              //   aria-hidden='true'
+              //   transition={{ type: 'spring', duration: 0.5 }}
+              // ></motion.div>
 
-
-            {items?.map((item, __) => {
-
-            const isActive = item.href === pathname;
-            <motion.div 
-              className="absolute left-0 inset-y-0 bg-indigo-100"
-              aria-hidden="true"
-              animate={{
-                ...animationProps,
-              }}
-              transition={{ type: "spring", duration: 0.5 }}
-            ></motion.div>
-          
-            return (
-            
-            <Link
-              key={item.href}
-              className={`font-bold inline-flex rounded-full px-3 py-1.5 text-slate-500 hover:text-indigo-500 [&.active]:text-indigo-600 text-sm lg:text-base relative no-underline duration-300 ease-in ${
-                isActive ? "active" : ""
-              }`}
-
-              href={item.href}
-            >
-              <span>{item.title}</span>
-            </Link>
-          );
-  }
-        
-)}
+              return (
+                <Link
+                  key={item.href}
+                  className={`relative inline-flex rounded-full px-3 py-1.5 text-sm font-bold text-slate-500 no-underline duration-300 ease-in hover:text-indigo-500 lg:text-base [&.active]:text-indigo-600 ${
+                    isActive ? 'active' : ''
+                  }`}
+                  href={item.href}
+                >
+                  <span>{item.title}</span>
+                </Link>
+              )
+            })}
           </div>
           <div className='flex h-[65%] w-full items-end justify-end'>
             <ModeToggle></ModeToggle>
