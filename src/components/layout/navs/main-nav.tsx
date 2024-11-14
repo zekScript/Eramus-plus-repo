@@ -24,6 +24,8 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
     left: 0,
     width: 0,
   }); 
+  
+  
   return (
     <>
     <div className='hidden lg:flex'>
@@ -38,7 +40,8 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
               }}
               transition={{ type: "spring", duration: 0.5 }}
             ></motion.div>
-          return (
+          
+            return (
             
             <Link
               key={item.href}
@@ -51,7 +54,9 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
               <span>{item.title}</span>
             </Link>
           );
-        })}
+        }
+        
+        )}
         </div>
         <ModeToggle></ModeToggle>
     </>
