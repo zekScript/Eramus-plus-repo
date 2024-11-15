@@ -87,13 +87,14 @@ a:hover {
 .text-break {
   word-break: break-word;
 }
+/* Placeholder animation should be in framer motion */
 
-.progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 10px;
-  background: var(--red);
-  transform-origin: 0%;
+/* hanlde smooth transitions between slides */
+@keyframes fadeVisibility {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
