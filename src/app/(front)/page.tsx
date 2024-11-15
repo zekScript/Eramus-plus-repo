@@ -1,10 +1,13 @@
 // import TextLayout from '@/components/anims/TextLayout'
 import TextFadeIn from '@/components/anims/TextFadeIn'
+import Video from '@/components/video'
 export default function Page() {
   return (
     <>
+    <Video></Video>
       <section className='inline-flex w-full'>
         <TextFadeIn></TextFadeIn>
+        
       </section>
       {/* Line */}
       {/* <div className='m-auto flex w-4/12 justify-center bg-gray-400 [height:_0.4px]'></div>
