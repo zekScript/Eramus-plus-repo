@@ -1,7 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 
-export default function TextFadeIn() {
+export default function FadeInContent() {
   return (
     <>
       <motion.div
@@ -9,11 +9,9 @@ export default function TextFadeIn() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
-        <div className='mb-20 ml-12 flex flex-row'>
-          <h1 className='w-12 text-7xl font-medium md:text-8xl'>
-            Hello To My World
-          </h1>
-        </div>
+        <h1 className='text-3xl font-medium text-white md:text-5xl'>
+          Hello To My World
+        </h1>
       </motion.div>
     </>
   )
