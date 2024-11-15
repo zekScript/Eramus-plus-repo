@@ -2,7 +2,6 @@ import Video from '@/components/video'
 export default function Page() {
   return (
     <>
-    
       <section>
         <Video></Video>
       </section>

@@ -9,10 +9,9 @@ export default function FadeInContent() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
-        
-          <h1 className='text-3xl text-white font-medium md:text-5xl '>
-            Hello To My World
-          </h1>
+        <h1 className='text-3xl font-medium text-white md:text-5xl'>
+          Hello To My World
+        </h1>
       </motion.div>
     </>
   )
