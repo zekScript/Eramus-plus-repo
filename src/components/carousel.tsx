@@ -1,5 +1,8 @@
 'use client'
 import { useState } from 'react'
+import { ArrowBigLeft, ArrowBigRight } from 'lucide-react'
+import { motion, AnimatePresence } from "framer-motion";
+
 
 const Carousel: React.FC = () => {
   // THERE SHOULD BE A CODE CLEANED AND STATIC TYPED IN
@@ -19,6 +22,15 @@ const Carousel: React.FC = () => {
     },
   ]
 
+  const variants = {
+    initial: { opacity: 0, x: 50 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -50 },
+  };
+
+  
+
+  
   const [current, setCurrent] = useState(0)
 
   const nextSlide = () => {
@@ -29,13 +41,7 @@ const Carousel: React.FC = () => {
     setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1))
   }
 
-  // return(
-  //       <>
 
-  //       <div className="flex w-full flex-col items-center justify-center">
-  //       </div>
-  //       </>
-  // )
 
   return (
     <div className='relative mx-auto max-w-xl'>
@@ -54,21 +60,22 @@ const Carousel: React.FC = () => {
             />
           </div>
         ))}
+        
       </div>
 
       {/* Navigation Buttons */}
-      <div className='absolute left-0 right-0 top-1/2 flex -translate-y-1/2 justify-between px-4'>
+      <div className='absolute left-0 right-0 top-1/2 flex -translate-y-1/2 justify-between px-4 hidden lg:flex'>
         <button
           onClick={prevSlide}
-          className='flex h-10 w-10 items-center justify-center rounded-full bg-white font-bold text-black shadow-lg'
+          className='arrow-big-left flex h-10 w-10 items-center justify-center rounded-full bg-white font-bold text-black shadow-lg'
         >
-          &lt;
+          <ArrowBigLeft></ArrowBigLeft>
         </button>
         <button
           onClick={nextSlide}
-          className='flex h-10 w-10 items-center justify-center rounded-full bg-white font-bold text-black shadow-lg'
+          className='arrow-big-right flex h-10 w-10 items-center justify-center rounded-full bg-white font-bold text-black shadow-lg'
         >
-          &gt;
+          <ArrowBigRight></ArrowBigRight>
         </button>
       </div>
 
@@ -79,7 +86,7 @@ const Carousel: React.FC = () => {
             key={idx}
             onClick={() => setCurrent(idx)}
             className={`h-3 w-3 rounded-full ${
-              idx === current ? 'bg-black' : 'bg-gray-400'
+              idx === current ? 'bg-teal-500' : 'bg-gray-400'
             }`}
           ></button>
         ))}

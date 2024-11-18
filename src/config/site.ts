@@ -34,6 +34,11 @@ export const topNav: Navigation = {
       title: 'Media',
       href: '/content/media',
     },
+    // Placehodler
+    {
+      title: 'Contact',
+      href: '#'
+    }
 
     // I dont know what is the purpose of this
     // {
