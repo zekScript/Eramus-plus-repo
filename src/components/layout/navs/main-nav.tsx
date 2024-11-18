@@ -18,7 +18,7 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
 
   return (
     <>
-      <div className='hidden lg:flex'>
+      <div className='hidden lg:flex w-full'>
         {items?.map((item) => {
           const isActive = item.href === pathname
           return (

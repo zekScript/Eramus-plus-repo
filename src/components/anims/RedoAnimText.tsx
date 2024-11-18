@@ -8,25 +8,9 @@ export interface IRedoAnimTextProps {
 
 export default function RedoAnimText({ delay }: IRedoAnimTextProps) {
   const textIndex = useMotionValue(0)
-  const texts = [
-    "I'm reaching out to express my interest in joining your team.",
-    "I'm excited about the opportunity to bring my skills to your company.",
-    "I'd love to discuss how my experience aligns with your needs.",
-    'I believe my background makes me a great fit for this role.',
-    "I'm eager to contribute my expertise and passion for [industry] at [company].",
-    "I'm drawn to this role as it aligns well with my skills and career goals.",
-    'After reviewing the job description, I’m excited to apply for this position.',
-    'I’m motivated to bring my skills to a team like yours.',
-    'I am writing to you because I want a job.',
-    'I am the best candidate for this job.',
-    'In my grand adventure as a seasoned designer...',
-    "Knock knock! Who's there? Your new employee!",
-    'Walking the tightrope balance of project management...',
-    'I find myself compelled to express my interest due to...',
-    'My pen (or should I say, keyboard) is at work today because...',
-    'Inspired by the alluring challenge in the job posting, I am writing...',
-    'Stirred to my keyboard by the tantalizing nature of the role…',
-  ]
+  // const texts = ["Ehhh hello, I'm Armandas, a passionate web developer with a passion for creating sleek and efficient websites. My journey in coding started when I applied to be a programming student I was fascinated turning ideas into reality through code. With expertise in HTML, CSS, JavaScript, and frameworks like React, Next.js, Tailwind, and other tools like shadcn, Auth.js. I enjoy crafting user-friendly and visually appealing web applications. "]
+    const texts = ["Ehhhh... hello i guess, I'm Armandas if you didn't know. I'm not very social so bare with me. I'm a frontend developer that likes to play video games and buy virtual items, but if you didn't know I know abit of Next.js and tailwind, Oh better yet I know also abit React and I know shadcn, Auth.js, Prisma(Not really), and other cool tools. I'm a newbie of being a developer or programming in general but me and Rounded square is helping to be in their internship temporarly, and being a better programmer and getting used to programming environment, I hope you pick me :)"]
+  
 
   const baseText = useTransform(textIndex, (latest) => texts[latest] || '')
   const count = useMotionValue(0)
@@ -37,14 +21,11 @@ export default function RedoAnimText({ delay }: IRedoAnimTextProps) {
   const updatedThisRound = useMotionValue(true)
 
   useEffect(() => {
-    animate(count, 60, {
+    animate(count, 550, {
       type: 'tween',
-      delay: delay,
-      duration: 2,
+      delay: 15,
+      duration: 45,
       ease: 'easeIn',
-      repeat: Infinity,
-      repeatType: 'reverse',
-      repeatDelay: 2,
       onUpdate(latest) {
         if (updatedThisRound.get() === true && latest > 0) {
           updatedThisRound.set(false)

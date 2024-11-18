@@ -13,7 +13,7 @@ const cal = localFont({
 })
 
 export const metadata: Metadata = {
-  title: 'Portfolio with articles',
+  title: 'My Armandas Portfolio',
   description: 'rSQ template',
 }
 

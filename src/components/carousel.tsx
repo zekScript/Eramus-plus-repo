@@ -44,7 +44,7 @@ const Carousel: React.FC = () => {
 
 
   return (
-    <div className='relative mx-auto max-w-xl'>
+    <div className='relative mx-auto max-w-xl '>
       <div className='overflow-hidden'>
         {images.map((img, idx) => (
           <div
@@ -64,7 +64,7 @@ const Carousel: React.FC = () => {
       </div>
 
       {/* Navigation Buttons */}
-      <div className='absolute left-0 right-0 top-1/2 flex -translate-y-1/2 justify-between px-4 hidden lg:flex'>
+      <div className='absolute left-0 right-0 top-1/2 -translate-y-1/2 justify-between px-4 hidden lg:flex'>
         <button
           onClick={prevSlide}
           className='arrow-big-left flex h-10 w-10 items-center justify-center rounded-full bg-white font-bold text-black shadow-lg'

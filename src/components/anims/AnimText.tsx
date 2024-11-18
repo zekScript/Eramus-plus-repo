@@ -9,7 +9,8 @@ export interface IAnimTextProps {
 
 export default function AnimText({ delay }: IAnimTextProps) {
   const [done, setDone] = useState(false)
-  const baseText = 'Dear Hiring Manager, '
+  const baseText = 'Welcome User Let me introduce myself'
+  
   const count = useMotionValue(0)
   const rounded = useTransform(count, (latest) => Math.round(latest))
   const displayText = useTransform(rounded, (latest) =>
@@ -20,7 +21,7 @@ export default function AnimText({ delay }: IAnimTextProps) {
     const controls = animate(count, baseText.length, {
       type: 'tween',
       delay: delay,
-      duration: 1,
+      duration: 15,
       ease: 'easeInOut',
       onComplete: () => {
         setDone(true)
@@ -32,7 +33,8 @@ export default function AnimText({ delay }: IAnimTextProps) {
 
   return (
     <span>
-      <motion.span>{displayText}</motion.span>
+      <motion.span className='text-3xl'>{displayText}</motion.span>
+      {/* <div className='flex w-4/12 justify-center bg-gray-400 [height:_0.4px]'></div> */}
       {done && (
         <>
           <br /> <br />

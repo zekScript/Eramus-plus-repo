@@ -38,7 +38,7 @@ export function TopBar() {
       >
         <div
           className={cn(
-            'py-transition container flex duration-300',
+            'py-transition container flex duration-300 w-full',
             isScrolled ? 'py-1' : 'py-2'
           )}
         >
@@ -47,11 +47,11 @@ export function TopBar() {
             <Link href='/'>
               <Icons.logo className='mr-3 w-40 cursor-pointer fill-primary pb-1' />
             </Link>
-            <div className='flex flex-row-reverse gap-x-4 lg:flex-row'>
-              {/* MAIN NAV */}
-              <MainNav items={topNav.items} />
-              {/* MOBILE NAV */}
-              <MobileNav items={topNav.items} />
+                <div className='flex flex-row-reverse gap-x-4 lg:flex-row'>
+                {/* MAIN NAV */}
+                <MainNav items={topNav.items} />
+                {/* MOBILE NAV */}
+                <MobileNav items={topNav.items} />
             </div>
           </div>
         </div>

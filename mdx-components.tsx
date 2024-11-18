@@ -36,7 +36,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </a>
     ),
     p: ({ children }) => (
-      <p style={{ fontFamily: 'sans-serif', margin: '32px', width: '70%' }}>
+      <p style={{ fontFamily: 'sans-serif', margin: '32px', width: '50%' }}>
         {children}
       </p>
     ),
