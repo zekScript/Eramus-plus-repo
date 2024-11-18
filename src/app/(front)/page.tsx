@@ -1,20 +1,24 @@
-"use client"
 import Video from '@/components/video'
 import Carousel from '@/components/carousel'
 import TextLayout from '@/components/anims/TextLayout'
 
 
+
 export default function Page() {
+  
+  
+
   return (
     <>
       <section>
         <Video></Video>
       </section>
-      
+      <section>
       <div className='flex w-4/12 justify-center bg-gray-400 [height:_0.4px]'></div>
-        <div className='mt-4 w-10/12'>
+        <div className='mt-72 ml-12 w-10/12'>
         <TextLayout></TextLayout>
       </div>
+      </section>
       <section className='mt-52 ml-12 mb-4'>
       
       <h1 className='mb-4 text-4xl font-bold'>Media</h1>
