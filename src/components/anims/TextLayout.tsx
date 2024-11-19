@@ -36,11 +36,11 @@ const itemVariants = {
 
 export default function A4Animation() {
   return (
-    <motion.div className='flex w-full select-none'>
+    <motion.div className='flex w-full select-none aspect-video'>
       <motion.div
         variants={containerVariants}
         animate='visible'
-        initial='hidden'
+        // initial='hidden'
         className='flex h-full w-full flex-col p-2'
       >
         <motion.div
@@ -52,7 +52,7 @@ export default function A4Animation() {
           className='flex items-center justify-center'
         ></motion.div>
         <motion.span variants={itemVariants} className='inline w-full text-lg'>
-          <AnimText />
+          <AnimText delay={1} />
         </motion.span>
       </motion.div>
     </motion.div>

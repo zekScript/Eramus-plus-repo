@@ -5,9 +5,10 @@ import FadeInContent from './anims/FadeInContent'
 export default function Video() {
   return (
     <div className='min-h-screen w-full overflow-hidden bg-black'>
-      <div className='absolute z-30 flex h-full w-full items-center justify-center'>
+      <div className='absolute z-30 flex h-full w-full items-center justify-center overflow-hidden'>
         <FadeInContent></FadeInContent>
       </div>
+
 
       <div className='absolute z-[1] h-full w-full object-cover opacity-50'>
         <video

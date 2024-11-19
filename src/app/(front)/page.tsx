@@ -1,18 +1,26 @@
+"use client"
 import Video from '@/components/video'
 import Carousel from '@/components/carousel'
-import TextLayout from '@/components/anims/TextLayout'
+import A4Animation from '@/components/anims/TextLayout'
+import { useInView } from 'framer-motion'
+import { useRef } from 'react'
+import { useEffect } from 'react'
 
 export default function Page() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true })
+
   return (
     <>
       <section>
         <Video></Video>
       </section>
       <section>
-        <div className='flex w-4/12 justify-center bg-gray-400 [height:_0.4px]'></div>
-        <div className='ml-12 mt-72 w-10/12'>
-          <TextLayout></TextLayout>
-        </div>
+          <div className='w-full flex justify-center'>
+            <div className='ml-12 mt-72 w-9/12 ' ref={ref} >
+            {isInView ? <A4Animation /> : <p>Loading...</p>}
+            </div>
+          </div>
       </section>
       <section className='mb-4 ml-12 mt-52'>
         <h1 className='mb-4 text-4xl font-bold'>Media</h1>
@@ -28,10 +36,11 @@ export default function Page() {
         </div>
       </section>
       <section className='mt-12 w-full'>
-        <Carousel></Carousel>
+        {/* <Carousel></Carousel> */}
       </section>
       <section className='ml-12 mt-12'>
-        <h1>Tell me more about your self!</h1>
+
+      
       </section>
     </>
   )
