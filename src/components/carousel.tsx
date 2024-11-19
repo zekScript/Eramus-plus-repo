@@ -1,8 +1,6 @@
 'use client'
 import { useState } from 'react'
 import { ArrowBigLeft, ArrowBigRight } from 'lucide-react'
-import { motion, AnimatePresence } from "framer-motion";
-
 
 const Carousel: React.FC = () => {
   // THERE SHOULD BE A CODE CLEANED AND STATIC TYPED IN
@@ -22,15 +20,6 @@ const Carousel: React.FC = () => {
     },
   ]
 
-  const variants = {
-    initial: { opacity: 0, x: 50 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -50 },
-  };
-
-  
-
-  
   const [current, setCurrent] = useState(0)
 
   const nextSlide = () => {
@@ -41,10 +30,8 @@ const Carousel: React.FC = () => {
     setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1))
   }
 
-
-
   return (
-    <div className='relative mx-auto max-w-xl '>
+    <div className='relative mx-auto max-w-xl'>
       <div className='overflow-hidden'>
         {images.map((img, idx) => (
           <div
@@ -60,11 +47,10 @@ const Carousel: React.FC = () => {
             />
           </div>
         ))}
-        
       </div>
 
       {/* Navigation Buttons */}
-      <div className='absolute left-0 right-0 top-1/2 -translate-y-1/2 justify-between px-4 hidden lg:flex'>
+      <div className='absolute left-0 right-0 top-1/2 hidden -translate-y-1/2 justify-between px-4 lg:flex'>
         <button
           onClick={prevSlide}
           className='arrow-big-left flex h-10 w-10 items-center justify-center rounded-full bg-white font-bold text-black shadow-lg'

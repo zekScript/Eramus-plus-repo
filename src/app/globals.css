@@ -87,7 +87,7 @@ a:hover {
 .text-break {
   word-break: break-word;
 }
-.arrow-big-right{
+.arrow-big-right {
   vertical-align: middle;
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
@@ -98,7 +98,8 @@ a:hover {
   transition-property: transform;
 }
 
-.arrow-big-right:hover, .arrow-big-right:active {
+.arrow-big-right:hover,
+.arrow-big-right:active {
   -webkit-transform: translateX(8px);
   transform: translateX(8px);
 }
@@ -113,7 +114,8 @@ a:hover {
   -webkit-transition-property: transform;
   transition-property: transform;
 }
-.arrow-big-left:hover, .arrow-big-left:active {
+.arrow-big-left:hover,
+.arrow-big-left:active {
   -webkit-transform: translateX(-8px);
   transform: translateX(-8px);
 }

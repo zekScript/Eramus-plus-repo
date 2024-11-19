@@ -41,7 +41,7 @@ export default function A4Animation() {
         variants={containerVariants}
         animate='visible'
         initial='hidden'
-        className='flex w-full h-full flex-col p-2'
+        className='flex h-full w-full flex-col p-2'
       >
         <motion.div
           variants={itemVariants}
@@ -52,7 +52,7 @@ export default function A4Animation() {
           className='flex items-center justify-center'
         ></motion.div>
         <motion.span variants={itemVariants} className='inline w-full text-lg'>
-          <AnimText delay={1} />
+          <AnimText />
         </motion.span>
       </motion.div>
     </motion.div>

@@ -37,8 +37,8 @@ export const topNav: Navigation = {
     // Placehodler
     {
       title: 'Contact',
-      href: '#'
-    }
+      href: '#',
+    },
 
     // I dont know what is the purpose of this
     // {
