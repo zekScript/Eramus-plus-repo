@@ -17,11 +17,11 @@ const badgeVariants = cva(
         outline: "text-foreground",
         // Custom badges
         important:
-        "bg-red-600 shadow",
+        "bg-red-600 shadow text-white",
         info:
-        "bg-blue-700 shadow",
+        "bg-blue-700 shadow text-white",
         announcement:
-        "bg-yellow-500 shadow",
+        "bg-yellow-500 shadow text-white",
       },
     },
     defaultVariants: {

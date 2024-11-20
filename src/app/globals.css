@@ -80,9 +80,9 @@
   border: 1px solid red;
 }
 
-a:hover {
+/* a:hover {
   color: #878787;
-}
+} */
 
 .text-break {
   word-break: break-word;
