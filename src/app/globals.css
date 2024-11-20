@@ -80,21 +80,18 @@
   border: 1px solid red;
 }
 
-a:hover {
+/* a:hover {
   color: #878787;
-}
+} */
 
 .text-break {
   word-break: break-word;
 }
-/* Placeholder animation should be in framer motion */
 
-/* hanlde smooth transitions between slides */
-@keyframes fadeVisibility {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.ratio {
+  aspect-ratio: 1920 / 1080;
+}
+
+.big-ratio {
+  aspect-ratio: 2048 / 1536;
 }

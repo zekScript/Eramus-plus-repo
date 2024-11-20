@@ -3,8 +3,8 @@
 import * as React from 'react'
 import { NavItem } from '@/types'
 import Link from 'next/link'
-import ModeToggle from './color-theme'
 import { usePathname } from 'next/navigation'
+import ThemeToggle from '@/components/theme-switch'
 
 interface MainNavProps {
   items?: NavItem[]
@@ -18,7 +18,7 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
 
   return (
     <>
-      <div className='hidden lg:flex'>
+      <div className='hidden w-full lg:flex'>
         {items?.map((item) => {
           const isActive = item.href === pathname
           return (
@@ -29,12 +29,15 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
               }`}
               href={item.href}
             >
-              <span>{item.title}</span>
+              <span>{item.title} </span>
             </Link>
           )
         })}
       </div>
-      <ModeToggle></ModeToggle>
+      {/* <ModeToggle></ModeToggle> */}
+      <div className='hidden w-full justify-end lg:flex'>
+        <ThemeToggle></ThemeToggle>
+      </div>
     </>
   )
 }

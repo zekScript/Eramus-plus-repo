@@ -5,7 +5,7 @@ import FadeInContent from './anims/FadeInContent'
 export default function Video() {
   return (
     <div className='min-h-screen w-full overflow-hidden bg-black'>
-      <div className='absolute z-30 flex h-full w-full items-center justify-center'>
+      <div className='absolute z-30 flex h-full w-full items-center justify-center overflow-hidden'>
         <FadeInContent></FadeInContent>
       </div>
 
@@ -18,7 +18,7 @@ export default function Video() {
           loop
           preload='auto'
         >
-          <source src='https://ik.imagekit.io/ikmedia/example_video.mp4' />
+          <source src='backgroundVideoP2.mp4' />
         </video>
       </div>
     </div>

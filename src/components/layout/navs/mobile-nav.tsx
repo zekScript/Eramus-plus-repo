@@ -6,8 +6,8 @@ import { Menu } from 'lucide-react'
 import { NavItem } from '@/types'
 import Link from 'next/link'
 import { Icons } from '@/components/icons'
-import ModeToggle from './color-theme'
 import { usePathname } from 'next/navigation'
+import ThemeToggle from '@/components/theme-switch'
 
 interface NavProps {
   items?: NavItem[]
@@ -51,7 +51,7 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
             })}
           </div>
           <div className='mt-4'>
-            <ModeToggle></ModeToggle>
+            <ThemeToggle></ThemeToggle>
           </div>
         </SheetContent>
       </Sheet>

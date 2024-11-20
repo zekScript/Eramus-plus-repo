@@ -38,7 +38,7 @@ export function TopBar() {
       >
         <div
           className={cn(
-            'py-transition container flex duration-300',
+            'py-transition container flex w-full duration-300',
             isScrolled ? 'py-1' : 'py-2'
           )}
         >

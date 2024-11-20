@@ -36,12 +36,12 @@ const itemVariants = {
 
 export default function A4Animation() {
   return (
-    <motion.div className='flex w-full select-none items-center justify-center'>
+    <motion.div className='flex h-[300px] w-full select-none'>
       <motion.div
         variants={containerVariants}
         animate='visible'
-        initial='hidden'
-        className='flex aspect-[1.3/1.41] h-[200px] w-96 flex-col p-2'
+        // initial='hidden'
+        className='flex h-full w-full flex-col p-2'
       >
         <motion.div
           variants={itemVariants}
