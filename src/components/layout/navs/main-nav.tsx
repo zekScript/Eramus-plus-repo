@@ -5,11 +5,11 @@ import { NavItem } from '@/types'
 import Link from 'next/link'
 import ModeToggle from './color-theme'
 import { usePathname } from 'next/navigation'
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/ui/hover-card'
+// import {
+//   HoverCard,
+//   HoverCardContent,
+//   HoverCardTrigger,
+// } from '@/components/ui/hover-card'
 
 interface MainNavProps {
   items?: NavItem[]
@@ -39,7 +39,7 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
             
           )
         })}
-
+{/* 
       <HoverCard>
         <HoverCardTrigger asChild>
           <Link href='/'>Projects</Link>
@@ -59,8 +59,8 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
             </div>
           </div>
         </HoverCardContent>
-      </HoverCard>
-      </div>
+      </HoverCard>*/}
+      </div> 
       <ModeToggle></ModeToggle>
       
     </>

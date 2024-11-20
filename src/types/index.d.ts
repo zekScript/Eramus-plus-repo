@@ -18,6 +18,20 @@ export type SiteConfig = {
   }
 }
 
+export type BlogSources = {
+  blogItems: BlogSourcesItem[];
+}
+
+export type BlogSourcesItem = {
+  id: number
+  src: string
+  badge: string
+  title: string
+  date: string
+  route: string
+  description: string
+}
+
 export type NavItem = {
   title: string
   href: string

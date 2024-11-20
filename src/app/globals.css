@@ -88,6 +88,13 @@ a:hover {
   word-break: break-word;
 }
 
+.ratio{
+  aspect-ratio: 1920 / 1080;
+}
+
+.big-ratio{
+  aspect-ratio: 2048 / 1536;
+}
 
 
 

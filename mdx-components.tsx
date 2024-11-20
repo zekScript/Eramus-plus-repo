@@ -95,6 +95,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </pre>
     ),
+    body: ({ children }) => (
+      <body
+        style={{ backgroundColor: '#fff' }}
+      >
+        {children}
+      </body>
+    ),
 
     img: (props) => (
       <Image
