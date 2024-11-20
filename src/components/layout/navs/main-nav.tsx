@@ -4,9 +4,7 @@ import * as React from 'react'
 import { NavItem } from '@/types'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Switch } from "@/components/ui/switch"
 import ThemeToggle from '@/components/theme-switch'
-
 
 interface MainNavProps {
   items?: NavItem[]
@@ -32,15 +30,14 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
               href={item.href}
             >
               <span>{item.title} </span>
-            </Link>            
+            </Link>
           )
         })}
-
-      </div> 
+      </div>
       {/* <ModeToggle></ModeToggle> */}
-        <div className='w-full  justify-end lg:flex hidden'>
-        <ThemeToggle></ThemeToggle>  
-        </div>
+      <div className='hidden w-full justify-end lg:flex'>
+        <ThemeToggle></ThemeToggle>
+      </div>
     </>
   )
 }

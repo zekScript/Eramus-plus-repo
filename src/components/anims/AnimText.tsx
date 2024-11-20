@@ -40,7 +40,7 @@ export default function AnimText({ delay }: IAnimTextProps) {
           <br /> <br />
         </>
       )}
-      <RedoAnimText delay={delay + 1} />
+      <RedoAnimText />
       <CursorBlinker />
     </span>
   )

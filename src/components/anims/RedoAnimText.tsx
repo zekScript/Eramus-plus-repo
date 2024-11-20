@@ -2,14 +2,11 @@
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import { useEffect } from 'react'
 
-export interface IRedoAnimTextProps {
-  delay: number
-}
-
-export default function RedoAnimText({ delay }: IRedoAnimTextProps) {
+export default function RedoAnimText() {
   const textIndex = useMotionValue(0)
-  const texts = ["I'm Armandas, a passionate web developer with a passion for creating sleek and efficient websites. My journey in coding started when I applied to be a programming student I was fascinated turning ideas into reality through code. With expertise in HTML, CSS, JavaScript, and frameworks like React, Next.js, Tailwind, and other tools like shadcn, Auth.js. I enjoy crafting user-friendly and visually appealing web applications. "]
-  
+  const texts = [
+    "I'm Armandas, a passionate web developer with a passion for creating sleek and efficient websites. My journey in coding started when I applied to be a programming student I was fascinated turning ideas into reality through code. With expertise in HTML, CSS, JavaScript, and frameworks like React, Next.js, Tailwind, and other tools like shadcn, Auth.js. I enjoy crafting user-friendly and visually appealing web applications. ",
+  ]
 
   const baseText = useTransform(textIndex, (latest) => texts[latest] || '')
   const count = useMotionValue(0)

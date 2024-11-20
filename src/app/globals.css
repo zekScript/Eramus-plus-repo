@@ -88,13 +88,10 @@
   word-break: break-word;
 }
 
-.ratio{
+.ratio {
   aspect-ratio: 1920 / 1080;
 }
 
-.big-ratio{
+.big-ratio {
   aspect-ratio: 2048 / 1536;
 }
-
-
-

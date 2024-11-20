@@ -9,7 +9,6 @@ import { Icons } from '@/components/icons'
 import { usePathname } from 'next/navigation'
 import ThemeToggle from '@/components/theme-switch'
 
-
 interface NavProps {
   items?: NavItem[]
 }

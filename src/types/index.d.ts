@@ -19,7 +19,7 @@ export type SiteConfig = {
 }
 
 export type BlogSources = {
-  blogItems: BlogSourcesItem[];
+  blogItems: BlogSourcesItem[]
 }
 
 export type BlogSourcesItem = {

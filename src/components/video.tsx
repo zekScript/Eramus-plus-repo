@@ -9,7 +9,6 @@ export default function Video() {
         <FadeInContent></FadeInContent>
       </div>
 
-
       <div className='absolute z-[1] h-full w-full object-cover opacity-50'>
         <video
           className='absolute left-0 top-0 z-[-1] h-full w-full object-cover'
