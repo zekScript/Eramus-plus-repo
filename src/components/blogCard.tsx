@@ -14,7 +14,7 @@ const BlogCard: React.FC<BlogProps> = ({ blogItems }) => {
   const currentPath = usePathname();
 
   const handleRouting = (route: string) => {
-    const newPath = currentPath + route;
+    const newPath = currentPath + "/blog" + route;
     router.push(newPath);
   };
 
@@ -28,7 +28,7 @@ const BlogCard: React.FC<BlogProps> = ({ blogItems }) => {
           hover:translate-y-[-10px]
           active:scale-90 active:shadow-sm
           mb-11 cursor-pointer"
-      onClick={() => handleRouting(blogItem.route)} // Use blogItem.route for navigation
+      onClick={() => handleRouting(blogItem.route)} 
     >
       <div className="text-break h-[370px] w-[350px] text-xl font-bold">
         <img
