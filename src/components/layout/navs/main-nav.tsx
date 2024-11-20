@@ -34,12 +34,12 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
               }`}
               href={item.href}
             >
-              <span>{item.title}</span>
+              <span>{item.title} </span>
             </Link>
+            
           )
         })}
-      </div>
-      <ModeToggle></ModeToggle>
+
       <HoverCard>
         <HoverCardTrigger asChild>
           <Link href='/'>Projects</Link>
@@ -60,6 +60,9 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
           </div>
         </HoverCardContent>
       </HoverCard>
+      </div>
+      <ModeToggle></ModeToggle>
+      
     </>
   )
 }

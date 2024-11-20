@@ -4,31 +4,83 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useState } from 'react';
 
 export default function FadeInContent() {
-  
 
+  const items = [
+
+    { id: 1,
+      src: "https://g.fp.ps.netease.com/market/file/5cbfc569a7f25262e5e1dbd0p2AlOda702",
+      mainTitle: 'Armandas Latanauskas',
+      description: 'Innovation starts with a single line of code.'
+    },
+    { id: 2,
+      src: "https://g.fp.ps.netease.com/market/file/5cbfc569a7f25262e5e1dbd0p2AlOda702",
+      mainTitle: 'Armandas Latanauskas',
+      description: 'Innovation starts with a single line of code.'
+    },
+    { id: 3,
+      src: "https://g.fp.ps.netease.com/market/file/5cbfc569a7f25262e5e1dbd0p2AlOda702",
+      mainTitle: 'Armandas Latanauskas',
+      description: 'Innovation starts with a single line of code.'
+    },
+    { id: 4,
+      src: "https://g.fp.ps.netease.com/market/file/5cbfc569a7f25262e5e1dbd0p2AlOda702",
+      mainTitle: 'Armandas Latanauskas',
+      description: 'Innovation starts with a single line of code.'
+    },
+  ];
+
+ 
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const squareIndicators = items.map((id, index) => (
+    <div
+      key={index}
+      onClick={() => setCurrentIndex(index)}
+      className={`h-[6px] w-6 bg-gray-400 shape ${
+        currentIndex === index ? "bg-slate-200" : "bg-gray-500"
+      }`}
+    ></div>
+  ))
+
+  // Function to go to the previous slide
+  const prevSlide = () => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? items.length - 1 : prev - 1
+    );
+  };
+
+  // Function to go to the next slide
+  const nextSlide = () => {
+    setCurrentIndex((prev) =>
+      prev === items.length - 1 ? 0 : prev + 1
+    );
+  };
   return (
     <>
       <motion.div className='overflow-hidden absolute right-[60%] mt-36'
-        // initial={{ opacity: 0, scale: 0.95 }}
-        // animate={{ opacity: 1, scale: 1 }}
-        // transition={{ duration: 0.8, ease: 'easeOut' }}
-        initial={{ opacity: 0, scale: 0.95, x: -100 }}  // Starts from the left (-100px on x-axis)
-        animate={{ opacity: 1, scale: 1, x: 0 }}  // Ends in normal position
+    
+        initial={{ opacity: 0, scale: 0.95, x: -100 }}  
+        animate={{ opacity: 1, scale: 1, x: 0 }}  
         transition={{ duration: 0.8, ease: 'easeOut' }}
 
       >
 
         <h1 className='text-lg font-bold text-slate-200 md:text-4xl'>
-          Armandas Latanauskas
+        {items[0].mainTitle}
+        {/* Placeholder */}
         </h1>
         <p className='md:text-2xl text-lg font-serif font-light text-slate-400 mt-6'>
-        "Innovation starts with a single line of code."
+        {items[0].description}
         </p>
-        <div className='relative w-full h-20 mt-32 flex justify-evenly items-center'>
-        <ChevronLeft size={40}></ChevronLeft>
+        <div className='relative w-full h-20 mt-32 flex justify-center items-center'>
+        <ChevronLeft size={40} onClick={prevSlide} className='text-white [cursor: pointer]'></ChevronLeft>
         {/* Indicators */}
-        ________
-        <ChevronRight size={40}></ChevronRight>
+        <div className='gap-x-2 flex mr-auto ml-auto'>
+          {squareIndicators}
+          
+        </div>
+        <ChevronRight className='text-white' onClick={nextSlide} size={40}></ChevronRight>
         </div>
       </motion.div>
 
@@ -53,7 +105,7 @@ export default function FadeInContent() {
                 transition-transform duration-500 
                 hover:translate-x-[-75px]'
                 
-                src="https://market.fp.ps.netease.com/file/6704da94f083126d846b2729h175EmYB05"></img>
+                src={items[0].src}></img>
       </motion.div>
     </>
   )

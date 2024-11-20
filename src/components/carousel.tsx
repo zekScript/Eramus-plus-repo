@@ -5,11 +5,14 @@ import { motion } from "framer-motion";
 export default function CustomCarousel() {
 
   const items = [
-    { image: "https://via.placeholder.com/300x200" },
+    { image: "https://via.placeholder.com/300x200"
+      
+     },
     { image: "https://via.placeholder.com/300x200" },
     { image: "https://via.placeholder.com/300x200" },
     { image: "https://via.placeholder.com/300x200" },
   ];
+
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dragging, setDragging] = useState(false);
