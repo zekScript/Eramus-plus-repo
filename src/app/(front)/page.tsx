@@ -14,23 +14,25 @@ export default function Page() {
       <section>
         <Video></Video>
       </section>
-      <section className='ml-12 mt-16'>
-        <div className='flex w-full justify-center'>
-          <div className='flex w-full justify-center pl-24 pr-24' ref={ref}>
+      <section className='ml-12 mt-16 md:ml-0 md:mt-5'>
+        <div>
+          <div
+            className='mb-9 h-full w-full pl-0 pr-0 md:pl-24 md:pr-24'
+            ref={ref}
+          >
             {isInView ? <A4Animation /> : <p>Loading Text...</p>}
           </div>
         </div>
       </section>
-      <section className='mb-4 ml-12 mt-14'>
+      <section className='ml-0 mt-5 lg:ml-12 lg:mt-14'>
         <h1 className='mb-4 text-4xl font-bold'>Media</h1>
         <div className='flex w-56 justify-center bg-gray-500 [height:_0.4px]'></div>
         {/* Container for blog post */}
 
-        <div className='m-auto grid h-full w-full grid-cols-1 gap-y-20 p-9 lg:grid-cols-3'>
+        <div className='grid h-full w-full grid-cols-1 gap-y-20 overflow-hidden p-9 lg:grid-cols-3'>
           <BlogCard blogItems={blogPostSources.blogItems} />
         </div>
       </section>
-      <section className='mt-12 w-full'>{/* <Carousel></Carousel> */}</section>
       <section className='ml-12 mt-12'></section>
     </>
   )

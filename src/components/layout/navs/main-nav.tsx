@@ -34,7 +34,6 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
           )
         })}
       </div>
-      {/* <ModeToggle></ModeToggle> */}
       <div className='hidden w-full justify-end lg:flex'>
         <ThemeToggle></ThemeToggle>
       </div>

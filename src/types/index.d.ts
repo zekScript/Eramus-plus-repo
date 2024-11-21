@@ -21,7 +21,18 @@ export type SiteConfig = {
 export type BlogSources = {
   blogItems: BlogSourcesItem[]
 }
+// Carousel items
+export type CarouselSources = {
+  carouselItems: CarouselSourcesItem[]
+}
 
+export type CarouselSourcesItem = {
+  id: number
+  src: string
+  mainTitle: string
+  description: string
+}
+// Blog items
 export type BlogSourcesItem = {
   id: number
   src: string

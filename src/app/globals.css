@@ -95,3 +95,7 @@
 .big-ratio {
   aspect-ratio: 2048 / 1536;
 }
+
+.text-ratio {
+  aspect-ratio: 64 / 27;
+}
