@@ -5,16 +5,11 @@ import { useState } from 'react'
 import { CarouselSourcesItem } from '@/types'
 
 interface CarouselProps {
-    carouselItems: CarouselSourcesItem[];
+  carouselItems: CarouselSourcesItem[]
 }
 
 const FadeInContent: React.FC<CarouselProps> = ({ carouselItems }) => {
-
-  
-
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [_, setDragging] = useState(false)
-
 
   const currentItem = carouselItems[currentIndex]
 
@@ -28,14 +23,16 @@ const FadeInContent: React.FC<CarouselProps> = ({ carouselItems }) => {
     />
   ))
 
-  // Function to go to the previous slide
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev === 0 ? carouselItems.length - 1 : prev - 1))
+    setCurrentIndex((prev) =>
+      prev === 0 ? carouselItems.length - 1 : prev - 1
+    )
   }
 
-  // Function to go to the next slide
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev === carouselItems.length - 1 ? 0 : prev + 1))
+    setCurrentIndex((prev) =>
+      prev === carouselItems.length - 1 ? 0 : prev + 1
+    )
   }
   return (
     <>
@@ -44,19 +41,16 @@ const FadeInContent: React.FC<CarouselProps> = ({ carouselItems }) => {
         initial={{ opacity: 0, scale: 0.95, x: -100 }}
         animate={{ opacity: 1, scale: 1, x: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        drag='x' 
-        dragConstraints={{ left: 0, right: 0 }} 
-        onDragStart={() => setDragging(true)} 
+        drag='x'
+        dragConstraints={{ left: 0, right: 0 }}
         onDragEnd={(e, info) => {
           if (info.offset.x < -100) {
             nextSlide()
           } else if (info.offset.x > 100) {
             prevSlide()
           }
-          setDragging(false) // Reset dragging state
         }}
       >
-      <div className=''>
         <div className='h-full w-full'>
           <h1 className='text-lg font-bold text-slate-200 md:text-4xl'>
             {currentItem.mainTitle}
@@ -70,19 +64,18 @@ const FadeInContent: React.FC<CarouselProps> = ({ carouselItems }) => {
           <ChevronLeft
             size={40}
             onClick={prevSlide}
-            className='hidden md:flex cursor-pointer text-slate-200 transition-transform duration-1000 hover:scale-150 hover:text-slate-100'
+            className='hidden cursor-pointer text-slate-200 transition-transform duration-1000 hover:scale-150 hover:text-slate-100 md:flex'
           ></ChevronLeft>
           {/* Indicators */}
-          <div className=' ml-8 mr-8 flex h-full items-end gap-x-2 transition-transform duration-1000 hover:scale-125'>
+          <div className='ml-8 mr-8 flex h-full items-end gap-x-2 transition-transform duration-1000 hover:scale-125'>
             {squareIndicators}
           </div>
           <ChevronRight
-            className=' hidden md:flex  cursor-pointer text-slate-200 transition-transform duration-1000 hover:scale-150 hover:text-slate-100'
+            className='hidden cursor-pointer text-slate-200 transition-transform duration-1000 hover:scale-150 hover:text-slate-100 md:flex'
             onClick={nextSlide}
             size={40}
           ></ChevronRight>
         </div>
-      </div>
       </motion.div>
 
       <motion.div
@@ -101,7 +94,7 @@ const FadeInContent: React.FC<CarouselProps> = ({ carouselItems }) => {
           delay: 0.3,
         }}
       >
-        <motion.div key={currentItem.src} >
+        <motion.div key={currentItem.src}>
           <img
             className='object-cover transition-transform duration-500 hover:translate-x-[-75px]'
             src={currentItem.src}

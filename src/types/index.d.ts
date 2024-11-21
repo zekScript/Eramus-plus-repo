@@ -23,7 +23,7 @@ export type BlogSources = {
 }
 // Carousel items
 export type CarouselSources = {
-  carouselItems: CarouselSourcesItem[];
+  carouselItems: CarouselSourcesItem[]
 }
 
 export type CarouselSourcesItem = {

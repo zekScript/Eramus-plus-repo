@@ -48,7 +48,7 @@ export const blogPostSources: BlogSources = {
 }
 
 export const carouselItems: CarouselSources = {
-   carouselItems: [
+  carouselItems: [
     {
       id: 1,
       src: 'https://g.fp.ps.netease.com/market/file/5cbfc569a7f25262e5e1dbd0p2AlOda702',
@@ -75,9 +75,10 @@ export const carouselItems: CarouselSources = {
       id: 4,
       src: 'https://g.fp.ps.netease.com/market/file/6247f63543d792abefab0c1cQMtLcCks04',
       mainTitle: 'Tech-Stack',
-      description:'I specialize in making websites with: Next.js, Tailwind, Shadcn, React',
+      description:
+        'I specialize in making websites with: Next.js, Tailwind, Shadcn, React',
     },
-  ]
+  ],
 }
 
 export const topNav: Navigation = {
