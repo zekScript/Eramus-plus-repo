@@ -1,4 +1,4 @@
-import { Navigation, SiteConfig, BlogSources } from '@/types'
+import { Navigation, SiteConfig, BlogSources, CarouselSources } from '@/types'
 
 export const siteConfig: SiteConfig = {
   name: '[rounded]',
@@ -19,6 +19,7 @@ export const siteConfig: SiteConfig = {
     },
   },
 }
+
 // Make a blog post card here
 // badge: "info", "important", "announcement"
 // Currently it mimics like a Database
@@ -36,35 +37,47 @@ export const blogPostSources: BlogSources = {
     },
     {
       id: 2,
-      src: 'https://www.lokalec.si/wp-content/uploads/2024/09/453217698_1046313393734868_4956412633326257407_n.jpg',
-      badge: 'info',
-      title: 'Today a storm happened in Ljubljana',
-      date: 'March 16, 2024',
+      src: 'https://www.timeforkids.com/wp-content/uploads/2018/08/Storms-Images.jpg',
+      badge: 'important',
+      title: 'today a storm happened in maribor',
+      date: 'December 12, 2023',
       route: '/today-a-storm-happened-in-maribor',
+      description: '',
+    },
+  ],
+}
+
+export const carouselItems: CarouselSources = {
+   carouselItems: [
+    {
+      id: 1,
+      src: 'https://g.fp.ps.netease.com/market/file/5cbfc569a7f25262e5e1dbd0p2AlOda702',
+      mainTitle: 'Armandas Latanauskas',
       description:
-        'Maribor recently experienced severe storms characterized by heavy rainfall, hail, and strong winds. These conditions caused significant damage, including the destruction of parts of the roof at Edvard Rusjan Airport. The hail, measuring 5-7 cm, damaged the terminal, flooded areas, and affected insulation and electronic equipment, leading to estimates of millions of euros in damage. The airport remains temporarily closed for repairs but is expected to resume operations soon',
+        '"Building the web, one line of code at a time, with passion and skill."',
+    },
+
+    {
+      id: 2,
+      src: 'https://market.fp.ps.netease.com/file/6704da94f083126d846b2729h175EmYB05',
+      mainTitle: 'Front-end development',
+      description:
+        'I make simple front-end design to make user never get lost in the website',
     },
     {
       id: 3,
-      src: 'https://www.lokalec.si/wp-content/uploads/2024/09/453217698_1046313393734868_4956412633326257407_n.jpg',
-      badge: 'info',
-      title: 'Today a storm happened in Ljubljana',
-      date: 'March 16, 2024',
-      route: '/today-a-storm-happened-in-maribor',
+      src: 'https://market.fp.ps.netease.com/file/65c2f968429118a2c170c123ktIbqFKp05',
+      mainTitle: 'Back-end development',
       description:
-        'Maribor recently experienced severe storms characterized by heavy rainfall, hail, and strong winds. These conditions caused significant damage, including the destruction of parts of the roof at Edvard Rusjan Airport. The hail, measuring 5-7 cm, damaged the terminal, flooded areas, and affected insulation and electronic equipment, leading to estimates of millions of euros in damage. The airport remains temporarily closed for repairs but is expected to resume operations soon',
+        "I'm new of being in the back-end But I'm always keen to improve, my back-end skills",
     },
     {
       id: 4,
-      src: 'https://www.lokalec.si/wp-content/uploads/2024/09/453217698_1046313393734868_4956412633326257407_n.jpg',
-      badge: 'info',
-      title: 'Today a storm happened in Ljubljana',
-      date: 'March 16, 2024',
-      route: '/today-a-storm-happened-in-maribor',
-      description:
-        'Maribor recently experienced severe storms characterized by heavy rainfall, hail, and strong winds. These conditions caused significant damage, including the destruction of parts of the roof at Edvard Rusjan Airport. The hail, measuring 5-7 cm, damaged the terminal, flooded areas, and affected insulation and electronic equipment, leading to estimates of millions of euros in damage. The airport remains temporarily closed for repairs but is expected to resume operations soon',
+      src: 'https://g.fp.ps.netease.com/market/file/6247f63543d792abefab0c1cQMtLcCks04',
+      mainTitle: 'Tech-Stack',
+      description:'I specialize in making websites with: Next.js, Tailwind, Shadcn, React',
     },
-  ],
+  ]
 }
 
 export const topNav: Navigation = {

@@ -36,7 +36,7 @@ const itemVariants = {
 
 export default function A4Animation() {
   return (
-    <motion.div className='flex h-[300px] w-full select-none'>
+    <motion.div className='md: flex h-full select-none'>
       <motion.div
         variants={containerVariants}
         animate='visible'
@@ -51,7 +51,10 @@ export default function A4Animation() {
           variants={itemVariants}
           className='flex items-center justify-center'
         ></motion.div>
-        <motion.span variants={itemVariants} className='inline w-full text-lg'>
+        <motion.span
+          variants={itemVariants}
+          className='inline w-[70%] text-sm md:w-full md:text-lg'
+        >
           <AnimText delay={1} />
         </motion.span>
       </motion.div>

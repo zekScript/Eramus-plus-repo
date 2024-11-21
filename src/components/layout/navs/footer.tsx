@@ -5,10 +5,7 @@ import { Icons } from '@/components/icons'
 import Link from 'next/link'
 import { Separator } from '@/components/ui/separator'
 import { P, PMuted } from '@/components/typography'
-import { Github } from 'lucide-react'
-import { Linkedin } from 'lucide-react'
-import { Instagram } from 'lucide-react'
-import { Twitter } from 'lucide-react'
+import { Twitter, Instagram, Linkedin, Github } from 'lucide-react'
 
 type Props = {
   className?: string
@@ -37,7 +34,7 @@ const Footer: React.FC<Props> = ({ className }) => {
           with <a href='https://vercel.com/'>Varcel</a>
         </p>
         {/* Socials here */}
-        <div className='mt-7 flex w-[35%] flex-col items-start gap-x-4 md:mt-4 md:flex-row md:items-center'>
+        <div className='mt-7 flex w-[35%] flex-row items-start gap-x-4 md:mt-4 md:items-center lg:flex-row'>
           <Link href='https://github.com/zekScript'>
             <Github />
           </Link>

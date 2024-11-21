@@ -3,7 +3,7 @@
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 // import { Badge } from '@/components/ui/badge'
 import { BlogSourcesItem } from '@/types'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 interface BlogProps {
   blogItems: BlogSourcesItem[]
@@ -11,10 +11,9 @@ interface BlogProps {
 
 const BlogCard: React.FC<BlogProps> = ({ blogItems }) => {
   const router = useRouter()
-  const currentPath = usePathname()
 
   const handleRouting = (route: string) => {
-    const newPath = currentPath + '/blog' + route
+    const newPath = '/content/media' + '/blog' + route
     router.push(newPath)
   }
 
