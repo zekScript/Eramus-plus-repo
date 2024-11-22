@@ -3,7 +3,7 @@ import { carouselItems } from '@/config/site'
 
 // import TextLayout from '@/components/anims/TextLayout'
 
-export default function Video() {
+const Video:React.FC = () => {
   return (
     <div className='min-h-[100vh] w-full overflow-hidden bg-black'>
       <div className='absolute z-30 flex h-full w-full items-center justify-center overflow-hidden'>
@@ -27,3 +27,5 @@ export default function Video() {
     </div>
   )
 }
+
+export default Video;
