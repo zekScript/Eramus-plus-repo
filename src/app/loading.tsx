@@ -1,4 +1,4 @@
-const Loading:React.FC = () => {
+const Loading: React.FC = () => {
   return (
     <>
       <div className='absolute bottom-0 left-0 right-0 top-0 z-[111111111]'>
@@ -10,4 +10,4 @@ const Loading:React.FC = () => {
   )
 }
 
-export default Loading;
+export default Loading

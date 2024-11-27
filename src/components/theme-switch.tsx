@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { Switch } from '@/components/ui/switch'
 
-const ThemeToggle:React.FC = () => {
+const ThemeToggle: React.FC = () => {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
@@ -24,4 +24,4 @@ const ThemeToggle:React.FC = () => {
     </div>
   )
 }
-export default ThemeToggle;
+export default ThemeToggle
