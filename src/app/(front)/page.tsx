@@ -6,7 +6,7 @@ import { useRef } from 'react'
 import BlogCard from '@/components/blogCard'
 import { blogPostSources } from '@/config/site'
 
-export default function Page() {
+const Page: React.FC = () => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
   return (
@@ -37,3 +37,5 @@ export default function Page() {
     </>
   )
 }
+
+export default Page
