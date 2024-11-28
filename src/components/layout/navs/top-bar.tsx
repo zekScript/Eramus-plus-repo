@@ -30,7 +30,7 @@ export function TopBar() {
   // TODO set color of topbar to same as background light and dark so that tranparency works ( example: bg-[#FFFF] )
   return (
     // fixed: position
-    <div className=' left-0 top-0 z-50 w-full bg-[#FAFAFA] bg-opacity-60 backdrop-blur-sm dark:bg-[#0e0e0e] dark:bg-opacity-50'>
+    <div className='left-0 top-0 z-50 w-full bg-[#FAFAFA] bg-opacity-60 backdrop-blur-sm dark:bg-[#0e0e0e] dark:bg-opacity-50'>
       <div
         className={cn(
           'shadow-transition border-border duration-300',

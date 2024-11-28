@@ -1,7 +1,7 @@
 'use client'
 import { createUser } from '../../actions/actions'
 import Image from 'next/image'
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 
