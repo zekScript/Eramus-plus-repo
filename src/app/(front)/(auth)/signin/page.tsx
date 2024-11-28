@@ -1,7 +1,7 @@
 'use client'
 import { createUser } from '../../actions/actions'
 import Image from 'next/image'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -67,7 +67,7 @@ export default function AuthPage() {
             </div>
           )}
           <Link className='mt-5' href='/login'>
-            Have an account already?
+            Have an account already? Log in
           </Link>
         </div>
 

@@ -11,6 +11,9 @@
     "format:fix": "prettier --write --ignore-path .gitignore .",
     "postinstall": "prisma generate"
   },
+  "prisma": {
+  "seed": "ts-node prisma/seed.ts"
+  },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",

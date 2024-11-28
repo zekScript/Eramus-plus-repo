@@ -2,7 +2,7 @@
 
 import prisma from '@/lib/db'
 import bcrypt from 'bcrypt'
-
+// USER CRUD
 export async function createUser(formData: FormData) {
   const saltRounds = 10
   const name = formData.get('name') as string
@@ -13,6 +13,15 @@ export async function createUser(formData: FormData) {
   if (!name || !email || !password) {
     return { success: false, message: 'All fields are required.' }
   }
+   // Check if the user already exists
+   const existingUser = await prisma.user.findUnique({ where: { email } });
+
+   if (existingUser) {
+     return {
+       success: false,
+       message: 'An account with this email already exists. Please log in.',
+     };
+   }
 
   try {
     await prisma.user.create({
@@ -28,27 +37,61 @@ export async function createUser(formData: FormData) {
   }
 }
 
-// export async function logUser(formData: FormData) {
-//   const email = formData.get('email') as string
-//   const password = formData.get('password') as string
 
-//   if (!email || !password) {
-//     return { success: false, message: 'All fields are required.' }
-//   }
 
-//   try {
-//     await prisma.user.findUnique({
-//       where: {
-//         email,
-//         password,
-//       },
-//     })
-//     return { success: true, message: 'User created successfully.' }
-//   } catch (error) {
-//     return {
-//       success: false,
-//       message:
-//         'Error logging in (try to double check if email and password is correct)',
-//     }
-//   }
-// }
+
+export async function updateUser(formData: FormData, id: string){
+  const saltRounds = 10
+  const name = formData.get('name') as string
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+  const hashedPassword = await bcrypt.hash(password, saltRounds)
+
+  await prisma.user.update({
+    where:{
+      id
+    },
+    data:{
+      name,
+      email,
+      password: hashedPassword,
+    }
+  })
+}
+
+export async function deleteUser(id: string){
+await prisma.user.delete({
+  where:{
+    id
+  }
+})
+}
+
+export async function loginUser(formData: FormData) {
+  const email = formData.get('email')?.toString();
+  const password = formData.get('password')?.toString();
+
+  if (!email || !password) {
+    return { success: false, message: 'Please provide both email and password.' };
+  }
+
+  // Find the user in the database
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) {
+    return { success: false, message: 'Invalid email or password.' };
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordValid) {
+    return { success: false, message: 'Incorrect password. Please try again.' };
+  }
+
+  // Compare passwords
+  const isPasswordValidAndMail = await bcrypt.compare(password, user.password);
+  if (!isPasswordValidAndMail) {
+    return { success: false, message: 'Invalid email or password.' };
+  }
+
+  return { success: true, message: 'Login successful!' };
+}
