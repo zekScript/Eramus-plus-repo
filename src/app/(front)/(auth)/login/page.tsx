@@ -1,6 +1,6 @@
 'use client';
 
-import { loginUser } from '../../actions/actions'; // Define this action in your app
+import { loginUser } from '../../actions/actions'; 
 import Image from 'next/image';
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';

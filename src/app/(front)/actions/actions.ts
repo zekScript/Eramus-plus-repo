@@ -1,5 +1,4 @@
 'use server'
-
 import prisma from '@/lib/db'
 import bcrypt from 'bcrypt'
 // USER CRUD
@@ -95,3 +94,13 @@ export async function loginUser(formData: FormData) {
 
   return { success: true, message: 'Login successful!' };
 }
+
+export async function getCurrentUser() {
+  try {
+    const user = await prisma.user.findMany({ where: { role: "ADMIN" } })
+    return user // This will return the first user found with the ADMIN role
+  } catch (error) {
+    console.error('Error fetching user:', error)
+  }
+}
+
