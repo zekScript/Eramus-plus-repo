@@ -14,7 +14,7 @@ const cal = localFont({
 
 export const metadata: Metadata = {
   title: 'My Armandas Portfolio',
-  description: 'rSQ template',
+  description: 'Supported By RoundedSQ',
 }
 
 export default function RootLayout({
@@ -25,8 +25,9 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
+        // mt-20
         className={cn(
-          'mt-20 min-h-screen bg-background font-sans antialiased',
+          'min-h-screen bg-background font-sans antialiased',
           inter.variable,
           cal.variable
         )}
