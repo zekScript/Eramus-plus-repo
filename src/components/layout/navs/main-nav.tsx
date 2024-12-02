@@ -66,8 +66,6 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
           )
         })}
       </div>
-      
-      
     </>
   )
 }
