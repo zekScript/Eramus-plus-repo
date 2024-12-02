@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { getCurrentUser } from '../actions/actions'
+import { getCurrentUser } from '../../../server/user'
+import Loader from '@/components/anims/Loader'
 export default function AdminPage() {
   const [isAdmin, setIsAdmin] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -26,7 +27,7 @@ export default function AdminPage() {
   }, [router])
 
   if (loading) {
-    return <p>Loading the Admin page...</p>
+    return <Loader></Loader>
   }
 
   if (!isAdmin) {

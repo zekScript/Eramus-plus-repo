@@ -1,5 +1,5 @@
 'use client'
-import { createUser } from '../../actions/actions'
+import { createUser } from '../../../../server/user'
 import Image from 'next/image'
 import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
