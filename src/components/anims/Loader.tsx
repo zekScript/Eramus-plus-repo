@@ -9,8 +9,8 @@ const Loader: React.FC = () => {
         aspectRatio: '1',
         borderRadius: '50%',
         background: `
-          radial-gradient(farthest-side, #ffa516 94%, transparent) top/8px 8px no-repeat,
-          conic-gradient(transparent 30%, #ffa516)
+          radial-gradient(farthest-side, #9b59b6 94%, transparent) top/8px 8px no-repeat,
+          conic-gradient(transparent 30%, #9b59b6)
         `,
         WebkitMask:
           'radial-gradient(farthest-side, transparent calc(100% - 8px), black 0)',

@@ -1,6 +1,7 @@
 import FadeInContent from './anims/FadeInContent'
 import { carouselItems } from '@/config/site'
 
+
 // import TextLayout from '@/components/anims/TextLayout'
 
 const Video: React.FC = () => {
@@ -19,6 +20,7 @@ const Video: React.FC = () => {
           autoPlay
           muted
           loop
+          preload='auto'
         >
           <source src='backgroundVideoP2.mp4' />
         </video>
