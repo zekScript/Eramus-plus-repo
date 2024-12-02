@@ -66,9 +66,8 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
           )
         })}
       </div>
-      <div className='hidden w-full justify-end lg:flex'>
-        <ThemeToggle></ThemeToggle>
-      </div>
+      
+      
     </>
   )
 }

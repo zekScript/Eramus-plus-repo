@@ -9,6 +9,7 @@ import { topNav } from '@/config/site'
 import MainNav from './main-nav'
 import MobileNav from './mobile-nav'
 import { useEffect, useState } from 'react'
+import ThemeToggle from '@/components/theme-switch'
 
 export function TopBar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -37,26 +38,48 @@ export function TopBar() {
           isScrolled ? 'shadow-lg' : ''
         )}
       >
+        
         <div
           className={cn(
             'py-transition container flex w-full duration-300',
             isScrolled ? 'py-1' : 'py-2'
           )}
         >
-          <div className='flex items-center justify-center gap-x-4 text-sm'>
+          <div className='w-full flex justify-start'>
             {/* LOGO */}
-            <Link href='/'>
-              <Icons.logo className='mr-3 w-40 cursor-pointer fill-primary pb-1' />
+          <Link href='/'>
+              <Icons.logo className=' w-40 cursor-pointer fill-primary pb-1' />
             </Link>
+            </div>
+
+          <div className='flex items-center justify-center gap-x-4 text-sm'>
+            <div className='w-full flex justify-end'>
+              {/* Main nav here */}
+            <MainNav items={topNav.items} />
+            </div>
             <div className='flex flex-row-reverse gap-x-4 lg:flex-row'>
-              {/* MAIN NAV */}
-              <MainNav items={topNav.items} />
               {/* MOBILE NAV */}
               <MobileNav items={topNav.items} />
             </div>
+            {/* MAIN NAV */}
+            
           </div>
+          <div className='w-full lg:flex mt-3 hidden justify-end gap-x-4 mb-4 '>
+      <Link href='/signin'>Sign in</Link>
+      <Link href='/login'>Log in</Link>
+      </div>
+        </div>
+        
+      </div>
+      <div className='flex justify-end w-full h-full '>
+      <div className='hidden w-full lg:flex justify-end mr-8 border-t-2 border-indigo-500 ml-8'>
+        <div className='mt-5'>
+        <ThemeToggle></ThemeToggle>
         </div>
       </div>
+      </div>
+      
     </div>
+    
   )
 }
