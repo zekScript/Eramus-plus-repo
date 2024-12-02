@@ -1,6 +1,6 @@
 'use client'
 
-import { loginUser } from '../../actions/actions'
+import { loginUser } from '../../../../server/user'
 import Image from 'next/image'
 import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'

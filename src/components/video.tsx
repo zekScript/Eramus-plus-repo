@@ -19,7 +19,6 @@ const Video: React.FC = () => {
           autoPlay
           muted
           loop
-          preload='auto'
         >
           <source src='backgroundVideoP2.mp4' />
         </video>

@@ -1,9 +1,15 @@
-'use server'
+"use server"
 import prisma from '@/lib/db'
 import bcrypt from 'bcrypt'
 // USER CRUD
-export async function createUser(formData: FormData) {
+type User = {
+  name: string
+  email: string
+  password: string
+}
+export async function createUser(formData: FormData, user: User) {
   const saltRounds = 10
+
   const name = formData.get('name') as string
   const email = formData.get('email') as string
   const password = formData.get('password') as string
