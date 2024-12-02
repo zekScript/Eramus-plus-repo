@@ -12,9 +12,7 @@ const Switch = React.forwardRef<
   return (
     <SwitchPrimitives.Root
       className={cn(
-        `peer inline-flex h-8 w-16 shrink-0 cursor-pointer items-center rounded-full border-2 shadow-sm transition-colors
-        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-        disabled:cursor-not-allowed disabled:opacity-50`,
+        `peer inline-flex h-8 w-16 shrink-0 cursor-pointer items-center rounded-full border-2 shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`,
         className
       )}
       style={{
@@ -24,7 +22,7 @@ const Switch = React.forwardRef<
       ref={ref}
     >
       <motion.div
-        className="pointer-events-none flex items-center justify-center h-6 w-6 rounded-full bg-background shadow-lg ring-0"
+        className='pointer-events-none flex h-6 w-6 items-center justify-center rounded-full bg-background shadow-lg ring-0'
         initial={false} // Prevent Framer Motion from applying an initial state mismatch
         animate={{ x: checked ? 32 : 0 }} // Smoothly transition based on `checked`
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}

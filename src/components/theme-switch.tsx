@@ -17,15 +17,15 @@ const ThemeToggle: React.FC = () => {
   if (!mounted) return null
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className='flex items-center space-x-2'>
       <Switch
         checked={theme === 'dark'}
         onCheckedChange={(isChecked) => setTheme(isChecked ? 'dark' : 'light')}
       >
         {theme === 'dark' ? (
-          <Moon className="h-4 w-4 text-slate-300" />
+          <Moon className='h-4 w-4 text-slate-300' />
         ) : (
-          <Sun className="h-4 w-4 text-yellow-400" />
+          <Sun className='h-4 w-4 text-yellow-400' />
         )}
       </Switch>
     </div>

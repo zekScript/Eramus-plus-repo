@@ -68,8 +68,8 @@ export function TopBar() {
           </div>
         </div>
       </div>
-      <div className='flex h-full w-full justify-end '>
-        <div className='ml-8 mr-8 hidden w-full mb-4 justify-end border-t-2 border-indigo-500 lg:flex'>
+      <div className='flex h-full w-full justify-end'>
+        <div className='mb-4 ml-8 mr-8 hidden w-full justify-end border-t-2 border-indigo-500 lg:flex'>
           <div className='mt-5'>
             <ThemeToggle></ThemeToggle>
           </div>

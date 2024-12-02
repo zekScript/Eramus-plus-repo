@@ -1,7 +1,6 @@
 import FadeInContent from './anims/FadeInContent'
 import { carouselItems } from '@/config/site'
 
-
 // import TextLayout from '@/components/anims/TextLayout'
 
 const Video: React.FC = () => {

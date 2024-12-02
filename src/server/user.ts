@@ -17,7 +17,8 @@ export async function createUser(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
-  if (!name || !email || !password) return { success: false, message: 'All fields are required.' }
+  if (!name || !email || !password)
+    return { success: false, message: 'All fields are required.' }
 
   const existingUser = await findUserByEmail(email)
   if (existingUser) return { success: false, message: 'Email already in use.' }
@@ -63,7 +64,8 @@ export async function loginUser(formData: FormData) {
   const email = formData.get('email')?.toString()
   const password = formData.get('password')?.toString()
 
-  if (!email || !password) return { success: false, message: 'Email and password required.' }
+  if (!email || !password)
+    return { success: false, message: 'Email and password required.' }
 
   const user = await findUserByEmail(email)
   if (!user) return { success: false, message: 'Invalid email or password.' }
