@@ -8,6 +8,9 @@ import Link from 'next/link'
 
 export default function LoginPage() {
   const [feedback, setFeedback] = useState({ success: false, message: '' })
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
 
   const handleSubmit = async (formData: FormData) => {
     const result = await loginUser(formData)
@@ -37,12 +40,16 @@ export default function LoginPage() {
               type='email'
               placeholder='example@mail.com'
               name='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className='mb-4 w-full rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
             <input
               type='password'
               placeholder='Password'
               name='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className='mb-4 w-full rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
             <button

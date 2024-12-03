@@ -7,7 +7,6 @@ const Video: React.FC = () => {
   return (
     <div className='relative min-h-[100vh] w-full overflow-hidden bg-black'>
       {' '}
-      {/* Apply relative positioning */}
       <div className='absolute z-30 flex h-full w-full items-center justify-center overflow-hidden'>
         <FadeInContent carouselItems={carouselItems.carouselItems} />
       </div>

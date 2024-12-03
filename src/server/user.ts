@@ -17,9 +17,17 @@ export async function createUser(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
+  const isLengthValid = password.length >= 8
+  const isUppercaseValid = /[A-Z]/.test(password)
+  const isNumberValid = /\d/.test(password)
+  const isSpecialCharValid = /[!@#$%^&*(),.?":{}|<>]/.test(password)
+
   if (!name || !email || !password)
     return { success: false, message: 'All fields are required.' }
-
+  
+  if (!(isLengthValid && isUppercaseValid && isNumberValid && isSpecialCharValid)) {
+    return { success: false, message: 'Password does not meet security requirements.' }
+  }
   const existingUser = await findUserByEmail(email)
   if (existingUser) return { success: false, message: 'Email already in use.' }
 
