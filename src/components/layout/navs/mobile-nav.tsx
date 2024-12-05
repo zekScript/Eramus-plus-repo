@@ -8,6 +8,20 @@ import Link from 'next/link'
 import { Icons } from '@/components/icons'
 import { usePathname } from 'next/navigation'
 import ThemeToggle from '@/components/theme-switch'
+import Cookies from 'js-cookie'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Headset, LogOut, Plus, Settings, User } from 'lucide-react'
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { useRouter } from 'next/navigation'
 
 interface NavProps {
   items?: NavItem[]
@@ -15,11 +29,14 @@ interface NavProps {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const MobileNav: React.FC<NavProps> = ({ items }) => {
-  // const itemsList = items?.map((item) => (
-  //   <Link key={item.title} href={item.href}>
-  //     {item.title}
-  //   </Link>
-  // ))
+  const router = useRouter()
+  const logout = () => {
+    Cookies.remove('authToken')
+    window.location.reload()
+    router.push('/')
+  }
+
+  const isLoggedIn = Cookies.get('authToken') ? true : false
   const pathname = usePathname() || '/'
 
   return (
@@ -53,6 +70,54 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
           <div className='mt-4'>
             <ThemeToggle></ThemeToggle>
           </div>
+          {!isLoggedIn ? (
+            <div className='mt-12 gap-x-8'>
+              <Link href='/signin'>Sign in</Link>
+              <Link href='/login'>Log in</Link>
+            </div>
+          ) : (
+            <div className='mt-12 gap-x-4'>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className='cursor-pointer'>
+                    <AvatarImage
+                      src='https://i.pinimg.com/564x/9f/e2/43/9fe24317d8363d84b3eb3b93b9c756ae.jpg'
+                      alt='Profile avatar'
+                    />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className='w-56'>
+                  <DropdownMenuLabel>Admin</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                      <User />
+                      <span>Profile</span>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem>
+                      <Settings />
+                      <span>Settings</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Plus />
+                      <span>Create</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <Headset />
+                    <span>Support</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={logout}>
+                    <LogOut />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          )}
         </SheetContent>
       </Sheet>
     </div>

@@ -11,7 +11,7 @@ export default function AdminPage() {
   useEffect(() => {
     const checkAdmin = async () => {
       try {
-        const user = await getCurrentUser()
+        const user = await getCurrentUser() //token
         if (user && user.role === 'ADMIN') {
           setIsAdmin(true)
         } else {

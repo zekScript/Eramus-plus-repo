@@ -1,10 +1,12 @@
-"use server"
+'use server'
 import prisma from '@/lib/db'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 // Helper function for password hashing
 const hashPassword = (password: string) => bcrypt.hash(password, 10)
+
+const findUserById = (id: string) => prisma.user.findUnique({ where: { id } })
 
 // Check if user exists by email
 const findUserByEmail = (email: string) =>
@@ -24,9 +26,14 @@ export async function createUser(formData: FormData) {
 
   if (!name || !email || !password)
     return { success: false, message: 'All fields are required.' }
-  
-  if (!(isLengthValid && isUppercaseValid && isNumberValid && isSpecialCharValid)) {
-    return { success: false, message: 'Password does not meet security requirements.' }
+
+  if (
+    !(isLengthValid && isUppercaseValid && isNumberValid && isSpecialCharValid)
+  ) {
+    return {
+      success: false,
+      message: 'Password does not meet security requirements.',
+    }
   }
   const existingUser = await findUserByEmail(email)
   if (existingUser) return { success: false, message: 'Email already in use.' }
@@ -77,32 +84,64 @@ export async function loginUser(formData: FormData) {
     return { success: false, message: 'Email and password required.' }
 
   if (!secretToken) {
-    throw new Error("SESSION_SECRET is not defined in the environment variables.");
+    throw new Error(
+      'SESSION_SECRET is not defined in the environment variables.'
+    )
   }
 
   const user = await findUserByEmail(email)
   if (!user) return { success: false, message: 'Invalid email or password.' }
-    
+
   const isValid = await bcrypt.compare(password, user.password)
-  const tokenPayload = { id: user.id, email: user.email, role: user.role };
-  const token = jwt.sign(tokenPayload, secretToken);
+  const tokenPayload = {
+    id: user.id,
+    email: user.email,
+    role: user.role,
+    name: user.name,
+  }
+
+  const token = jwt.sign(tokenPayload, secretToken)
+
   return isValid
-  
-    ? { success: true, message: 'Login successful!', token}
+    ? {
+        success: true,
+        message: `Login successful! Welcome ${tokenPayload.name}`,
+        token,
+      }
     : { success: false, message: 'Incorrect password.' }
 }
 
 export async function verifyToken(token: string) {
   const secretToken = process.env.SESSION_SECRET as string
   try {
-    return jwt.verify(token, secretToken);
-
+    return jwt.verify(token, secretToken)
   } catch (error) {
-    return null;
+    return null
   }
 }
 
+export async function getCurrentUser(token: string) {
+  const secretToken = process.env.SESSION_SECRET as string
 
-export async function getCurrentUser() {
-  return await prisma.user.findFirst({ where: { role: 'ADMIN' } })
+  try {
+    const decoded = jwt.verify(token, secretToken) as {
+      id: string
+      email: string
+      role: string
+      name: string
+    }
+
+    // Fetch the user by id or email, based on decoded information
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.id },
+    })
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    return user // Return full user details (name, role, etc.)
+  } catch (error) {
+    return null
+  }
 }
