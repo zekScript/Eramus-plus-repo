@@ -10,9 +10,57 @@ import MainNav from './main-nav'
 import MobileNav from './mobile-nav'
 import { useEffect, useState } from 'react'
 import ThemeToggle from '@/components/theme-switch'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
+import {
+  Cloud,
+  CreditCard,
+  Github,
+  Keyboard,
+  LifeBuoy,
+  LogOut,
+  Mail,
+  MessageSquare,
+  Plus,
+  PlusCircle,
+  Settings,
+  User,
+  UserPlus,
+  Users,
+} from "lucide-react"
+ 
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export function TopBar() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const router = useRouter();
+  const isLoggedIn = Cookies.get('authToken') ? true : false;
+
+
+const logout = () => {
+  Cookies.remove('authToken');
+  window.location.reload();
+  router.push('/'); 
+};
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,10 +110,109 @@ export function TopBar() {
             </div>
             {/* MAIN NAV */}
           </div>
-          <div className='mb-4 mt-3 hidden w-full justify-end gap-x-4 lg:flex'>
-            <Link href='/signin'>Sign in</Link>
-            <Link href='/login'>Log in</Link>
-          </div>
+          {!isLoggedIn ? (
+        <div className='mb-4 mt-3 hidden w-full justify-end gap-x-4 lg:flex'>
+          <Link href='/signin'>Sign in</Link>
+          <Link href='/login'>Log in</Link>
+        </div>
+      ) : (
+        <div className='mb-4 mt-3 hidden w-full justify-end gap-x-4 lg:flex'>
+        
+
+        <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+      <Avatar>
+          <AvatarImage src="https://i.pinimg.com/564x/9f/e2/43/9fe24317d8363d84b3eb3b93b9c756ae.jpg" alt="Profile avatar" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <User />
+            <span>Profile</span>
+            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <CreditCard />
+            <span>Billing</span>
+            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Settings />
+            <span>Settings</span>
+            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Keyboard />
+            <span>Keyboard shortcuts</span>
+            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <Users />
+            <span>Team</span>
+          </DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <UserPlus />
+              <span>Invite users</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem>
+                  <Mail />
+                  <span>Email</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <MessageSquare />
+                  <span>Message</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <PlusCircle />
+                  <span>More...</span>
+                </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
+          <DropdownMenuItem>
+            <Plus />
+            <span>New Team</span>
+            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <Github />
+          <span>GitHub</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <LifeBuoy />
+          <span>Support</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem disabled>
+          <Cloud />
+          <span>API</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <LogOut />
+          <span>Log out</span>
+          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+        
+        </div>
+      )}
+          
+          
         </div>
       </div>
       <div className='flex h-full w-full justify-end'>
@@ -78,3 +225,7 @@ export function TopBar() {
     </div>
   )
 }
+function getCookie(arg0: string) {
+  throw new Error('Function not implemented.')
+}
+

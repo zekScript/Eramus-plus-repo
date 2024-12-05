@@ -14,14 +14,19 @@ export default function LoginPage() {
 
   const handleSubmit = async (formData: FormData) => {
     const result = await loginUser(formData)
-    setFeedback(result)
+    if(result.success){
+      document.cookie = `authToken=${result.token}; path=/`; // Store token in a cookie
+      router.push("/"); // Redirect to home page
+    }else{
+      setFeedback(result)
+    }
   }
 
   const router = useRouter()
   const pathname = usePathname()
 
   if (feedback.success) {
-    router.push('/')
+
   } else if (feedback.success && pathname === '/login') {
     router.push('/')
   }

@@ -1,7 +1,7 @@
-'use server'
-
+"use server"
 import prisma from '@/lib/db'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 // Helper function for password hashing
 const hashPassword = (password: string) => bcrypt.hash(password, 10)
@@ -69,20 +69,39 @@ export async function deleteUser(id: string) {
 }
 
 export async function loginUser(formData: FormData) {
+  const secretToken = process.env.SESSION_SECRET as string
   const email = formData.get('email')?.toString()
   const password = formData.get('password')?.toString()
 
   if (!email || !password)
     return { success: false, message: 'Email and password required.' }
 
+  if (!secretToken) {
+    throw new Error("SESSION_SECRET is not defined in the environment variables.");
+  }
+
   const user = await findUserByEmail(email)
   if (!user) return { success: false, message: 'Invalid email or password.' }
-
+    
   const isValid = await bcrypt.compare(password, user.password)
+  const tokenPayload = { id: user.id, email: user.email, role: user.role };
+  const token = jwt.sign(tokenPayload, secretToken);
   return isValid
-    ? { success: true, message: 'Login successful!' }
+  
+    ? { success: true, message: 'Login successful!', token}
     : { success: false, message: 'Incorrect password.' }
 }
+
+export async function verifyToken(token: string) {
+  const secretToken = process.env.SESSION_SECRET as string
+  try {
+    return jwt.verify(token, secretToken);
+
+  } catch (error) {
+    return null;
+  }
+}
+
 
 export async function getCurrentUser() {
   return await prisma.user.findFirst({ where: { role: 'ADMIN' } })
