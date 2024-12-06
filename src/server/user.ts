@@ -74,6 +74,15 @@ export async function deleteUser(id: number) {
   }
 }
 
+export async function verifyToken(token: string) {
+  const secretToken = process.env.SESSION_SECRET as string
+  try {
+    return jwt.verify(token, secretToken)
+  } catch (error) {
+    return null
+  }
+}
+
 export async function loginUser(formData: FormData) {
   const secretToken = process.env.SESSION_SECRET as string
   const email = formData.get('email')?.toString()
