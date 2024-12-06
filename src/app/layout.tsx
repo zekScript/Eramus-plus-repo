@@ -27,7 +27,7 @@ export default function RootLayout({
       <body
         // mt-20
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'relative mt-44 min-h-screen bg-background font-sans antialiased',
           inter.variable,
           cal.variable
         )}

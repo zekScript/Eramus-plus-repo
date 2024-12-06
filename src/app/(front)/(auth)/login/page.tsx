@@ -3,26 +3,34 @@
 import { loginUser } from '../../../../server/user'
 import Image from 'next/image'
 import { useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export default function LoginPage() {
   const [feedback, setFeedback] = useState({ success: false, message: '' })
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const router = useRouter()
+
+
 
   const handleSubmit = async (formData: FormData) => {
     const result = await loginUser(formData)
-    setFeedback(result)
+    if(result.success){
+
+      
+
+
+      document.cookie = `authToken=${result.token}; path=/`; // Store token in a cookie
+      router.push("/"); // Redirect to home page
+    }else{
+      setFeedback(result)
+    }
   }
 
-  const router = useRouter()
-  const pathname = usePathname()
 
-  if (feedback.success) {
-    router.push('/')
-  } else if (feedback.success && pathname === '/login') {
-    router.push('/')
-  }
 
+  
   return (
     <>
       <div className='flex h-screen w-full'>
@@ -37,12 +45,16 @@ export default function LoginPage() {
               type='email'
               placeholder='example@mail.com'
               name='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className='mb-4 w-full rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
             <input
               type='password'
               placeholder='Password'
               name='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className='mb-4 w-full rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
             <button
