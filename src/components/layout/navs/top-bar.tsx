@@ -13,7 +13,7 @@ import ThemeToggle from '@/components/theme-switch'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion' 
-// import { getCurrentUser } from './actions'
+import { getCurrentUser } from '../../../server/currentUser'
 // import { loginUser } from '@/server/user'
 // import { getServerSideProps } from '@/server/user'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -52,6 +52,7 @@ export function TopBar() {
   )
   const router = useRouter()
   const isLoggedIn = Cookies.get('authToken') ? true : false
+  const user = getCurrentUser();
   const logout = () => {
     Cookies.remove('authToken')
     window.location.reload()
@@ -68,9 +69,7 @@ export function TopBar() {
 
 
 
-// const user = getCurrentUser();
 
-// console.log(user)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -138,7 +137,7 @@ export function TopBar() {
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className='w-56'>
-                  <DropdownMenuLabel>Admin</DropdownMenuLabel>
+                  <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuItem onClick={() => router.push('/dashboard')}>
