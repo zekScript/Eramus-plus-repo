@@ -43,8 +43,6 @@ export default function AuthPage() {
   const router = useRouter()
   const pathname = usePathname()
 
-  
-
   if (feedback.success) {
     setTimeout(() => {
       router.push('/login')
@@ -110,7 +108,7 @@ export default function AuthPage() {
               <p
                 className={`flex text-sm ${validation.uppercase ? 'text-green-500' : 'text-red-500'}`}
               >
-                 - At least one uppercase letter{' '}
+                - At least one uppercase letter{' '}
                 <span className='ml-2'>
                   {validation.uppercase ? <Check /> : <X />}
                 </span>

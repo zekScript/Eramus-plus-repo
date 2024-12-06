@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken'
 // Helper function for password hashing
 const hashPassword = (password: string) => bcrypt.hash(password, 10)
 
-const findUserById = (id: string) => prisma.user.findUnique({ where: { id } })
 
 // Check if user exists by email
 const findUserByEmail = (email: string) =>
@@ -106,42 +105,57 @@ export async function loginUser(formData: FormData) {
     ? {
         success: true,
         message: `Login successful! Welcome ${tokenPayload.name}`,
-        token,
+        token, 
+        user,
       }
     : { success: false, message: 'Incorrect password.' }
 }
 
-export async function verifyToken(token: string) {
-  const secretToken = process.env.SESSION_SECRET as string
-  try {
-    return jwt.verify(token, secretToken)
-  } catch (error) {
-    return null
-  }
-}
 
-export async function getCurrentUser(token: string) {
-  const secretToken = process.env.SESSION_SECRET as string
 
-  try {
-    const decoded = jwt.verify(token, secretToken) as {
-      id: string
-      email: string
-      role: string
-      name: string
-    }
+// export async function getServerSideProps(context: any) {
+//   const { req } = context;
+//   const cookies = req.cookies;
+//   const secretToken = process.env.SESSION_SECRET as string;
 
-    // Fetch the user by id or email, based on decoded information
-    const user = await prisma.user.findUnique({
-      where: { id: decoded.id },
-    })
+//   if (!cookies.authToken) {
+//     return {
+//       redirect: {
+//         destination: '/login',
+//         permanent: false,
+//       },
+//     };
+//   }
 
-    if (!user) {
-      throw new Error('User not found')
-    }
+//   try {
+//     const decoded = jwt.verify(cookies.authToken, secretToken) as {
+//       id: string;
+//       email: string;
+//       role: string;
+//       name: string;
+//     };
 
-    return user // Return full user details (name, role, etc.)
-  } catch (error) {
-    return null
-  }
-}
+//     // Fetch user from database
+//     const user = await prisma.user.findUnique({
+//       where: { id: decoded.id },
+//     });
+
+//     if (!user) {
+//       throw new Error('User not found');
+//     }
+
+//     return {
+//       props: {
+//         user,
+//       },
+//     };
+//   } catch (error) {
+//     console.error(error);
+//     return {
+//       redirect: {
+//         destination: '/login',
+//         permanent: false,
+//       },
+//     };
+//   }
+// }

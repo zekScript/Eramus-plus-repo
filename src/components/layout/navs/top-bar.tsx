@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import Link from 'next/link'
 
@@ -12,9 +12,22 @@ import { useEffect, useState } from 'react'
 import ThemeToggle from '@/components/theme-switch'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
+import { motion } from 'framer-motion' 
+// import { getCurrentUser } from './actions'
+// import { loginUser } from '@/server/user'
+// import { getServerSideProps } from '@/server/user'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Headset, LogOut, Plus, Settings, User } from 'lucide-react'
-// import { getCurrentUser } from '@/server/user'
+import {
+  Headset,
+  LogOut,
+  Plus,
+  Settings,
+  User,
+  Share2,
+  Copy,
+  Check,
+  LayoutDashboard 
+} from 'lucide-react'
 
 import {
   DropdownMenu,
@@ -22,21 +35,42 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
 export function TopBar() {
   const [isScrolled, setIsScrolled] = useState(false)
-
+  const [copied, setCopied] = useState(false)
+  const [email] = useState(
+    'https://erasmus-plus-project-git-armandascode-zekscripts-projects.vercel.app/'
+  )
   const router = useRouter()
   const isLoggedIn = Cookies.get('authToken') ? true : false
-
   const logout = () => {
     Cookies.remove('authToken')
     window.location.reload()
     router.push('/')
   }
+
+  const handleCopy = (event: React.MouseEvent) => {
+    event.preventDefault() // Prevent the dropdown from closing
+    navigator.clipboard.writeText(email).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1000) // Reset the icon after 2 seconds
+    })
+}
+
+
+
+// const user = getCurrentUser();
+
+// console.log(user)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,7 +122,7 @@ export function TopBar() {
           </div>
           {!isLoggedIn ? (
             <div className='mb-4 mt-3 hidden w-full justify-end gap-x-4 lg:flex'>
-              <Link href='/signin'>Sign in </Link>
+              <Link href='/signin'>Sign in</Link>
               <Link href='/login'>Log in</Link>
             </div>
           ) : (
@@ -107,25 +141,68 @@ export function TopBar() {
                   <DropdownMenuLabel>Admin</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                      <User />
-                      <span>Profile</span>
+                    <DropdownMenuItem onClick={() => router.push('/dashboard')}>
+                      <LayoutDashboard  />
+                      <span>Dashboard</span>
                     </DropdownMenuItem>
 
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push('/settings')}>
                       <Settings />
                       <span>Settings</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push('/create')}>
                       <Plus />
                       <span>Create</span>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push('/support')}>
                     <Headset />
                     <span>Support</span>
                   </DropdownMenuItem>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <Share2 />
+                      <span>Share</span>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        <DropdownMenuItem
+                          className='flex items-center gap-2'
+                          onSelect={(event) => event.preventDefault()} // Prevent default dropdown closing behavior
+                        >
+                          <input
+                            type='text'
+                            readOnly
+                            value={email}
+                            className='rounded-md border border-gray-300 px-2 py-1 text-sm'
+                          />
+                          <motion.button
+                            onClick={handleCopy}
+                            aria-label='Copy to clipboard'
+                            className='text-gray-500'
+                            initial={{ opacity: 0 }} // Initial state
+                            animate={{ opacity: 1 }} // Animate to full opacity
+                            transition={{ duration: 0.3 }} // Duration of the animation
+                          >
+                            <motion.div
+                              key={copied ? 'check' : 'copy'} // Animate between icons
+                              initial={{ scale: 0 }} // Initial scale for icon animation
+                              animate={{ scale: 1 }} // Animate to full size
+                              exit={{ scale: 0 }} // Exit animation
+                              transition={{ ease: 'easeInOut', duration: 0.2 }} // Smooth, no bobbing
+                            >
+                              {copied ? (
+                                <Check size={16} />
+                              ) : (
+                                <Copy size={16} />
+                              )}
+                            </motion.div>
+                          </motion.button>
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
 
                   <DropdownMenuItem onClick={logout}>
                     <LogOut />
@@ -141,13 +218,9 @@ export function TopBar() {
         <div className='mb-4 ml-8 mr-8 hidden w-full justify-end border-t-2 border-indigo-500 lg:flex'>
           <div className='mt-5'>
             <ThemeToggle></ThemeToggle>
-            {/* <button onClick={handleCurrentUser}>Check</button> */}
           </div>
         </div>
       </div>
     </div>
   )
-}
-function getCookie(arg0: string) {
-  throw new Error('Function not implemented.')
 }
