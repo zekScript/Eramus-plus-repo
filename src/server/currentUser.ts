@@ -7,7 +7,7 @@ export function getCurrentUser() {
     
       try {
         const decoded = jwt.decode(token) as {
-          id: string;
+          id: number;
           email: string;
           role: string;
           name: string;

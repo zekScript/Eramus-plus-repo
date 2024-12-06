@@ -140,14 +140,13 @@ export function TopBar() {
                   <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
+                  <DropdownMenuItem onClick={() => router.push(`/profiles/${user?.id}`)}>
+                      <User />
+                      <span>Profile</span>
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => router.push('/dashboard')}>
                       <LayoutDashboard  />
                       <span>Dashboard</span>
-                    </DropdownMenuItem>
-
-                    <DropdownMenuItem onClick={() => router.push('/settings')}>
-                      <Settings />
-                      <span>Settings</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => router.push('/create')}>
                       <Plus />
@@ -202,6 +201,7 @@ export function TopBar() {
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
+                  <DropdownMenuSeparator />
 
                   <DropdownMenuItem onClick={logout}>
                     <LogOut />

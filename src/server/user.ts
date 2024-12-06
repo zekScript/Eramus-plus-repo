@@ -48,7 +48,7 @@ export async function createUser(formData: FormData) {
   }
 }
 
-export async function updateUser(formData: FormData, id: string) {
+export async function updateUser(formData: FormData, id: number) {
   const name = formData.get('name') as string
   const email = formData.get('email') as string
   const password = formData.get('password') as string
@@ -65,7 +65,7 @@ export async function updateUser(formData: FormData, id: string) {
   }
 }
 
-export async function deleteUser(id: string) {
+export async function deleteUser(id: number) {
   try {
     await prisma.user.delete({ where: { id } })
     return { success: true, message: 'User deleted successfully.' }
@@ -110,52 +110,3 @@ export async function loginUser(formData: FormData) {
       }
     : { success: false, message: 'Incorrect password.' }
 }
-
-
-
-// export async function getServerSideProps(context: any) {
-//   const { req } = context;
-//   const cookies = req.cookies;
-//   const secretToken = process.env.SESSION_SECRET as string;
-
-//   if (!cookies.authToken) {
-//     return {
-//       redirect: {
-//         destination: '/login',
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   try {
-//     const decoded = jwt.verify(cookies.authToken, secretToken) as {
-//       id: string;
-//       email: string;
-//       role: string;
-//       name: string;
-//     };
-
-//     // Fetch user from database
-//     const user = await prisma.user.findUnique({
-//       where: { id: decoded.id },
-//     });
-
-//     if (!user) {
-//       throw new Error('User not found');
-//     }
-
-//     return {
-//       props: {
-//         user,
-//       },
-//     };
-//   } catch (error) {
-//     console.error(error);
-//     return {
-//       redirect: {
-//         destination: '/login',
-//         permanent: false,
-//       },
-//     };
-//   }
-// }

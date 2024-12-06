@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(cuid())
+  id          Int   @id @default(autoincrement())
   name        String   @db.VarChar(64)
   password    String
   email       String   @unique
@@ -35,7 +35,6 @@ model Post {
   published Boolean  @default(false)
   updatedAt DateTime @updatedAt
   Author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
-
+  authorId  Int     
   @@index([slug])
 }
