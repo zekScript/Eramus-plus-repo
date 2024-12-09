@@ -24,6 +24,7 @@ import {
   Copy,
   Check,
   LayoutDashboard,
+  Cog,
 } from 'lucide-react'
 
 import {
@@ -169,6 +170,10 @@ export function TopBar() {
                       <Share2 />
                       <span>Share</span>
                     </DropdownMenuSubTrigger>
+                    <DropdownMenuItem onClick={() => router.push(`/profiles/${user?.id}/settings/general`)}>
+                      <Cog />
+                      <span>Edit Profile</span>
+                    </DropdownMenuItem>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent>
                         <DropdownMenuItem

@@ -1,14 +1,13 @@
-// lib/actions.ts
-import prisma from '@/lib/db';
+import prisma from '@/lib/db'
 
-export async function getProfileById(profileId: number) {
+export async function getProfileById(portfolioID: string) {
   try {
     const profile = await prisma.user.findUnique({
-      where: { id: profileId },
-    });
-
-    return profile;
+      where: { id: parseInt(portfolioID) },
+    })
+    return profile
   } catch (error) {
-    throw new Error('Error fetching profile');
+    console.error('Error fetching profile:', error)
+    throw new Error('Failed to fetch profile')
   }
 }

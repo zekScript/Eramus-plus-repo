@@ -114,7 +114,6 @@ export async function loginUser(formData: FormData) {
         success: true,
         message: `Login successful! Welcome ${tokenPayload.name}`,
         token,
-        user,
       }
     : { success: false, message: 'Incorrect password.' }
 }

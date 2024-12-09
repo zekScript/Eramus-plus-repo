@@ -1,60 +1,37 @@
-// 'use client'
 import Image from 'next/image'
-// import { usePathname, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import BlogCard from '@/components/blogCard'
 import { blogPostSources } from '@/config/site'
 import Link from 'next/link'
-import { getCurrentUser } from '@/server/currentUser'
-// import { useRouter, usePathname } from 'next/navigation'
-// import prisma from '@/lib/db'
-// import NotFound from '@/app/not-found'
-export default function Profiles({
-  params,
-}: {
+import NotFound from '@/app/not-found'
+import { getProfileById } from './actions'
+interface ProfileProps {
   params: { portfolioID: string }
-}) {
-  
+}
+export default async function Profiles({ params }: ProfileProps) {
 
-  // const profiles = await prisma.user.findUnique({
-  //   where: { id: parseInt(params.portfolioID) },
-  // })
+  const profiles = await getProfileById(params.portfolioID)
 
-  // const path = usePathname()
-  // const router = useRouter()
-
-  // const handleRouteToSettings = () => {
-  //   const newPath = path + '/settings/general'
-  //   router.push(newPath)
-  // }
-
-  // if(!profiles){
-  //   return <NotFound />
-  // }
-  const ready = false;
-  if(ready){
-    return (
-      <div className='m-auto h-full w-[90%] justify-center'>Sorry But this page is in Working progress :(</div>)
+  if (!profiles) {
+    return <NotFound />
   }
-  
 
-  const user = getCurrentUser()
 
   return (
     <div className='m-auto h-full w-[90%] justify-center'>
       <div className='flex h-full w-full'>
         {/* Avatar */}
         <div className='mb-4 ml-4 mr-6 mt-4 flex'>
-          <Image
-            src='/signinWallpaper.jpg'
+          <img
+            src={profiles.profilePic ?? undefined}
             width={210}
             height={200}
             alt='Avatar'
             className='rounded-[100%]'
-          ></Image>
+          />
           {/* User Details */}
           <div className='ml-8 mt-4 flex h-full w-[95%] flex-col'>
-            <h1 className='text-3xl font-bold'></h1>
+            <h1 className='text-3xl font-bold'>{profiles.name}</h1>
             {/* {profiles?.name} */}
             <p className='text-break mt-4 text-sm'>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia
@@ -69,22 +46,9 @@ export default function Profiles({
           <div className='flex w-[30%] flex-col'>
             <div className='mt-3 flex h-full items-center justify-center'>
               <p className='flex h-full items-center'>Level</p>
-              <div className='levelCircle ml-1 rounded-[100%]'>
-                <p className='m-1'>10</p>
+              <div className='border-gray-600 ml-1 rounded-[100%]'>
+                <p className='m-1'>0</p>
               </div>
-            </div>
-
-            <div className='flex justify-center'>
-              {/* {user?.id === Number(params.portfolioID) ? (
-                <Button
-                  // onClick={handleRouteToSettings}
-                  className='mb-6 mt-14 w-2/3'
-                  variant='outline'
-                >
-                  Edit Profile
-                </Button>
-              ) : <div className="mb-6 mt-14 w-2/3"></div> } */}
-
             </div>
           </div>
         </div>
@@ -92,8 +56,8 @@ export default function Profiles({
       {/* Recent posts by this user */}
       <div className='mt-12'>
         <div className='mb-12 flex w-[92%] border-b-2 border-indigo-500'>
-          <Link className='mb-2 text-2xl font-medium' href='#'>
-            Create a new post +
+          <Link className='mb-2 text-2xl font-medium' href='/'>
+            All posts
           </Link>
         </div>
         <div className='grid h-full w-full grid-cols-1 overflow-hidden lg:grid-cols-3'>

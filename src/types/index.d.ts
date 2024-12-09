@@ -39,7 +39,6 @@ export type BlogSourcesItem = {
   badge: string
   title: string
   date: string
-  route: string
   description: string
 }
 
