@@ -6,6 +6,7 @@ import { useRef } from 'react'
 import BlogCard from '@/components/blogCard'
 import { blogPostSources } from '@/config/site'
 import Loader from '@/components/anims/Loader'
+import { getCurrentUser } from '@/server/currentUser'
 
 const Page: React.FC = () => {
   const ref = useRef(null)

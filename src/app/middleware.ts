@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyToken } from './server/user'
+import { verifyToken } from '../server/user'
 
 // Define protected and public routes
 const protectedRoutes = ['/dashboard', '/profile']

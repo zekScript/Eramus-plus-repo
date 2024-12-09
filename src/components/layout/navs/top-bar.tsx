@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import Link from 'next/link'
 
@@ -12,21 +12,18 @@ import { useEffect, useState } from 'react'
 import ThemeToggle from '@/components/theme-switch'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion' 
+import { motion } from 'framer-motion'
 import { getCurrentUser } from '../../../server/currentUser'
-// import { loginUser } from '@/server/user'
-// import { getServerSideProps } from '@/server/user'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   Headset,
   LogOut,
   Plus,
-  Settings,
   User,
   Share2,
   Copy,
   Check,
-  LayoutDashboard 
+  LayoutDashboard,
 } from 'lucide-react'
 
 import {
@@ -37,12 +34,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useParams } from 'next/navigation'
 
 export function TopBar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -52,11 +49,20 @@ export function TopBar() {
   )
   const router = useRouter()
   const isLoggedIn = Cookies.get('authToken') ? true : false
-  const user = getCurrentUser();
+  const user = getCurrentUser()
+
   const logout = () => {
     Cookies.remove('authToken')
     window.location.reload()
     router.push('/')
+  }
+
+  function getFirstLettersForFallback(str: String) {
+    if (!str) return ''
+    return str
+      .split(' ') // Split the string into an array of words
+      .map((word) => word.charAt(0).toUpperCase()) // Take the first letter of each word and capitalize it
+      .join('') // Combine the letters without spaces
   }
 
   const handleCopy = (event: React.MouseEvent) => {
@@ -65,11 +71,7 @@ export function TopBar() {
       setCopied(true)
       setTimeout(() => setCopied(false), 1000) // Reset the icon after 2 seconds
     })
-}
-
-
-
-
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -133,19 +135,23 @@ export function TopBar() {
                       src='https://i.pinimg.com/564x/9f/e2/43/9fe24317d8363d84b3eb3b93b9c756ae.jpg'
                       alt='Profile avatar'
                     />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarFallback>
+                      {getFirstLettersForFallback(user?.name)}
+                    </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className='w-56'>
                   <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                  <DropdownMenuItem onClick={() => router.push(`/profiles/${user?.id}`)}>
+                    <DropdownMenuItem
+                      onClick={() => router.push(`/profiles/${user?.id}`)}
+                    >
                       <User />
                       <span>Profile</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => router.push('/dashboard')}>
-                      <LayoutDashboard  />
+                      <LayoutDashboard />
                       <span>Dashboard</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => router.push('/create')}>

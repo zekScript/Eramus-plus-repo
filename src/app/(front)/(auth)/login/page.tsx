@@ -12,25 +12,16 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const router = useRouter()
 
-
-
   const handleSubmit = async (formData: FormData) => {
     const result = await loginUser(formData)
-    if(result.success){
-
-      
-
-
-      document.cookie = `authToken=${result.token}; path=/`; // Store token in a cookie
-      router.push("/"); // Redirect to home page
-    }else{
+    if (result.success) {
+      document.cookie = `authToken=${result.token}; path=/` // Store token in a cookie
+      router.push('/') // Redirect to home page
+    } else {
       setFeedback(result)
     }
   }
 
-
-
-  
   return (
     <>
       <div className='flex h-screen w-full'>

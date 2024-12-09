@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken'
 // Helper function for password hashing
 const hashPassword = (password: string) => bcrypt.hash(password, 10)
 
-
 // Check if user exists by email
 const findUserByEmail = (email: string) =>
   prisma.user.findUnique({ where: { email } })
@@ -114,7 +113,7 @@ export async function loginUser(formData: FormData) {
     ? {
         success: true,
         message: `Login successful! Welcome ${tokenPayload.name}`,
-        token, 
+        token,
         user,
       }
     : { success: false, message: 'Incorrect password.' }
