@@ -1,21 +1,20 @@
-import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import BlogCard from '@/components/blogCard'
 import { blogPostSources } from '@/config/site'
 import Link from 'next/link'
 import NotFound from '@/app/not-found'
 import { getProfileById } from './actions'
-interface ProfileProps {
-  params: { portfolioID: string }
-}
-export default async function Profiles({ params }: ProfileProps) {
+// import { useParams } from 'next/navigation'
+// interface ProfileProps {
+//   params: { portfolioID: string }
+// }
+// { params }: ProfileProps
+export default function Profiles() {
+  // const profiles = await getProfileById(params.portfolioID)
 
-  const profiles = await getProfileById(params.portfolioID)
-
-  if (!profiles) {
-    return <NotFound />
-  }
-
+  // if (!profiles) {
+  //   return <NotFound />
+  // }
 
   return (
     <div className='m-auto h-full w-[90%] justify-center'>
@@ -23,7 +22,7 @@ export default async function Profiles({ params }: ProfileProps) {
         {/* Avatar */}
         <div className='mb-4 ml-4 mr-6 mt-4 flex'>
           <img
-            src={profiles.profilePic ?? undefined}
+            // src={profiles.profilePic ?? undefined}
             width={210}
             height={200}
             alt='Avatar'
@@ -31,7 +30,8 @@ export default async function Profiles({ params }: ProfileProps) {
           />
           {/* User Details */}
           <div className='ml-8 mt-4 flex h-full w-[95%] flex-col'>
-            <h1 className='text-3xl font-bold'>{profiles.name}</h1>
+            <h1 className='text-3xl font-bold'></h1>
+            {/* {profiles.name} */}
             {/* {profiles?.name} */}
             <p className='text-break mt-4 text-sm'>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia
@@ -46,7 +46,7 @@ export default async function Profiles({ params }: ProfileProps) {
           <div className='flex w-[30%] flex-col'>
             <div className='mt-3 flex h-full items-center justify-center'>
               <p className='flex h-full items-center'>Level</p>
-              <div className='border-gray-600 ml-1 rounded-[100%]'>
+              <div className='ml-1 rounded-[100%] border-gray-600'>
                 <p className='m-1'>0</p>
               </div>
             </div>

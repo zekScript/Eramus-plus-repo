@@ -58,7 +58,7 @@ export function TopBar() {
     router.push('/')
   }
 
-  function getFirstLettersForFallback(str: String) {
+  function getFirstLettersForFallback(str: string) {
     if (!str) return ''
     return str
       .split(' ') // Split the string into an array of words
@@ -170,7 +170,11 @@ export function TopBar() {
                       <Share2 />
                       <span>Share</span>
                     </DropdownMenuSubTrigger>
-                    <DropdownMenuItem onClick={() => router.push(`/profiles/${user?.id}/settings/general`)}>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        router.push(`/profiles/${user?.id}/settings/general`)
+                      }
+                    >
                       <Cog />
                       <span>Edit Profile</span>
                     </DropdownMenuItem>
@@ -186,28 +190,18 @@ export function TopBar() {
                             value={email}
                             className='rounded-md border border-gray-300 px-2 py-1 text-sm'
                           />
-                          <motion.button
+                          <button
                             onClick={handleCopy}
                             aria-label='Copy to clipboard'
-                            className='text-gray-500'
-                            initial={{ opacity: 0 }} // Initial state
-                            animate={{ opacity: 1 }} // Animate to full opacity
-                            transition={{ duration: 0.3 }} // Duration of the animation
                           >
-                            <motion.div
-                              key={copied ? 'check' : 'copy'} // Animate between icons
-                              initial={{ scale: 0 }} // Initial scale for icon animation
-                              animate={{ scale: 1 }} // Animate to full size
-                              exit={{ scale: 0 }} // Exit animation
-                              transition={{ ease: 'easeInOut', duration: 0.2 }} // Smooth, no bobbing
-                            >
+                            <div key={copied ? 'check' : 'copy'}>
                               {copied ? (
                                 <Check size={16} />
                               ) : (
                                 <Copy size={16} />
                               )}
-                            </motion.div>
-                          </motion.button>
+                            </div>
+                          </button>
                         </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>

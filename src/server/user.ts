@@ -105,6 +105,14 @@ export async function loginUser(formData: FormData) {
     email: user.email,
     role: user.role,
     name: user.name,
+    updatedAt: user.updatedAt,
+    createdAt: user.createdAt,
+    friendsCount: user.friendsCount,
+    followersCount: user.followersCount,
+    followingCount: user.followingCount,
+    postsCount: user.postsCount,
+    profilePic: user.profilePic,
+    bio: user.bio,
   }
 
   const token = jwt.sign(tokenPayload, secretToken)
@@ -117,3 +125,5 @@ export async function loginUser(formData: FormData) {
       }
     : { success: false, message: 'Incorrect password.' }
 }
+
+// Get all users according to id

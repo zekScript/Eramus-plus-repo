@@ -15,18 +15,18 @@ datasource db {
 
 model User {
   id             Int        @id @default(autoincrement())
-  name           String     @db.VarChar(64) @unique
+  name           String     @unique @db.VarChar(64)
   password       String
   email          String     @unique
   accessAdmin    Boolean?   @default(false)
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   role           String     @default("USER")
-  friendsCount   Int        @default(0)
   followersCount Int        @default(0)
   followingCount Int        @default(0)
   postsCount     Int        @default(0)
   profilePic     String?    @default("https://i.pinimg.com/564x/9f/e2/43/9fe24317d8363d84b3eb3b93b9c756ae.jpg")
+  bio            String?
   posts          Post[]
   Settings       Settings[]
 }
@@ -47,16 +47,16 @@ model Post {
 }
 
 model Settings {
-  id               Int     @id @default(autoincrement())
-  theme            String? @default("dark")
-  notifications    Boolean @default(true)
+  id            Int     @id @default(autoincrement())
+  theme         String? @default("dark")
+  notifications Boolean @default(true)
   // Privacy Settings
-  basicDetails     Boolean @default(true)
+  basicDetails  Boolean @default(true)
 
-  myProfileDetails String  @default("Public")
-  postDetails      String  @default("Public")
-  friendsList      String  @default("Public")
-  postComments     String  @default("Public")
-  Author           User    @relation(fields: [userId], references: [id])
+  myProfileDetails String @default("Public")
+  postDetails      String @default("Public")
+  friendsList      String @default("Public")
+  postComments     String @default("Public")
+  Author           User   @relation(fields: [userId], references: [id])
   userId           Int
 }

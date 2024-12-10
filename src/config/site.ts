@@ -40,7 +40,8 @@ export const blogPostSources: BlogSources = {
       badge: 'info',
       title: 'The Ultimate Productivity Hack is Saying No',
       date: 'December 12, 2023',
-      description: 'Not doing something will always be faster than doing it. This statement reminds me of the old computer programming saying, “Remember that there is no code faster than no code.\”',
+      description:
+        'Not doing something will always be faster than doing it. This statement reminds me of the old computer programming saying, “Remember that there is no code faster than no code.\”',
     },
     {
       id: 3,
@@ -48,7 +49,8 @@ export const blogPostSources: BlogSources = {
       badge: 'info',
       title: '30 One-Sentence Stories From People Who Have Built Better Habits',
       date: 'December 9, 2024',
-      description: 'None of these stories are mine. They were sent to me by readers of Atomic Habits. My hope is that these examples will illustrate how real people are putting the book into practice. They will show you what people are actually doing to build good habits and break bad ones. And hopefully, they will spark some ideas for how you can do the same.',
+      description:
+        'None of these stories are mine. They were sent to me by readers of Atomic Habits. My hope is that these examples will illustrate how real people are putting the book into practice. They will show you what people are actually doing to build good habits and break bad ones. And hopefully, they will spark some ideas for how you can do the same.',
     },
     {
       id: 4,
@@ -56,10 +58,9 @@ export const blogPostSources: BlogSources = {
       badge: 'info',
       title: 'Why Choose Next.js for Your First Web Project?',
       date: 'December 8, 2024',
-      description: 'Starting your web development journey can feel overwhelming, especially with so many frameworks to choose from. Next.js, a powerful React framework, is one of the best options for beginners. Here’s why:',
+      description:
+        'Starting your web development journey can feel overwhelming, especially with so many frameworks to choose from. Next.js, a powerful React framework, is one of the best options for beginners. Here’s why:',
     },
-
-    
   ],
 }
 

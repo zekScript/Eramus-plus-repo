@@ -14,11 +14,11 @@ const BlogCard: React.FC<BlogProps> = ({ blogItems }) => {
 
   const handleRouting = (route: string) => {
     const formatText = route
-    .toLowerCase()  
-    .replace(/[^a-z0-9\s]/g, '')            // Removes all non-alphanumeric characters (including special chars and punctuation)
-    .replace(/\s+/g, '-')                   // Replaces spaces with hyphens
-    .replace(/-+/g, '-')                    // Replaces multiple hyphens with a single hyphen
-    .trim();     // Replaces spaces with hyphens
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, '') // Removes all non-alphanumeric characters (including special chars and punctuation)
+      .replace(/\s+/g, '-') // Replaces spaces with hyphens
+      .replace(/-+/g, '-') // Replaces multiple hyphens with a single hyphen
+      .trim() // Replaces spaces with hyphens
     const newPath = '/content/media' + '/blog/' + formatText
     router.push(newPath)
   }

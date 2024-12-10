@@ -11,9 +11,17 @@ export function getCurrentUser() {
       email: string
       role: string
       name: string
+      updatedAt: Date
+      createdAt: Date
+      friendsCount: Number
+      followersCount: Number
+      followingCount: Number
+      postsCount: Number
+      profilePic: String
+      bio: String
     }
 
-    return decoded // Contains id, email, role, name
+    return decoded
   } catch (error) {
     console.error('Error decoding token:', error)
     return null
