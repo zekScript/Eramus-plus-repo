@@ -13,7 +13,13 @@ const BlogCard: React.FC<BlogProps> = ({ blogItems }) => {
   const router = useRouter()
 
   const handleRouting = (route: string) => {
-    const newPath = '/content/media' + '/blog' + route
+    const formatText = route
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, '') // Removes all non-alphanumeric characters (including special chars and punctuation)
+      .replace(/\s+/g, '-') // Replaces spaces with hyphens
+      .replace(/-+/g, '-') // Replaces multiple hyphens with a single hyphen
+      .trim() // Replaces spaces with hyphens
+    const newPath = '/content/media' + '/blog/' + formatText
     router.push(newPath)
   }
 
@@ -24,7 +30,7 @@ const BlogCard: React.FC<BlogProps> = ({ blogItems }) => {
     <div
       key={blogItem.id}
       className='mb-11 cursor-pointer transition-transform duration-500 hover:translate-y-[-10px] active:scale-90 active:shadow-sm'
-      onClick={() => handleRouting(blogItem.route)}
+      onClick={() => handleRouting(blogItem.title)}
     >
       <div className='text-break h-[370px] w-[350px] text-xl font-bold'>
         <img

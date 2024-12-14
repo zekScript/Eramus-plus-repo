@@ -95,3 +95,7 @@
 .text-ratio {
   aspect-ratio: 64 / 27;
 }
+
+.levelCircle {
+  border: 2px solid blue;
+}
