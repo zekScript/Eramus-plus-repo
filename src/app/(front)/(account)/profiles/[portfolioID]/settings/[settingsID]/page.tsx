@@ -39,7 +39,7 @@ export default function SettingsPage() {
               alt='Avatar'
             ></img>
             {/* User Details */}
-            <div className='ml-8 flex h-full items-center '>
+            <div className='ml-8 flex h-full items-center'>
               <Button
                 variant='link'
                 onClick={() => {

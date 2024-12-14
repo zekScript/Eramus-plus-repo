@@ -107,7 +107,7 @@ export async function loginUser(formData: FormData) {
     name: user.name,
     updatedAt: user.updatedAt,
     createdAt: user.createdAt,
-    friendsCount: user.friendsCount,
+    // friendsCount: user.friendsCount,
     followersCount: user.followersCount,
     followingCount: user.followingCount,
     postsCount: user.postsCount,

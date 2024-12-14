@@ -13,12 +13,12 @@ export function getCurrentUser() {
       name: string
       updatedAt: Date
       createdAt: Date
-      friendsCount: Number
-      followersCount: Number
-      followingCount: Number
-      postsCount: Number
-      profilePic: String
-      bio: String
+      friendsCount: number
+      followersCount: number
+      followingCount: number
+      postsCount: number
+      profilePic: string
+      bio: string
     }
 
     return decoded

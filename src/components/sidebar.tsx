@@ -24,7 +24,7 @@ export default function SideBar() {
       {/* <div className='mt-2 flex h-full bg-red-500 w-full justify-start'>
       </div> */}
       <div className='flex'>
-      <div className='flex w-[250px] flex-col'>
+        <div className='flex w-[250px] flex-col'>
           {/* Settings */}
           <NavLink
             navigateTo={`/profiles/${user?.id}/settings/general`}
@@ -67,12 +67,10 @@ export default function SideBar() {
           >
             Privacy Settings
           </NavLink>
-          
-        </div>
-          
-          <SideBarContent params={{ settingsID: settingsID as string }} />
         </div>
 
+        <SideBarContent params={{ settingsID: settingsID as string }} />
+      </div>
     </>
   )
 }

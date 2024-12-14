@@ -2,8 +2,6 @@ import { Button } from '@/components/ui/button'
 import BlogCard from '@/components/blogCard'
 import { blogPostSources } from '@/config/site'
 import Link from 'next/link'
-import NotFound from '@/app/not-found'
-import { getProfileById } from './actions'
 // import { useParams } from 'next/navigation'
 // interface ProfileProps {
 //   params: { portfolioID: string }

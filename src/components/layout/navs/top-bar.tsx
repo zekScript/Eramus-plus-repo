@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react'
 import ThemeToggle from '@/components/theme-switch'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
 import { getCurrentUser } from '../../../server/currentUser'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
@@ -40,7 +39,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useParams } from 'next/navigation'
 
 export function TopBar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -58,7 +56,7 @@ export function TopBar() {
     router.push('/')
   }
 
-  function getFirstLettersForFallback(str: string) {
+  function getFirstLettersForFallback(str?: string) {
     if (!str) return ''
     return str
       .split(' ') // Split the string into an array of words
@@ -137,7 +135,7 @@ export function TopBar() {
                       alt='Profile avatar'
                     />
                     <AvatarFallback>
-                      {getFirstLettersForFallback(user?.name)}
+                      {getFirstLettersForFallback(user?.name ?? '')}
                     </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
