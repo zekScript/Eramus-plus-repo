@@ -1,4 +1,5 @@
 'use server'
+
 import prisma from '@/lib/db'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -107,7 +108,6 @@ export async function loginUser(formData: FormData) {
     name: user.name,
     updatedAt: user.updatedAt,
     createdAt: user.createdAt,
-    // friendsCount: user.friendsCount,
     followersCount: user.followersCount,
     followingCount: user.followingCount,
     postsCount: user.postsCount,

@@ -5,6 +5,10 @@ import { Button } from './ui/button'
 import { Textarea } from './ui/textarea'
 import { getCurrentUser } from '@/server/currentUser'
 import * as React from 'react'
+import { GlassEffectSwitch } from './ui/switch'
+import ColorPicker from './ColorPicker'
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 import {
   Select,
@@ -12,6 +16,7 @@ import {
   SelectGroup,
   SelectItem,
   SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select'
 interface SideBarContentProps {
   params: {
@@ -32,6 +37,12 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
   } else if (params.settingsID === 'privacy') {
     contentToDisplay = 'privacy' // Display privacy settings
   }
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleColorPicker = () => {
+    setIsOpen(!isOpen);
+  };
 
   // const handleNewProfilePicture = () => {
   //   const newProfilePictureText = ''
@@ -99,13 +110,16 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
           </p>
           <div className='mt-6 flex gap-5'>
             <img
-              src={user?.profilePic as string}
+              src={(user?.profilePic as string) || undefined}
               width={128}
               height={128}
               // className="w-[184px] h-[184px]"
               alt='Avatar'
             ></img>
-            {/* <Input onChange={handleNewProfilePicture} type='file' id='newProfilePictureID'></Input> */}
+            <div className='flex w-[50%] gap-1.5'>
+              <Label htmlFor='picture'>Picture</Label>
+              <Input id='picture' type='file' />
+            </div>
           </div>
           <form className='mt-3'>
             <section id='avatar'>
@@ -132,9 +146,17 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
           </p>
           <form className='mt-3'>
             <section id='profileBackground'>
-              <div className='ml-3 mt-6'>
-                <Label htmlFor='newBackground'>New Background</Label>
-                <Input type='text' name='newBackground' className='w-[60%]' />
+              <div className='flex w-full justify-end'>
+                <div className='w-[250px]'>
+                  <Input
+                    id='picture'
+                    type='file'
+                    className='flex w-full justify-end'
+                  />
+                </div>
+              </div>
+              <div className='mt-6 h-full w-full'>
+                <img src='https://placehold.co/600x400'></img>
               </div>
             </section>
             <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
@@ -150,11 +172,81 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
         <div className='ml-6 flex h-full w-full flex-col text-[1.4rem] font-bold'>
           <h1>Custom Themes</h1>
           <p className='mt-3 text-sm font-medium text-gray-600'>
-            This is where you can change themes like transparency, colors, and
-            animations to your liking.
+            You can change custom theme colors. also you can change what theme
+            mode you prefer
           </p>
           <form className='mt-3'>
-            <div>{/* Theme color picker */}</div>
+            {/* Whole container */}
+            <div className='mt-3 h-full w-full'>
+              {/* Container */}
+
+              <div className='border-settings mt-3 flex h-full w-full p-6'>
+                <div className='h-full w-full'>
+                  <h1 className='text-xl font-medium'>Choose your mode</h1>
+                  <p className='text-sm font-thin'>
+                    Change the colors that appear on your site
+                  </p>
+                </div>
+                {/* Selection */}
+                <div className='mr-3 flex items-center'>
+                  <Select>
+                    <SelectTrigger className='w-[140px]'>
+                      <SelectValue placeholder='Dark' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value='apple'>Dark</SelectItem>
+                        <SelectItem value='banana'>Light</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className='border-settings mt-3 flex h-full w-full p-6'>
+                <div className='h-full w-full'>
+                  <h1 className='text-xl font-medium'>Glass effect</h1>
+                  <p className='text-sm font-thin'>
+                    some site surfaces will appear glassy translucent effect
+                  </p>
+                </div>
+                {/* Selection */}
+                <div className='mr-3 flex items-center'>
+                  <GlassEffectSwitch></GlassEffectSwitch>
+                </div>
+              </div>
+
+              <div className='border-settings mt-3 flex h-full w-full p-6 '>
+                <div className='flex h-full w-full flex-col'>
+                  <div className='flex h-full w-full'>
+                    <div className='flex h-full w-full flex-col'>
+                      <h1 className='text-xl font-medium'>Color</h1>
+                    </div>
+                    {/* Selection */}
+                    <div className='mr-3 flex items-center'>
+                      <Select>
+                        <SelectTrigger className='w-[140px]'>
+                          <SelectValue placeholder='Manual' />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value='apple'>Dark</SelectItem>
+                            <SelectItem value='banana'>Light</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div>
+                    {/* Color picker templates  */}
+                    <div className='flex w-full h-full items-start '>
+                      <ColorPicker />
+  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
               <Button variant='secondary'>Save</Button>
               <Button variant='outline'>Cancel</Button>

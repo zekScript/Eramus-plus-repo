@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { getCurrentUser } from '@/server/currentUser'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+
 export default function SettingsPage() {
   const pathname = usePathname()
   const router = useRouter()
