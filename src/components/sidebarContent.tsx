@@ -7,8 +7,9 @@ import { getCurrentUser } from '@/server/currentUser'
 import * as React from 'react'
 import { GlassEffectSwitch } from './ui/switch'
 import ColorPicker from './ColorPicker'
-import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { ChevronUp, ChevronDown } from 'lucide-react';
+import { updateUser } from '@/server/user'
 
 import {
   Select,
@@ -25,6 +26,8 @@ interface SideBarContentProps {
 }
 const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
   const user = getCurrentUser()
+  
+
   let contentToDisplay = ''
   if (params.settingsID === 'general') {
     contentToDisplay = 'general' // Display general settings
@@ -37,19 +40,38 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
   } else if (params.settingsID === 'privacy') {
     contentToDisplay = 'privacy' // Display privacy settings
   }
+// Avatar script
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setAvatarPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
 
-  const toggleColorPicker = () => {
-    setIsOpen(!isOpen);
+  const handleSaveSubmit = async (formData: FormData, id: number) => {
+    
+    const result = await updateUser(formData, id)
+    console.log(result.message)
+  }
+
+
+
+  
+  const resetAvatar = () => {
+    setAvatarPreview(null);
   };
 
-  // const handleNewProfilePicture = () => {
-  //   const newProfilePictureText = ''
-  //   const newProfilePictureID = document.getElementById('newProfilePictureID').value;
-
-  //   console.log("value changed")
+  // const handleSuhandleSaveAvatarSubmitbmit = async (formData: FormData) => {
+  //     const result = await updateUser(formData)
   // }
+
 
   return (
     <>
@@ -101,6 +123,8 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
 
       {/* Avatar Settings */}
       {contentToDisplay === 'avatar' && (
+      <form className='mt-3'>
+
         <div className='ml-6 flex h-full w-full flex-col text-[1.4rem] font-bold'>
           <h1>Avatar</h1>
 
@@ -108,32 +132,54 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
             This is where you can change your avatar to your liking. The image
             must be 184x184.
           </p>
-          <div className='mt-6 flex gap-5'>
+          <div className='mt-6 flex gap-5 w-full'>
             <img
-              src={(user?.profilePic as string) || undefined}
+              src={avatarPreview || user?.profilePic}
+              width={184}
+              height={184}
+              // className="w-[184px] h-[184px]"
+              alt='Avatar'
+            ></img>
+            <div className='w-[128px] h-[128px]'>
+<img
+              src={avatarPreview || user?.profilePic}
               width={128}
               height={128}
               // className="w-[184px] h-[184px]"
               alt='Avatar'
             ></img>
-            <div className='flex w-[50%] gap-1.5'>
-              <Label htmlFor='picture'>Picture</Label>
-              <Input id='picture' type='file' />
+            </div>
+            <div className='w-[64px] h-[64px]'>
+            <img
+              src={avatarPreview || user?.profilePic}
+              width={64}
+              height={64}
+              // className="w-[184px] h-[184px]"
+              alt='Avatar'
+            ></img>
+            </div>
+            <div className='flex w-[30%] gap-1.5 flex-col'>
+            <label
+            htmlFor="picture"
+            className="cursor-pointer  bg-gradient-to-r from-neutral-700 via-neutral-800 to-neutral-900 px-4 py-2 text-neutral-100 text-sm shadow-md hover:from-neutral-800 hover:to-neutral-950 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-offset-2"
+            >
+              Upload Picture
+            </label>
+              <Input name='profilePic' className='hidden' id='picture' type='file' accept="image/*"
+          onChange={handleAvatarChange}
+ />
+      <p className='text-sm text-center font-normal text-neutral-600'>Upload a image by 184x184 from your system</p>
             </div>
           </div>
-          <form className='mt-3'>
-            <section id='avatar'>
-              <div className='ml-3 mt-6'>
-                <Label htmlFor='newAvatar'>New Avatar</Label>
-                <Input type='text' name='newAvatar' className='w-[60%]' />
-              </div>
-            </section>
+            {/* Continue here to add more... */}
             <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
-              <Button variant='secondary'>Save</Button>
-              <Button variant='outline'>Cancel</Button>
+              {/* onClick={handleSaveAvatarSubmit} */}
+              <Button variant='secondary' >Save</Button>
+              <Button variant='outline' onClick={resetAvatar}>Cancel</Button>
+
             </div>
-          </form>
         </div>
+        </form>
       )}
 
       {/* Profile Background Settings */}
@@ -147,16 +193,25 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
           <form className='mt-3'>
             <section id='profileBackground'>
               <div className='flex w-full justify-end'>
-                <div className='w-[250px]'>
-                  <Input
-                    id='picture'
-                    type='file'
-                    className='flex w-full justify-end'
-                  />
+                <div className='w-full'>
+                <label
+            htmlFor="picture"
+            className="cursor-pointer  bg-gradient-to-r from-neutral-700 via-neutral-800 to-neutral-900 px-4 py-2 text-neutral-100 text-sm shadow-md hover:from-neutral-800 hover:to-neutral-950 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-offset-2"
+            >
+              Upload Picture
+            </label>
+              <Input className='hidden' id='picture' type='file' accept="image/*"
+          onChange={handleAvatarChange}
+ />
                 </div>
               </div>
               <div className='mt-6 h-full w-full'>
-                <img src='https://placehold.co/600x400'></img>
+                <img 
+                src={avatarPreview || 'https://placehold.co/600x400'}
+                
+                >
+
+                </img>
               </div>
             </section>
             <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
@@ -222,23 +277,24 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                     <div className='flex h-full w-full flex-col'>
                       <h1 className='text-xl font-medium'>Color</h1>
                     </div>
+
                     {/* Selection */}
-                    <div className='mr-3 flex items-center'>
+                    <div className='mr-3 flex items-center gap-4'>
                       <Select>
                         <SelectTrigger className='w-[140px]'>
                           <SelectValue placeholder='Manual' />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value='apple'>Dark</SelectItem>
-                            <SelectItem value='banana'>Light</SelectItem>
+                            <SelectItem value='apple' disabled>Manual</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
+                      <ChevronUp></ChevronUp>
                     </div>
                   </div>
 
-                  <div>
+                  <div className='hidden'>
                     {/* Color picker templates  */}
                     <div className='flex w-full h-full items-start '>
                       <ColorPicker />

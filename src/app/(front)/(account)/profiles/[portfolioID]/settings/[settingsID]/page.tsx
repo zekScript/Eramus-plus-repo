@@ -11,7 +11,7 @@ export default function SettingsPage() {
   const user = getCurrentUser()
 
   useEffect(() => {
-    // Redirect to /general if the current path doesn't include these routes below
+    // Redirect to /general if the current path doesn't include these routers
     if (
       !(
         pathname.includes('/general') ||
