@@ -35,22 +35,22 @@ export default function SideBar() {
             General
           </NavLink>
 
-          <NavLink
+          {/* <NavLink
             navigateTo={`/profiles/${user?.id}/settings/avatar`}
             exact
             scroll={false}
             className='flex justify-start rounded-full px-3 py-1.5 text-slate-500 hover:text-indigo-500 [&.active]:bg-gradient-to-l [&.active]:from-transparent [&.active]:to-[#3d4450] [&.active]:bg-[length:200%_100%] [&.active]:bg-[position:100%_0] [&.active]:text-indigo-600'
           >
             Avatar
-          </NavLink>
-          <NavLink
+          </NavLink> */}
+          {/* <NavLink
             navigateTo={`/profiles/${user?.id}/settings/profilebackground`}
             exact
             scroll={false}
             className='flex justify-start rounded-full px-3 py-1.5 text-slate-500 hover:text-indigo-500 [&.active]:bg-gradient-to-l [&.active]:from-transparent [&.active]:to-[#3d4450] [&.active]:bg-[length:200%_100%] [&.active]:bg-[position:100%_0] [&.active]:text-indigo-600'
           >
             Profile Background
-          </NavLink>
+          </NavLink> */}
           <NavLink
             navigateTo={`/profiles/${user?.id}/settings/theme`}
             exact

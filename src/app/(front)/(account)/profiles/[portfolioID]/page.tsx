@@ -1,19 +1,18 @@
 import { Button } from '@/components/ui/button'
 import BlogCard from '@/components/blogCard'
 import { blogPostSources } from '@/config/site'
-import Link from 'next/link'
+import { findUserById } from '@/server/user'
 
-// import { useParams } from 'next/navigation'
-// interface ProfileProps {
-//   params: { portfolioID: string }
-// }
-// { params }: ProfileProps
-export default function Profiles() {
-  // const profiles = await getProfileById(params.portfolioID)
+interface ProfileProps {
+  params: { portfolioID: string }
+}
 
-  // if (!profiles) {
-  //   return <NotFound />
-  // }
+export default async function  Profiles({ params }: ProfileProps) {
+
+  const profileID: number = parseInt(params.portfolioID, 10) 
+  
+  const profiles: any = await findUserById(profileID)
+  
 
   return (
     <div className='m-auto h-full w-[90%] justify-center'>
@@ -21,7 +20,7 @@ export default function Profiles() {
         {/* Avatar */}
         <div className='mb-4 ml-4 mr-6 mt-4 flex'>
           <img
-            // src={profiles.profilePic ?? undefined}
+            src={profiles.profilePic ?? undefined}
             width={210}
             height={200}
             alt='Avatar'
@@ -29,35 +28,23 @@ export default function Profiles() {
           />
           {/* User Details */}
           <div className='ml-8 mt-4 flex h-full w-[95%] flex-col'>
-            <h1 className='text-3xl font-bold'></h1>
-            {/* {profiles.name} */}
-            {/* {profiles?.name} */}
-            <p className='text-break mt-4 text-sm'>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia
-              distinctio animi vero incidunt ullam expedita provident ut at enim
-              voluptatem. Eum repudiandae dignissimos excepturi necessitatibus,
-              optio repellat quas officia ipsa!
+            <h1 className='text-3xl font-bold'>{profiles?.name}</h1>
+            <p className='text-break mt-4 text-md'>
+            {profiles?.bio ? profiles.bio : <p className="text-red-500">No bio information available yet</p>}
             </p>
-            <Button variant='link' className='ml-0 w-full justify-start'>
+            {/* <Button variant='link' className='ml-0 w-full justify-start'>
               View more info
-            </Button>
+            </Button> */}
           </div>
-          <div className='flex w-[30%] flex-col'>
-            <div className='mt-3 flex h-full items-center justify-center'>
-              <p className='flex h-full items-center'>Level</p>
-              <div className='ml-1 rounded-[100%] border-gray-600'>
-                <p className='m-1'>0</p>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </div>
       {/* Recent posts by this user */}
       <div className='mt-12'>
         <div className='mb-12 flex w-[92%] border-b-2 border-indigo-500'>
-          <Link className='mb-2 text-2xl font-medium' href='/'>
+          {/* <Link className='mb-2 text-2xl font-medium' href='/profiles/[USERID]/all-posts'>
             All posts
-          </Link>
+          </Link> */}
         </div>
         <div className='grid h-full w-full grid-cols-1 overflow-hidden lg:grid-cols-3'>
           <BlogCard blogItems={blogPostSources.blogItems} />

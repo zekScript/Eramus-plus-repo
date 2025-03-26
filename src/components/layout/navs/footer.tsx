@@ -18,7 +18,7 @@ const Footer: React.FC<Props> = ({ className }) => {
         <Separator orientation='horizontal' />
       </div>
 
-      <div className='ml-7 mt-14 w-[40%]'>
+      <div className='mt-14 w-[40%]'>
         <h2 className='mb-7 text-xl font-bold'>
           Website designed by Armandas Latanauskas
         </h2>
@@ -50,7 +50,7 @@ const Footer: React.FC<Props> = ({ className }) => {
         </div>
       </div>
 
-      <div className='container flex h-full flex-col items-end justify-between gap-1 md:flex-row md:items-center'>
+      <div className='flex h-full flex-col items-end justify-between gap-1 md:flex-row md:items-center'>
         <Icons.logo className='w-40 fill-primary' />
 
         <div className='mt-1 flex flex-col items-start gap-x-4 md:mt-0 md:flex-row md:items-center'>

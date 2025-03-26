@@ -159,7 +159,9 @@ export function TopBar() {
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => router.push('/support')}>
+                  <DropdownMenuItem
+                    onClick={() => router.push('/profiles/5/support')}
+                  >
                     <Headset />
                     <span>Support</span>
                   </DropdownMenuItem>

@@ -25,7 +25,7 @@ model User {
   followersCount Int        @default(0)
   followingCount Int        @default(0)
   postsCount     Int        @default(0)
-  profilePic     String?    @default("https://i.pinimg.com/564x/9f/e2/43/9fe24317d8363d84b3eb3b93b9c756ae.jpg")
+  profilePic     String?    @default("https://t3.ftcdn.net/jpg/06/97/24/84/360_F_697248427_3i5BB12ezUHJ1LUj3EbroqkwpSkpBh9J.jpg")
   bio            String?
   posts          Post[]
   Settings       Settings[]

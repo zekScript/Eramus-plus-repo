@@ -49,15 +49,17 @@ export async function createUser(formData: FormData) {
 }
 
 export async function updateUser(formData: FormData, id: number) {
-  const name = formData.get('name') as string
-  const email = formData.get('email') as string
-  const password = formData.get('password') as string
+  const name = formData.get('newName') as string
+  const textAbout = formData.get('textAbout') as string
+
+  if(textAbout.length > 250){
+    return { success: false, message: 'Bio is too long, please keep it under 250 characters.' }
+  }
 
   try {
-    const hashedPassword = await hashPassword(password)
     await prisma.user.update({
       where: { id },
-      data: { name, email, password: hashedPassword },
+      data: { name: name, bio: textAbout },
     })
     return { success: true, message: 'User updated successfully.' }
   } catch (error) {
@@ -115,7 +117,7 @@ export async function loginUser(formData: FormData) {
     bio: user.bio,
   }
 
-  const token = jwt.sign(tokenPayload, secretToken)
+  const token = jwt.sign(tokenPayload, secretToken, { expiresIn: '62d' })
 
   return isValid
     ? {
@@ -126,4 +128,11 @@ export async function loginUser(formData: FormData) {
     : { success: false, message: 'Incorrect password.' }
 }
 
-// Get all users according to id
+export async function findUserById (id: number) {
+  // if(!id){
+  //   return { success: false, message: 'Wooooooooooooooooow no user here' }
+  // }
+  return await prisma.user.findUnique({ where: { id  } })
+
+  
+}
