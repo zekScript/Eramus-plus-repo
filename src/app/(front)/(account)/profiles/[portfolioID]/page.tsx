@@ -14,65 +14,58 @@ export default async function Profiles({ params }: ProfileProps) {
   const profiles: any = await findUserById(profileID)
 
   return (
-    <div className='m-auto h-full w-[90%] justify-center '>
-      
-        <div className='flex h-full w-full '>
-          {/* Avatar */}
-          <div className='mb-4 ml-4 mr-6 mt-4 flex'>
-            <img
-              src={profiles.profilePic ?? undefined}
-              width={210}
-              height={200}
-              alt='Avatar'
-              className='rounded-[100%]'
-            />
-            {/* User Details */}
+    <div className='m-auto h-full w-[90%] justify-center'>
+      <div className='flex h-full w-full'>
+        {/* Avatar */}
+        <div className='mb-4 ml-4 mr-6 mt-4 flex'>
+          <img
+            src={profiles.profilePic ?? undefined}
+            width={210}
+            height={200}
+            alt='Avatar'
+            className='rounded-[100%]'
+          />
+          {/* User Details */}
 
-            <div className='ml-8 mt-4 flex h-full w-[95%] flex-col'>
-              <h1 className='text-3xl font-bold'>{profiles?.name}</h1>
-    {!isPrivate ? (
-      <div>
-              <p className='text-break text-md mt-4'>
-                {profiles?.bio ? (
-                  profiles.bio
-                ) : (
-                  <p className='text-red-500'>
-                    No bio information available yet
-                  </p>
-                )}
-              </p>
+          <div className='ml-8 mt-4 flex h-full w-[95%] flex-col'>
+            <h1 className='text-3xl font-bold'>{profiles?.name}</h1>
+            {!isPrivate ? (
+              <div>
+                <p className='text-break text-md mt-4'>
+                  {profiles?.bio ? (
+                    profiles.bio
+                  ) : (
+                    <p className='text-red-500'>
+                      No bio information available yet
+                    </p>
+                  )}
+                </p>
               </div>
-    ) : (
-          <p className='text-red-500 mt-4'>
-           This profile is set to private by {profiles?.name}
-          </p>
-    )}
-              
+            ) : (
+              <p className='mt-4 text-red-500'>
+                This profile is set to private by {profiles?.name}
+              </p>
+            )}
 
-              
-              {/* <Button variant='link' className='ml-0 w-full justify-start'>
+            {/* <Button variant='link' className='ml-0 w-full justify-start'>
             View more info
           </Button> */}
-            </div>
           </div>
         </div>
-      
-
-      
-
+      </div>
 
       {!isPrivate ? (
         <div className='mt-12'>
-        <div className='mb-12 flex w-[92%] border-b-2 border-indigo-500'>
-          {/* <Link className='mb-2 text-2xl font-medium' href='/profiles/[USERID]/all-posts'>
+          <div className='mb-12 flex w-[92%] border-b-2 border-indigo-500'>
+            {/* <Link className='mb-2 text-2xl font-medium' href='/profiles/[USERID]/all-posts'>
             All posts
           </Link> */}
+          </div>
+          <div className='grid h-full w-full grid-cols-1 overflow-hidden lg:grid-cols-3'>
+            <BlogCard blogItems={blogPostSources.blogItems} />
+          </div>
         </div>
-        <div className='grid h-full w-full grid-cols-1 overflow-hidden lg:grid-cols-3'>
-          <BlogCard blogItems={blogPostSources.blogItems} />
-        </div>
-      </div>
-      ): (
+      ) : (
         <span></span>
       )}
     </div>
