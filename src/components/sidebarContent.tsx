@@ -13,7 +13,6 @@ import { findUserById, updateUser } from '@/server/user'
 import { useTheme } from 'next-themes'
 import { usePathname } from 'next/navigation'
 
-
 import {
   Select,
   SelectContent,
@@ -27,39 +26,50 @@ interface SideBarContentProps {
     settingsID: string
   }
 }
+
+interface UserProfile {
+  name: string
+  id: number
+  password: string
+  email: string
+  accessAdmin: boolean | null
+  createdAt: Date
+  updatedAt: Date
+  role: string
+  followersCount: number
+  followingCount: number
+  postsCount: number
+  profilePic: string | null
+  bio: string | null
+}
 const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
   const [feedback, setFeedback] = useState({ success: false, message: '' })
   const [charCounter, setCharCounter] = useState(0)
   const { setTheme } = useTheme()
+  const pathname = usePathname()
+  const segments = pathname.split('/')
+  const userId = parseInt(segments[2], 10)
+
+  useEffect(() => {
+    findUserById(userId)
+      .then((user) => {
+        return setProfileSettingsCurrentUser(user) // Store resolved value in state
+      })
+      .catch((error) => {
+        console.error('Error fetching user:', error)
+      })
+  }, [userId])
 
   const [isOpen, setIsOpen] = useState(false) // State to manage dropdown visibility
 
   const handleChevronClick = () => {
     setIsOpen((prev) => !prev) // Toggle the dropdown open/close
   }
+  const [profileSettingsCurrentUser, setProfileSettingsCurrentUser] =
+    useState<UserProfile | null>(null)
 
- 
-
-  const user = getCurrentUser()
-  const [name, setName] = useState(user?.name)
-  interface UserProfile {
-    name: string;
-    id: number;
-    password: string;
-    email: string;
-    accessAdmin: boolean | null;
-    createdAt: Date;
-    updatedAt: Date;
-    role: string;
-    followersCount: number;
-    followingCount: number;
-    postsCount: number;
-    profilePic: string | null;
-    bio: string | null;
-  }
-  
-  const [profileSettingsCurrentUser, setProfileSettingsCurrentUser] = useState<UserProfile | null>(null);
-
+  const [name, setName] = useState(profileSettingsCurrentUser?.name)
+  const [privacy, setPrivacy] = useState('public')
 
   let contentToDisplay = ''
   if (params.settingsID === 'general') {
@@ -73,8 +83,6 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
   } else if (params.settingsID === 'privacy') {
     contentToDisplay = 'privacy' // Display privacy settings
   }
-  // Avatar script
-  // const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
 
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -90,20 +98,9 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
     setTheme('' + value)
   }
 
-
-const pathname = usePathname();
-const segments = pathname.split("/");
-const userId = parseInt(segments[2], 10);
-
-useEffect(() => {
-  findUserById(userId)
-    .then((user) => {
-      return setProfileSettingsCurrentUser(user) // Store resolved value in state
-    })
-    .catch((error) => {
-      console.error("Error fetching user:", error);
-    });
-}, [userId]);
+  const handleSelectChangePrivacy = (value: string) => {
+    setPrivacy('' + value)
+  }
 
   return (
     <>
@@ -115,8 +112,9 @@ useEffect(() => {
             This is where you can change your custom name, Bio, and more.
           </p>
           <form
-            action={(formData) => handleSubmit(formData, user?.id as number)}
-            
+            action={(formData) =>
+              handleSubmit(formData, profileSettingsCurrentUser?.id as number)
+            }
           >
             <section id='general'>
               <div className='ml-3 w-[100%] space-y-4'>
@@ -136,7 +134,9 @@ useEffect(() => {
                   name='textAbout'
                   placeholder='I like to eat pizza...'
                 />
-                <p className='text-end text-[20px] font-normal'>{charCounter} / 500</p>
+                <p className='text-end text-[20px] font-normal'>
+                  {charCounter} / 500
+                </p>
               </div>
               <div className='mt-4'>
                 {/* Settings for optimization && styling*/}
@@ -401,7 +401,7 @@ useEffect(() => {
                 >
                   <div className='flex'>
                     <h1 className='mb-3'>My profile:</h1>
-                    <Select>
+                    <Select onValueChange={handleSelectChangePrivacy}>
                       <SelectTrigger className='w-[100px] border-none'>
                         <span className='text-indigo-500'>Public</span>
                       </SelectTrigger>

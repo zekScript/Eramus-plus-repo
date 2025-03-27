@@ -25,6 +25,8 @@ model User {
   followersCount Int        @default(0)
   followingCount Int        @default(0)
   postsCount     Int        @default(0)
+  isPrivate      Boolean    @default(false)
+  colorTheme     String     @default("#fff")
   profilePic     String?    @default("https://t3.ftcdn.net/jpg/06/97/24/84/360_F_697248427_3i5BB12ezUHJ1LUj3EbroqkwpSkpBh9J.jpg")
   bio            String?
   posts          Post[]
@@ -40,7 +42,7 @@ model Post {
   createdAt DateTime @default(now()) @map("created_at")
   published Boolean  @default(false)
   updatedAt DateTime @updatedAt
-  Author    User     @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id])
   authorId  Int
 
   @@index([slug])

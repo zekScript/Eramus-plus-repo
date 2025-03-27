@@ -1,8 +1,7 @@
 'use client'
 import ColorPalletes from './colorPalletes'
 import { useState, useRef } from 'react'
-import { Button } from "@/components/ui/button"
-
+import { Button } from '@/components/ui/button'
 
 const ColorPicker = () => {
   const colorInputRef = useRef<HTMLInputElement | null>(null) // Reference to the hidden input
@@ -40,12 +39,7 @@ const ColorPicker = () => {
             </div>
             {/* Selection */}
             <div className='mr-3 flex items-center'>
-              <Button
-                onClick={handleButtonClick}
-                
-              >
-                Select Color
-              </Button>
+              <Button onClick={handleButtonClick}>Select Color</Button>
 
               {/* Hidden color input */}
               <input

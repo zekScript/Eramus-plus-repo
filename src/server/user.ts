@@ -52,8 +52,11 @@ export async function updateUser(formData: FormData, id: number) {
   const name = formData.get('newName') as string
   const textAbout = formData.get('textAbout') as string
 
-  if(textAbout.length > 250){
-    return { success: false, message: 'Bio is too long, please keep it under 250 characters.' }
+  if (textAbout.length > 250) {
+    return {
+      success: false,
+      message: 'Bio is too long, please keep it under 250 characters.',
+    }
   }
 
   try {
@@ -93,12 +96,6 @@ export async function loginUser(formData: FormData) {
   if (!email || !password)
     return { success: false, message: 'Email and password required.' }
 
-  if (!secretToken) {
-    throw new Error(
-      'SESSION_SECRET is not defined in the environment variables.'
-    )
-  }
-
   const user = await findUserByEmail(email)
   if (!user) return { success: false, message: 'Invalid email or password.' }
 
@@ -128,11 +125,9 @@ export async function loginUser(formData: FormData) {
     : { success: false, message: 'Incorrect password.' }
 }
 
-export async function findUserById (id: number) {
+export async function findUserById(id: number) {
   // if(!id){
   //   return { success: false, message: 'Wooooooooooooooooow no user here' }
   // }
-  return await prisma.user.findUnique({ where: { id  } })
-
-  
+  return await prisma.user.findUnique({ where: { id } })
 }
