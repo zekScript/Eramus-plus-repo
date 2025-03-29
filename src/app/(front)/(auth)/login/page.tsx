@@ -15,7 +15,7 @@ export default function LoginPage() {
   const handleSubmit = async (formData: FormData) => {
     const result = await loginUser(formData)
     if (result.success) {
-      document.cookie = `authToken=${result.token}; path=/` // Store token in a cookie
+      document.cookie = `authToken=${result.token}; { expires: 62, path: '/' }` // Store token in a cookie
       router.push('/') // Redirect to home page
     } else {
       setFeedback(result)

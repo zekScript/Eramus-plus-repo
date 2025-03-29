@@ -5,6 +5,13 @@ import { Button } from './ui/button'
 import { Textarea } from './ui/textarea'
 import { getCurrentUser } from '@/server/currentUser'
 import * as React from 'react'
+import { GlassEffectSwitch } from './ui/switch'
+import ColorPicker from './ColorPicker'
+import { useState, useEffect } from 'react'
+import { ChevronUp, ChevronDown } from 'lucide-react'
+import { findUserById, updateUser } from '@/server/user'
+import { useTheme } from 'next-themes'
+import { usePathname } from 'next/navigation'
 
 import {
   Select,
@@ -12,14 +19,58 @@ import {
   SelectGroup,
   SelectItem,
   SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select'
 interface SideBarContentProps {
   params: {
     settingsID: string
   }
 }
+
+interface UserProfile {
+  name: string
+  id: number
+  password: string
+  email: string
+  accessAdmin: boolean | null
+  createdAt: Date
+  updatedAt: Date
+  role: string
+  followersCount: number
+  followingCount: number
+  postsCount: number
+  profilePic: string | null
+  bio: string | null
+}
 const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
-  const user = getCurrentUser()
+  const [feedback, setFeedback] = useState({ success: false, message: '' })
+  const [charCounter, setCharCounter] = useState(0)
+  const { setTheme } = useTheme()
+  const pathname = usePathname()
+  const segments = pathname.split('/')
+  const userId = parseInt(segments[2], 10)
+
+  useEffect(() => {
+    findUserById(userId)
+      .then((user) => {
+        return setProfileSettingsCurrentUser(user) // Store resolved value in state
+      })
+      .catch((error) => {
+        console.error('Error fetching user:', error)
+      })
+  }, [userId])
+
+  const [isOpen, setIsOpen] = useState(false) // State to manage dropdown visibility
+
+  const handleChevronClick = () => {
+    setIsOpen((prev) => !prev) // Toggle the dropdown open/close
+  }
+  const [profileSettingsCurrentUser, setProfileSettingsCurrentUser] =
+    useState<UserProfile | null>(null)
+
+  const [name, setName] = useState(profileSettingsCurrentUser?.name)
+  const [privacy, setPrivacy] = useState('public')
+
   let contentToDisplay = ''
   if (params.settingsID === 'general') {
     contentToDisplay = 'general' // Display general settings
@@ -33,50 +84,77 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
     contentToDisplay = 'privacy' // Display privacy settings
   }
 
-  // const handleNewProfilePicture = () => {
-  //   const newProfilePictureText = ''
-  //   const newProfilePictureID = document.getElementById('newProfilePictureID').value;
+  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    setName(e.target.value)
+  }
 
-  //   console.log("value changed")
-  // }
+  const handleSubmit = async (formData: FormData, id: number) => {
+    const result = await updateUser(formData, id)
+    console.log(result.message)
+  }
+
+  const handleSelectChange = (value: string) => {
+    setTheme('' + value)
+  }
+
+  const handleSelectChangePrivacy = (value: string) => {
+    setPrivacy('' + value)
+  }
 
   return (
     <>
       {/* General Settings */}
       {contentToDisplay === 'general' && (
-        <div className='ml-6 flex h-full w-full flex-col text-[1.4rem] font-bold'>
+        <div className='ml-6 flex h-full w-full flex-col space-y-4 text-[1.4rem] font-bold'>
           <h1>General Settings</h1>
-          <p className='mt-3 text-sm font-medium text-gray-600'>
+          <p className='text-sm font-medium text-gray-600'>
             This is where you can change your custom name, Bio, and more.
           </p>
-          <form className='mt-3'>
+          <form
+            action={(formData) =>
+              handleSubmit(formData, profileSettingsCurrentUser?.id as number)
+            }
+          >
             <section id='general'>
-              <div className='ml-3 mt-6 w-[60%] gap-y-4'>
+              <div className='ml-3 w-[100%] space-y-4'>
                 <Label htmlFor='newName'>Name</Label>
-                <Input type='text' name='newName' value={user?.name} />
+                <Input
+                  type='text'
+                  name='newName'
+                  onChange={handleChangeName}
+                  defaultValue={profileSettingsCurrentUser?.name}
+                />
 
                 <Label>About you</Label>
                 <Textarea
+                  maxLength={500}
+                  defaultValue={profileSettingsCurrentUser?.bio || ''}
+                  onChange={(e) => setCharCounter(e.target.value.length)}
                   name='textAbout'
                   placeholder='I like to eat pizza...'
                 />
+                <p className='text-end text-[20px] font-normal'>
+                  {charCounter} / 500
+                </p>
               </div>
-              <div>
+              <div className='mt-4'>
                 {/* Settings for optimization && styling*/}
                 <h1>Optimization & styling</h1>
-                <p className='mt-3 text-sm font-medium text-gray-600'>
+                <p className='text-sm font-medium text-gray-600'>
                   If you feel you want to optimize abit and make a different
                   website experience
                 </p>
-                <p className='mt-3 text-sm font-medium text-gray-600'>
+                <p className='text-sm font-medium text-gray-600'>
                   Note: This feature could be buggy so if you find any bugs
                   please contact us on support
                 </p>
                 {/* Options */}
                 <h3>Optimization</h3>
-                <div className='mt-3 font-serif text-sm font-thin'>
-                  <p>Animations: </p>
-                  <p>Images: </p>
+                <div className='mt-3 space-y-3 text-[20px] font-normal'>
+                  {/* <p>Animations: </p>
+                  <p>Images: </p> */}
+                  <p>Coming Soon!</p>
                 </div>
               </div>
             </section>
@@ -89,41 +167,71 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
       )}
 
       {/* Avatar Settings */}
-      {contentToDisplay === 'avatar' && (
-        <div className='ml-6 flex h-full w-full flex-col text-[1.4rem] font-bold'>
-          <h1>Avatar</h1>
-
-          <p className='mt-3 text-sm font-medium text-gray-600'>
-            This is where you can change your avatar to your liking. The image
-            must be 184x184.
-          </p>
-          <div className='mt-6 flex gap-5'>
-            <img
-              src={user?.profilePic as string}
-              width={128}
-              height={128}
-              // className="w-[184px] h-[184px]"
-              alt='Avatar'
-            ></img>
-            {/* <Input onChange={handleNewProfilePicture} type='file' id='newProfilePictureID'></Input> */}
+      {/* {contentToDisplay === 'avatar' && (
+        <form action={formAction} className="mt-3">
+      <div className="ml-6 flex h-full w-full flex-col text-[1.4rem] font-bold">
+        <h1>Avatar</h1>
+        <p className="mt-3 text-sm font-medium text-gray-600">
+          This is where you can change your avatar to your liking. The image must be 184x184.
+        </p>
+        <div className="mt-6 flex w-full gap-5">
+          <img
+            src={avatarPreview || user?.profilePic}
+            width={184}
+            height={184}
+            alt="Avatar"
+          />
+          <div className="h-[128px] w-[128px]">
+            <img src={avatarPreview || user?.profilePic} width={128} height={128} alt="Avatar" />
           </div>
-          <form className='mt-3'>
-            <section id='avatar'>
-              <div className='ml-3 mt-6'>
-                <Label htmlFor='newAvatar'>New Avatar</Label>
-                <Input type='text' name='newAvatar' className='w-[60%]' />
-              </div>
-            </section>
-            <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
-              <Button variant='secondary'>Save</Button>
-              <Button variant='outline'>Cancel</Button>
-            </div>
-          </form>
+          <div className="h-[64px] w-[64px]">
+            <img src={avatarPreview || user?.profilePic} width={64} height={64} alt="Avatar" />
+          </div>
+          <div className="flex w-[30%] flex-col gap-1.5">
+            <label
+              htmlFor="picture"
+              className="cursor-pointer bg-gradient-to-r from-neutral-700 via-neutral-800 to-neutral-900 px-4 py-2 text-sm text-neutral-100 shadow-md hover:from-neutral-800 hover:to-neutral-950 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-offset-2"
+            >
+              Upload Picture
+            </label>
+            <input type="hidden" name="userId" value={user?.id} />
+            <input
+              name="profilePic"
+              className="hidden"
+              id="picture"
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+            />
+            <p className="text-center text-sm font-normal text-neutral-600">
+              Upload an image (184x184) from your system.
+            </p>
+          </div>
         </div>
-      )}
+        <div className="mr-4 mt-4 flex w-full justify-end gap-2">
+          <button type="submit" className="px-4 py-2 bg-blue-500 text-white">Save</button>
+          <button type="button" className="px-4 py-2 border" onClick={() => setAvatarPreview(null)}>Cancel</button>
+        </div>
+      </div>
+
+      {feedback.message && (
+            <div
+              className={`mt-4 w-full rounded-md p-3 text-center ${
+                feedback.success
+                  ? 'bg-green-100 text-green-700'
+                  : 'bg-red-100 text-red-700'
+              }`}
+            >
+              {feedback.message}
+            </div>
+          )}
+    </form>
+
+    
+      )} */}
 
       {/* Profile Background Settings */}
-      {contentToDisplay === 'profilebackground' && (
+      {/* {contentToDisplay === 'profilebackground' && (
         <div className='ml-6 flex h-full w-full flex-col text-[1.4rem] font-bold'>
           <h1>Profile Background</h1>
           <p className='mt-3 text-sm font-medium text-gray-600'>
@@ -132,9 +240,30 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
           </p>
           <form className='mt-3'>
             <section id='profileBackground'>
-              <div className='ml-3 mt-6'>
-                <Label htmlFor='newBackground'>New Background</Label>
-                <Input type='text' name='newBackground' className='w-[60%]' />
+              <div className='flex w-full justify-end'>
+                <div className='w-full'>
+                  <label
+                    htmlFor='picture'
+                    className='cursor-pointer bg-gradient-to-r from-neutral-700 via-neutral-800 to-neutral-900 px-4 py-2 text-sm text-neutral-100 shadow-md hover:from-neutral-800 hover:to-neutral-950 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-offset-2'
+                  >
+                    Upload Picture
+                  </label>
+                  <Input
+                    className='hidden'
+                    id='picture'
+                    type='file'
+                    accept='image/*'
+                    onChange={handleAvatarChange}
+                  />
+                </div>
+              </div>
+              <div className='mt-6 h-full w-full'>
+                <img
+                  src={
+                    avatarPreview ||
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpYdAVog761Bm7DbPNApHtkl4TxGlz3Ry0Cw&s'
+                  }
+                ></img>
               </div>
             </section>
             <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
@@ -143,18 +272,89 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
             </div>
           </form>
         </div>
-      )}
+      )} */}
 
       {/* Theme Settings */}
       {contentToDisplay === 'theme' && (
         <div className='ml-6 flex h-full w-full flex-col text-[1.4rem] font-bold'>
           <h1>Custom Themes</h1>
           <p className='mt-3 text-sm font-medium text-gray-600'>
-            This is where you can change themes like transparency, colors, and
-            animations to your liking.
+            You can change custom theme colors. also you can change what theme
+            mode you prefer
           </p>
           <form className='mt-3'>
-            <div>{/* Theme color picker */}</div>
+            {/* Whole container */}
+            <div className='mt-3 h-full w-full'>
+              {/* Container */}
+
+              <div className='border-settings mt-3 flex h-full w-full p-6'>
+                <div className='h-full w-full'>
+                  <h1 className='text-xl font-medium'>Choose your mode</h1>
+                  <p className='text-sm font-thin'>
+                    Change the colors that appear on your site
+                  </p>
+                </div>
+                {/* Selection */}
+                <div className='mr-3 flex items-center'>
+                  <Select onValueChange={handleSelectChange}>
+                    <SelectTrigger className='w-[140px]'>
+                      <SelectValue placeholder='Dark' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value='dark'>Dark</SelectItem>
+                        <SelectItem value='light'>Light</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className='border-settings mt-3 flex h-full w-full p-6'>
+                <div className='flex h-full w-full flex-col'>
+                  <div className='flex h-full w-full'>
+                    <div className='flex h-full w-full flex-col'>
+                      <h1 className='text-xl font-medium'>Color</h1>
+                    </div>
+
+                    {/* Selection */}
+                    <div className='mr-3 flex items-center gap-4'>
+                      <Select onOpenChange={setIsOpen}>
+                        <SelectTrigger className='w-[140px]'>
+                          <SelectValue placeholder='Manual' />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value='apple' disabled>
+                              Manual
+                            </SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      {/* Chevron button */}
+                      <div
+                        onClick={handleChevronClick}
+                        className='cursor-pointer'
+                      >
+                        {isOpen ? <ChevronUp /> : <ChevronDown />}{' '}
+                        {/* Toggle Chevron based on isOpen */}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Expanded content */}
+
+                  <div>
+                    {/* Color picker templates  */}
+                    {isOpen && (
+                      <div className='flex h-full w-full items-start'>
+                        <ColorPicker />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
               <Button variant='secondary'>Save</Button>
               <Button variant='outline'>Cancel</Button>
@@ -201,7 +401,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                 >
                   <div className='flex'>
                     <h1 className='mb-3'>My profile:</h1>
-                    <Select>
+                    <Select onValueChange={handleSelectChangePrivacy}>
                       <SelectTrigger className='w-[100px] border-none'>
                         <span className='text-indigo-500'>Public</span>
                       </SelectTrigger>

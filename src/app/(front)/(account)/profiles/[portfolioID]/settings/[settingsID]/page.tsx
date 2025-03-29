@@ -1,16 +1,48 @@
 'use client'
 import SideBar from '@/components/sidebar'
 import { Button } from '@/components/ui/button'
-import { getCurrentUser } from '@/server/currentUser'
 import { usePathname, useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { findUserById } from '@/server/user'
+import { getCurrentUser } from '@/server/currentUser'
+
+interface UserProfile {
+  name: string
+  id: number
+  password: string
+  email: string
+  accessAdmin: boolean | null
+  createdAt: Date
+  updatedAt: Date
+  role: string
+  followersCount: number
+  followingCount: number
+  postsCount: number
+  profilePic: string | null
+  bio: string | null
+}
+
 export default function SettingsPage() {
-  const pathname = usePathname()
   const router = useRouter()
-  const user = getCurrentUser()
+  const currentUser = getCurrentUser()
+  const pathname = usePathname()
+  const segments = pathname.split('/')
+  const userId = parseInt(segments[2], 10)
+  const [profileSettingsCurrentUser, setProfileSettingsCurrentUser] =
+    useState<UserProfile | null>(null)
 
   useEffect(() => {
-    // Redirect to /general if the current path doesn't include '/general'
+    findUserById(userId)
+      .then((user) => {
+        return setProfileSettingsCurrentUser(user) // Store resolved value in state
+      })
+      .catch((error) => {
+        console.error('Error fetching user:', error)
+      })
+  }, [userId])
+
+  useEffect(() => {
+    // Redirect to /general if the current path doesn't include these routers
     if (
       !(
         pathname.includes('/general') ||
@@ -21,9 +53,18 @@ export default function SettingsPage() {
         pathname.includes('/privacy')
       )
     ) {
-      router.push(`/profiles/${user?.id}/settings/general`)
+      router.push(`/profiles/${currentUser?.id}/settings/general`)
     }
   }, [pathname, router])
+
+  if (
+    profileSettingsCurrentUser &&
+    currentUser &&
+    profileSettingsCurrentUser.id !== currentUser.id
+  ) {
+    router.push(`/profiles/${currentUser.id}/settings/general`)
+    console.log('Redirecting unauthorized user...')
+  }
 
   return (
     <>
@@ -32,7 +73,7 @@ export default function SettingsPage() {
           {/* Avatar */}
           <div className='mb-4 ml-4 mr-6 mt-4 flex'>
             <img
-              src={user?.profilePic as string}
+              src={profileSettingsCurrentUser?.profilePic as string}
               width={128}
               height={128}
               // className="w-[184px] h-[184px]"
@@ -43,18 +84,20 @@ export default function SettingsPage() {
               <Button
                 variant='link'
                 onClick={() => {
-                  router.push(`/profiles/${user?.id}`)
+                  router.push(`/profiles/${profileSettingsCurrentUser?.id}`)
                 }}
                 className='text-2xl font-medium'
               >
-                {user?.name}
+                {profileSettingsCurrentUser?.name}
               </Button>
               /
               <Button
                 className='flex h-full items-center text-sm font-normal'
                 variant='link'
                 onClick={() =>
-                  router.push(`/profiles/${user?.id}/settings/general`)
+                  router.push(
+                    `/profiles/${profileSettingsCurrentUser?.id}/settings/general`
+                  )
                 }
               >
                 Edit profile

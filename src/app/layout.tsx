@@ -25,9 +25,9 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        // mt-20
+        // Adjust the body layout to your liking
         className={cn(
-          'relative mt-44 min-h-screen bg-background font-sans antialiased',
+          'relative ml-7 mr-7 mt-44 min-h-screen bg-background font-sans antialiased',
           inter.variable,
           cal.variable
         )}
