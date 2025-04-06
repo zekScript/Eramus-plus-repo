@@ -1,9 +1,9 @@
 'use client'
 
 import { createPost } from '@/server/post'
-import { useEffect, useState } from 'react'
-import { findUserById } from '@/server/user'
+import { useState } from 'react'
 import { usePathname } from 'next/navigation'
+import SidebarForPosts from '@/components/sidebar-for-posts'
 
 interface UserProfile {
   name: string
@@ -23,8 +23,7 @@ interface UserProfile {
 export default function CreatePost() {
   const pathname = usePathname()
   const segments = pathname.split('/')
-  const userId = parseInt(segments[2], 10)
-  console.log(userId)
+  const userId: number = parseInt(segments[2], 10)
 
   const [feedback, setFeedback] = useState({ success: false, message: '' })
 
@@ -42,52 +41,85 @@ export default function CreatePost() {
   }
 
   return (
-    <div className='bg-red-500 w-full h-full'>
-        {/* TODO: Add a sidebar where u can esilly create or edit blog posts and save it as a snipet for later projects */}
-        {/* TODO: add a window where a user can enter text in markdown and color it in markdown */}
-        {/* TODO: and in real time always check how is the output */}
+    <div className='h-full w-full'>
+      {/* NOT FINISHED */}
+      {/* TODO: add a sidebar where u can edit text in real time like word */}
+      {/* TODO: add a window where a user can enter text in markdown and color it in markdown */}
+      {/* TODO: and in real time always check how is the output */}
+      <div className='flex'>
+        {/* Sidebar */}
+        <div className='w-[30%]'>
+          <SidebarForPosts />
+        </div>
+        <div className='h-full w-full bg-neutral-900'>
+          <div>
+            <h1 className='w-[20%] bg-background text-center text-2xl text-foreground'>
+              Input
+            </h1>
+          </div>
 
-{/* Sidebar */}
-<div>
-<p>Hello world</p>
-    <p>Hello world</p>
-    <p>Hello world</p>
-    <p>Hello world</p>
-    <p>Hello world</p>
-    <p>Hello world</p>
-</div>
+          <div className='h-full w-full'>
+            {/* Title input */}
+            <form action={handleSubmit} className='mt-4'>
+              <input type='hidden' name='userID' value={userId}></input>
+              <input
+                name='title'
+                type='text'
+                className='h-[35px] w-full bg-background text-xl'
+                placeholder='Title'
+              />
 
-{/* Input window */}
-<div>
-  <div>
-    {/* Juosta */}
+              <div>
+                <textarea
+                  name='content'
+                  className='h-screen w-full bg-background'
+                  placeholder='Write your blog here ex. trump is great in my opinion because...'
+                ></textarea>
+              </div>
+              <button
+                type='submit'
+                className='mt-4 w-full rounded bg-blue-600 p-2 text-white'
+              >
+                Send data
+              </button>
+            </form>
+            {feedback.message && (
+              <div
+                className={`ml-5 mt-4 w-full p-3 text-start ${
+                  feedback.success ? 'text-green-700' : 'text-red-700'
+                }`}
+              >
+                {feedback.message}
+              </div>
+            )}
+          </div>
+        </div>
 
-  </div>
-  <div>
-    {/* Title input */}
-  </div>
-  <div>
-    {/* Writing window */}
-  </div>
-</div>
-    
+        {/* Input window */}
+        <div className='h-full w-full border-l-2'>
+          <div className='bg-neutral-900'>
+            <h1 className='w-[20%] bg-background text-center text-2xl text-foreground'>
+              Output
+            </h1>
+          </div>
 
-    {/* Output window */}
+          <div className='m-0 h-full w-full'>
+            {/* Title input */}
 
-    <div>
-      
-    </div>
+            <div className='h-screen w-full border-r-2'>
+              {/* Output window */}
+              <div className='flex h-full w-full items-center justify-center text-4xl text-muted'>
+                <h1>This is the final output of your blog</h1>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        {/* Output window */}
+      </div>
     </div>
   )
 }
-
-
-
-
-
-
-
 
 // <div className='m-auto w-[90%] max-w-2xl p-6'>
 //       <h1 className='text-2xl font-bold'>Create a New Blog Post</h1>

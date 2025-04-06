@@ -21,6 +21,23 @@ export async function createPost(formData: FormData) {
     })
     return { success: true, message: 'Post created successfully.' }
   } catch (error) {
-    return { success: false, message: `Error 404: ${console.error(error)}` }
+    return {
+      success: false,
+      message: `Error 404: ${console.error(error)} title: ${title}, content: ${content} userID: ${userID}`,
+    }
   }
 }
+
+export async function findPostById(id: string) {
+  return await prisma.post.findUnique({ where: { id } })
+}
+
+// export async function getMadeByAuthor(){
+
+//   return await prisma.post.findUnique({
+//     where: {
+
+//     },
+//   })
+
+// }

@@ -1,5 +1,4 @@
 'use client'
-import { getCurrentUser } from '@/server/currentUser'
 import SideBarContent from './sidebarContent'
 import { Button } from './ui/button'
 import { useRouter, usePathname } from 'next/navigation'

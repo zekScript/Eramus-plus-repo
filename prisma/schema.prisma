@@ -41,6 +41,9 @@ model Post {
   badge     String?
   createdAt DateTime @default(now()) @map("created_at")
   published Boolean  @default(false)
+  likes     Int      @default(0)
+  dislikes  Int      @default(0)
+  views     Int      @default(0)
   updatedAt DateTime @updatedAt
   author    User     @relation(fields: [authorId], references: [id])
   authorId  Int

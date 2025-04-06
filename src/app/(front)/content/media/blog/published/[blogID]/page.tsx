@@ -1,18 +1,5 @@
-
-
-
-
 const PublicBlogPage: React.FC = () => {
-
-
-
-      return(
-            <>
-            
-            
-            
-            </>
-      )
+  return <></>
 }
 
-export default PublicBlogPage;
+export default PublicBlogPage

@@ -1,26 +1,29 @@
-import prisma from '@/lib/db'
 import Link from 'next/link'
-import { X } from 'lucide-react'
-import { EyeOff } from 'lucide-react';
-import { Pencil } from 'lucide-react';
+import { Settings, X } from 'lucide-react'
+import { EyeOff } from 'lucide-react'
+import { Pencil } from 'lucide-react'
+import { getPostsMadeByYou } from './actions'
+import { findUserById } from '@/server/user'
 
+interface ProfileProps {
+  params: { portfolioID: string }
+}
 
+export default async function BlogPage({ params }: ProfileProps) {
+  const posts = await getPostsMadeByYou()
+  console.log(posts)
 
-export default async function BlogPage() {
-  
-  const posts = await prisma.post.findMany({
-    orderBy: { createdAt: 'desc' },
-  })
+  const profileID: number = parseInt(params.portfolioID, 10)
+
+  const profiles: any = await findUserById(profileID)
 
   const truncateText = (text: string, length: number) =>
     text.length > length ? `${text.slice(0, length)}...` : text
 
-
-
   function timeAgo(date: Date): string {
-    const now: Date = new Date();
-    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-  
+    const now: Date = new Date()
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)
+
     const intervals: { [key: string]: number } = {
       year: 31536000,
       month: 2592000,
@@ -29,91 +32,91 @@ export default async function BlogPage() {
       hour: 3600,
       minute: 60,
       second: 1,
-    };
+    }
 
     if (seconds > intervals.year * 5) {
-      return `Posted on ${date.toLocaleDateString()}`;
+      return `Posted on ${date.toLocaleDateString()}`
     }
-
 
     for (const [unit, value] of Object.entries(intervals)) {
-      const count = Math.floor(seconds / value);
+      const count = Math.floor(seconds / value)
       if (count > 0) {
-        return `Posted ${count} ${unit}${count > 1 ? "s" : ""} ago`;
+        return `Posted ${count} ${unit}${count > 1 ? 's' : ''} ago`
       }
     }
-  
-    return "Just now";
+
+    return 'Just now'
   }
 
-  
-// TODO: ADD PAGINATION HERE
+  // TODO: ADD PAGINATION HERE
   return (
-    <div className='m-auto w-full p-6'>
-      {posts.length === 0 ? (
-        <p>No posts available</p>
-      ) : (
-        posts.map((post) => (
-          <div
-            key={post.id}
-            className='mb-6 flex w-[60%] justify-between border-b pb-4 space-y-6 '
-          >
-            <div className='flex flex-col gap-2'>
+    <div className='m-auto h-full w-[90%] justify-center'>
+      <div className='mt-12'>
+        <div className='mb-12 flex w-[90%] border-b-2 border-indigo-500'>
+          <h1 className='mb-2 text-2xl font-medium'>
+            All posts made by {profiles?.name}
+          </h1>
+        </div>
+        <div className='h-full w-full overflow-hidden'>
+          {posts.length === 0 ? (
+            <p>No posts available</p>
+          ) : (
+            posts.map((post) => (
+              <div>
+                {post.authorId === profiles?.id && (
+                  <div
+                    key={post.id}
+                    className='mb-6 flex w-[80%] justify-between space-x-3 space-y-6 border-b pb-4'
+                  >
+                    <div className='flex flex-col gap-2'>
+                      <div className='w-full'>
+                        {/* <h2 >
+                        {post.title}
+                      </h2> */}
+                        {/* fix it here */}
+                        <Link
+                          href={`/content/media/blog/published/${post.slug}&p=${post.id}`}
+                          className='text-lg font-semibold text-indigo-500'
+                        >
+                          {post.title}
+                        </Link>
+                        <p className='text-sm text-gray-600'>
+                          Posted by {profiles?.name}
+                        </p>
+                        <p className='text-md'>
+                          {timeAgo(new Date(post.createdAt))}
+                        </p>
+                        <p className='font-sm h-full w-full text-sm text-neutral-400'>
+                          {truncateText(post.content, 200)}
+                        </p>
+                      </div>
 
-            <div className='w-full'>
-              <h2 className='text-lg font-semibold text-indigo-500'>
-                {post.title}
-              </h2>
-              <p className='text-sm'>{timeAgo(new Date(post.createdAt))}</p>
-              <p className='font-sm h-full w-full text-sm text-gray-500'>
-                {truncateText(post.content, 200)}
-              </p>
-              
-            </div>
+                      <div className='flex gap-3 text-sm font-semibold text-indigo-500'>
+                        {/* Extra options */}
+                        {/* <Link href='/my-account/stats'>Statistics</Link> */}
+                        {/* <p>Views: 999</p>
+                        <p>Likes: 999</p>
+                        <p>Dislikes: 999</p> */}
+                      </div>
+                    </div>
 
-
-
-            <div className='flex gap-3 text-sm font-semibold text-indigo-500'> 
-              {/* Extra options */}
-<Link href="/stats">Statistics</Link>
-<p>Views: 999</p>
-<p>Likes: 999</p>
-<p>Dislikes: 999</p>
-
-
-
-            </div>
-            </div>
-            
-
-            
-
-            
-
-            <div className='mb-2 text-sm space-y-2'>
-              <Link href="/edit" className={`flex text-sm`}>
-                Edit
-                <span className='ml-2'>
-                  <Pencil size={16}/>
-                </span>
-              </Link>
-
-              <Link href="/hide" className={`flex text-sm`}>
-                Hide
-                <span className='ml-2'>
-                  <EyeOff size={16}/>
-                </span>
-              </Link>
-              <Link href="/delete" className={`flex text-sm`}>
-                Delete
-                <span className='ml-2'>
-                  <X size={16}/>
-                </span>
-              </Link>
-            </div>
-          </div>
-        ))
-      )}
+                    {post.authorId === profiles?.id && (
+                      <div className='mb-2 space-y-2 text-sm'>
+                        <Link
+                          href={`/content/blogitems/edit?p=${post.id}`}
+                          className='flex text-sm'
+                        >
+                          Post Settings
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+      </div>
     </div>
   )
 }

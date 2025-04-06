@@ -22,9 +22,10 @@ import {
   Share2,
   Copy,
   Check,
-  LayoutDashboard,
   Cog,
+  Database,
 } from 'lucide-react'
+import { BarChartIcon } from 'lucide-react'
 
 import {
   DropdownMenu,
@@ -149,18 +150,32 @@ export function TopBar() {
                       <User />
                       <span>Profile</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push('/dashboard')}>
-                      <LayoutDashboard />
-                      <span>Dashboard</span>
+                    <DropdownMenuItem
+                      onClick={() => router.push('/my-account/stats')}
+                    >
+                      <BarChartIcon />
+                      <span>Stats</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push('/create')}>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        router.push(`/profiles/${user?.id}/create`)
+                      }
+                    >
                       <Plus />
                       <span>Create</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        router.push(`/profiles/${user?.id}/all-posts`)
+                      }
+                    >
+                      <Database />
+                      <span>My posts</span>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
-                    onClick={() => router.push('/profiles/5/support')}
+                    onClick={() => router.push(`/profiles/${user?.id}/support`)}
                   >
                     <Headset />
                     <span>Support</span>

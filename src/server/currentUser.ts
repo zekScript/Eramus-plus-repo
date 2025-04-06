@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import Cookies from 'js-cookie'
 
 export function getCurrentUser() {
+  "use client"
   const token = Cookies.get('authToken')
   if (!token) return null
 
