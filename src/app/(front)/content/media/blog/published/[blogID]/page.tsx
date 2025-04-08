@@ -59,8 +59,24 @@ const BlogPage = () => {
 
   return(
     <>
-                <ReactMarkdown>{post.content}</ReactMarkdown>
+
+
+
+{/* Blog post content */}
+<div className='flex w-full h-full'>
+<div className=' bg-blue-500 w-full'>
+<h2 className='mt-4 text-xl font-bold'>{post.title}</h2>
+
+<ReactMarkdown>{post.content}</ReactMarkdown>
+
+</div>
     
+
+{/* Make a sidebar menu for the details of the blog */}
+
+</div>
+
+
     </>
   )
 }
