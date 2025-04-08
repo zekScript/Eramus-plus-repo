@@ -6,7 +6,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -78,18 +77,7 @@ const EditPost: React.FC<ProfileProps> = ({ params }) => {
             defaultValue={post.title}
           />
         </div>
-        <div className='mb-7 mt-7'>
-          <label className='text-xs'>Blog :</label>
-          <textarea
-            className={cn(
-              'mt-1 w-full border-b-2 border-indigo-500 py-2 pl-1 text-sm shadow-sm transition focus:outline-none',
-              'border-gray-300 focus:border-b-indigo-500 focus:ring-2 focus:ring-transparent',
-              'bg-transparent',
-              'h-96 resize-none'
-            )}
-            defaultValue={post.content}
-          ></textarea>
-        </div>
+        
 
         <div className='mb-7 mt-7'>
           <label className='text-xs'>Blog content:</label>

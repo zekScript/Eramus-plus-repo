@@ -32,6 +32,14 @@ export async function findPostById(id: string) {
   return await prisma.post.findUnique({ where: { id } })
 }
 
+
+
+export async function getPostById(blogID: string) {
+  return await prisma.post.findUnique({
+    where: { id: blogID },
+  })
+}
+
 // export async function getMadeByAuthor(){
 
 //   return await prisma.post.findUnique({

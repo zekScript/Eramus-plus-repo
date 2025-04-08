@@ -2,21 +2,17 @@
 import { findUserById } from '@/server/user'
 import { getPostsMadeByYou } from './all-posts/actions'
 import Link from 'next/link'
-import { getCurrentUser } from '@/server/currentUser'
 
 interface ProfileProps {
   params: { portfolioID: string }
 }
 
 export default async function Profiles({ params }: ProfileProps) {
-  const user = getCurrentUser()
-  console.log(user)
 
   const posts = await getPostsMadeByYou()
 
   const truncateText = (text: string, length: number) =>
     text.length > length ? `${text.slice(0, length)}...` : text
-  const isPrivate = false // debug
   const profileID: number = parseInt(params.portfolioID, 10)
 
 
@@ -50,6 +46,7 @@ export default async function Profiles({ params }: ProfileProps) {
     return 'Just now'
   }
 
+  const isPrivate = profiles?.isPrivate
   return (
     <div className='m-auto h-full w-[90%] justify-center'>
       <div className='flex h-full w-full'>
@@ -93,19 +90,15 @@ export default async function Profiles({ params }: ProfileProps) {
 
       {!isPrivate ? (
         <div className='mt-12'>
-          <div className='mb-12 flex w-[90%] border-b-2 border-indigo-500'>
-            <Link
-              className='mb-2 text-2xl font-medium'
-              href={`/profiles/${profiles.id}/all-posts`}
-            >
-              All posts
-            </Link>
+          <div className='mb-12 flex w-[90%] border-b-2 border-indigo-500 text-2xl font-bold'>
+            <h1 >Posts made by {profiles?.name}</h1>
           </div>
           <div className='grid h-full w-full  overflow-hidden '>
+            
             {posts.length === 0 ? (
               <p>No posts available</p>
             ) : (
-              posts.map((post) => (
+              posts.slice(0, 8).map((post) => (
                 <div>
                   {post.authorId === profiles?.id && (
                     <div
@@ -159,8 +152,14 @@ export default async function Profiles({ params }: ProfileProps) {
                 </div>
               ))
             )}
-            {/* <BlogCard blogItems={blogPostSources.blogItems} /> */}
-          </div>
+{posts.length > 8 && (
+      <div className='mt-4'>
+        <Link href={`/profiles/${profiles?.id}/all-posts`} className='text-indigo-500'>
+          Checkout more posts
+        </Link>
+      </div>
+    )}
+              </div>
         </div>
       ) : (
         <span></span>

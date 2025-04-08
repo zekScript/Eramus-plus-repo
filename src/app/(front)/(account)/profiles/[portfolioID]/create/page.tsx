@@ -4,29 +4,18 @@ import { createPost } from '@/server/post'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import SidebarForPosts from '@/components/sidebar-for-posts'
+import ReactMarkdown from 'react-markdown'
+import Link from 'next/link'
 
-interface UserProfile {
-  name: string
-  id: number
-  password: string
-  email: string
-  accessAdmin: boolean | null
-  createdAt: Date
-  updatedAt: Date
-  role: string
-  followersCount: number
-  followingCount: number
-  postsCount: number
-  profilePic: string | null
-  bio: string | null
-}
 export default function CreatePost() {
   const pathname = usePathname()
   const segments = pathname.split('/')
   const userId: number = parseInt(segments[2], 10)
 
-  const [feedback, setFeedback] = useState({ success: false, message: '' })
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
 
+  const [feedback, setFeedback] = useState({ success: false, message: '' })
   const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (formData: FormData) => {
@@ -42,117 +31,57 @@ export default function CreatePost() {
 
   return (
     <div className='h-full w-full'>
-      {/* NOT FINISHED */}
-      {/* TODO: add a sidebar where u can edit text in real time like word */}
-      {/* TODO: add a window where a user can enter text in markdown and color it in markdown */}
-      {/* TODO: and in real time always check how is the output */}
       <div className='flex'>
         {/* Sidebar */}
-        <div className='w-[30%]'>
+        <div className='w-[15%]'>
           <SidebarForPosts />
         </div>
-        <div className='h-full w-full bg-neutral-900'>
-          <div>
-            <h1 className='w-[20%] bg-background text-center text-2xl text-foreground'>
-              Input
-            </h1>
-          </div>
 
-          <div className='h-full w-full'>
-            {/* Title input */}
-            <form action={handleSubmit} className='mt-4'>
-              <input type='hidden' name='userID' value={userId}></input>
-              <input
-                name='title'
-                type='text'
-                className='h-[35px] w-full bg-background text-xl'
-                placeholder='Title'
-              />
+        {/* Editor */}
+        <div className='w-[45%] bg-neutral-900 p-4'>
+          <form action={handleSubmit} className='space-y-4'>
+            <input type='hidden' name='userID' value={userId} />
 
-              <div>
-                <textarea
-                  name='content'
-                  className='h-screen w-full bg-background'
-                  placeholder='Write your blog here ex. trump is great in my opinion because...'
-                ></textarea>
-              </div>
-              <button
-                type='submit'
-                className='mt-4 w-full rounded bg-blue-600 p-2 text-white'
-              >
-                Send data
-              </button>
-            </form>
-            {feedback.message && (
-              <div
-                className={`ml-5 mt-4 w-full p-3 text-start ${
-                  feedback.success ? 'text-green-700' : 'text-red-700'
-                }`}
-              >
-                {feedback.message}
-              </div>
-            )}
-          </div>
+            <h1 className='text-2xl font-semibold text-white'>Write Your Post</h1>
+
+            <input
+              name='title'
+              type='text'
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className='w-full rounded bg-background p-2 text-xl text-white'
+              placeholder='Title'
+            />
+
+            <textarea
+              name='content'
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className='h-[400px] w-full rounded bg-background p-3 text-white resize-none'
+              placeholder='Supports markdown, check documentation below for more details'
+            ></textarea>
+<div className='flex justify-between mr-7 ml-7'> 
+<button
+              type='submit'
+              className='rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700'
+            >
+              Post your blog
+            </button>
+            <Link href="#">Markdown documentation</Link>
+</div>
+            
+          </form>
         </div>
 
-        {/* Input window */}
-        <div className='h-full w-full border-l-2'>
-          <div className='bg-neutral-900'>
-            <h1 className='w-[20%] bg-background text-center text-2xl text-foreground'>
-              Output
-            </h1>
-          </div>
-
-          <div className='m-0 h-full w-full'>
-            {/* Title input */}
-
-            <div className='h-screen w-full border-r-2'>
-              {/* Output window */}
-              <div className='flex h-full w-full items-center justify-center text-4xl text-muted'>
-                <h1>This is the final output of your blog</h1>
-              </div>
-            </div>
+        {/* Output Preview */}
+        <div className='w-[40%] border-l-2 p-4'>
+          <h1 className='text-2xl font-semibold'>Live Preview</h1>
+          <h2 className='mt-4 text-xl font-bold'>{title}</h2>
+          <div className='prose prose-invert max-w-none text-white'>
+            <ReactMarkdown>{content}</ReactMarkdown>
           </div>
         </div>
-
-        {/* Output window */}
       </div>
     </div>
   )
 }
-
-// <div className='m-auto w-[90%] max-w-2xl p-6'>
-//       <h1 className='text-2xl font-bold'>Create a New Blog Post</h1>
-//       {error && <p className='text-red-500'>{error}</p>}
-//       <form action={handleSubmit} className='mt-4'>
-//         <input type='hidden' disabled name='userID' defaultValue={userId}></input>
-//         <input
-//           type='text'
-//           name='title'
-//           placeholder='Post Title'
-//           className='mb-4 w-full rounded border p-2'
-//           required
-//         />
-//         <textarea
-//           name='content'
-//           placeholder='Write your post in Markdown...'
-//           className='h-40 w-full rounded border p-2'
-//           required
-//         />
-//         <button
-//           type='submit'
-//           className='mt-4 w-full rounded bg-blue-600 p-2 text-white'
-//         >
-//           Send data
-//         </button>
-//         {feedback.message && (
-//           <div
-//             className={`ml-5 mt-4 w-full p-3 text-start ${
-//               feedback.success ? 'text-green-700' : 'text-red-700'
-//             }`}
-//           >
-//             {feedback.message}
-//           </div>
-//         )}
-//       </form>
-//     </div>

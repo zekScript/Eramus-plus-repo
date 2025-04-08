@@ -31,6 +31,6 @@
     "src/app/(front)/content/our-work/page.mdx",
     "src/app/(front)/content/media/page.tsx",
     "src/app/(front)/content/our-work/n/[slug]/page.mdx"
-  ],
+, "src/app/(front)/content/media/blog/published/[blogID]/page.tsx"  ],
   "exclude": ["node_modules"]
 }
