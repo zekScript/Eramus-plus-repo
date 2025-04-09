@@ -1,4 +1,3 @@
-
 import { findUserById } from '@/server/user'
 import { getPostsMadeByYou } from './all-posts/actions'
 import Link from 'next/link'
@@ -8,13 +7,11 @@ interface ProfileProps {
 }
 
 export default async function Profiles({ params }: ProfileProps) {
-
   const posts = await getPostsMadeByYou()
 
   const truncateText = (text: string, length: number) =>
     text.length > length ? `${text.slice(0, length)}...` : text
   const profileID: number = parseInt(params.portfolioID, 10)
-
 
   const profiles: any = await findUserById(profileID)
 
@@ -91,10 +88,9 @@ export default async function Profiles({ params }: ProfileProps) {
       {!isPrivate ? (
         <div className='mt-12'>
           <div className='mb-12 flex w-[90%] border-b-2 border-indigo-500 text-2xl font-bold'>
-            <h1 >Posts made by {profiles?.name}</h1>
+            <h1>Posts made by {profiles?.name}</h1>
           </div>
-          <div className='grid h-full w-full  overflow-hidden '>
-            
+          <div className='grid h-full w-full overflow-hidden'>
             {posts.length === 0 ? (
               <p>No posts available</p>
             ) : (
@@ -112,7 +108,7 @@ export default async function Profiles({ params }: ProfileProps) {
                       </h2> */}
                           {/* fix it here */}
                           <Link
-                            href={`/content/media/blog/published/${post?.slug}`}
+                            href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
                             className='text-lg font-semibold text-indigo-500'
                           >
                             {post.title}
@@ -143,8 +139,6 @@ export default async function Profiles({ params }: ProfileProps) {
                             Post settings
                             
                           </Link> */}
-
-                  
                         </div>
                       )}
                     </div>
@@ -152,14 +146,17 @@ export default async function Profiles({ params }: ProfileProps) {
                 </div>
               ))
             )}
-{posts.length > 8 && (
-      <div className='mt-4'>
-        <Link href={`/profiles/${profiles?.id}/all-posts`} className='text-indigo-500'>
-          Checkout more posts
-        </Link>
-      </div>
-    )}
+            {posts.length > 8 && (
+              <div className='mt-4'>
+                <Link
+                  href={`/profiles/${profiles?.id}/all-posts`}
+                  className='text-indigo-500'
+                >
+                  Checkout more posts
+                </Link>
               </div>
+            )}
+          </div>
         </div>
       ) : (
         <span></span>

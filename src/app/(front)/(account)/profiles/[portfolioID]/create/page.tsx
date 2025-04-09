@@ -42,7 +42,9 @@ export default function CreatePost() {
           <form action={handleSubmit} className='space-y-4'>
             <input type='hidden' name='userID' value={userId} />
 
-            <h1 className='text-2xl font-semibold text-white'>Write Your Post</h1>
+            <h1 className='text-2xl font-semibold text-white'>
+              Write Your Post
+            </h1>
 
             <input
               name='title'
@@ -57,19 +59,18 @@ export default function CreatePost() {
               name='content'
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className='h-[400px] w-full rounded bg-background p-3 text-white resize-none'
+              className='h-[400px] w-full resize-none rounded bg-background p-3 text-white'
               placeholder='Supports markdown, check documentation below for more details'
             ></textarea>
-<div className='flex justify-between mr-7 ml-7'> 
-<button
-              type='submit'
-              className='rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700'
-            >
-              Post your blog
-            </button>
-            <Link href="#">Markdown documentation</Link>
-</div>
-            
+            <div className='ml-7 mr-7 flex justify-between'>
+              <button
+                type='submit'
+                className='rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700'
+              >
+                Post your blog
+              </button>
+              <Link href='#'>Markdown documentation</Link>
+            </div>
           </form>
         </div>
 

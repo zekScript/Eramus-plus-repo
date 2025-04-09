@@ -17,6 +17,7 @@ export async function createPost(formData: FormData) {
         content: content as string,
         slug: title.toLowerCase().replace(/\s+/g, '-'),
         author: { connect: { id: userID } },
+        
       },
     })
     return { success: true, message: 'Post created successfully.' }
@@ -32,20 +33,69 @@ export async function findPostById(id: string) {
   return await prisma.post.findUnique({ where: { id } })
 }
 
-
-
 export async function getPostById(blogID: string) {
   return await prisma.post.findUnique({
     where: { id: blogID },
   })
 }
 
-// export async function getMadeByAuthor(){
+export async function likePost(postId: string) {
+  const updatedPost = await prisma.post.update({
+    where: { id: postId },
+    data: {
+      likes: {
+        increment: 1,
+      },
+    },
+  })
 
-//   return await prisma.post.findUnique({
-//     where: {
+  return updatedPost.likes
+}
 
-//     },
-//   })
+export async function dislikePost(postId: string) {
+  const updatedPost = await prisma.post.update({
+    where: { id: postId },
+    data: {
+      dislikes: {
+        increment: 1,
+      },
+    },
+  })
 
-// }
+  return updatedPost.dislikes
+}
+
+
+export async function updatePostVisibillity(id: string, postVisibillity: string) {
+  try {
+    await prisma.post.update({
+      where: { id },
+      data: { 
+        postVisibillity: postVisibillity as string,
+       },
+    })
+  } catch (error) {
+    console.error('Error updating post visibility:', error)
+  }
+}
+
+export async function updatePostTag(id: string, postTag: string) {
+
+  try {
+    await prisma.post.update({
+      where: { id },
+      data: {
+        badge: postTag as string,
+      },
+    })
+  } catch (error) {
+    console.error('Error updating post tag:', error)
+  }
+}
+
+export async function deletePost(id: string) {
+  try {
+    await prisma.post.delete({ where: { id } })
+  } catch (error) {
+    console.error('Error deleting post:', error)}
+}

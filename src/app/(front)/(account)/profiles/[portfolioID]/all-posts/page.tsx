@@ -28,7 +28,10 @@ export default async function BlogPage({ params, searchParams }: ProfileProps) {
   const currentPage = Number(searchParams.page) || 1
   const totalPages = Math.ceil(userPosts.length / POSTS_PER_PAGE)
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE
-  const paginatedPosts = userPosts.slice(startIndex, startIndex + POSTS_PER_PAGE)
+  const paginatedPosts = userPosts.slice(
+    startIndex,
+    startIndex + POSTS_PER_PAGE
+  )
 
   const truncateText = (text: string, length: number) =>
     text.length > length ? `${text.slice(0, length)}...` : text
@@ -76,7 +79,7 @@ export default async function BlogPage({ params, searchParams }: ProfileProps) {
                   <div className='flex flex-col gap-2'>
                     <div className='w-full'>
                       <Link
-                        href={`/content/media/blog/published/${post.slug}&p=${post.id}`}
+                        href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
                         className='text-lg font-semibold text-indigo-500'
                       >
                         {post.title}
@@ -84,7 +87,9 @@ export default async function BlogPage({ params, searchParams }: ProfileProps) {
                       <p className='text-sm text-gray-600'>
                         Posted by {profiles?.name}
                       </p>
-                      <p className='text-md'>{timeAgo(new Date(post.createdAt))}</p>
+                      <p className='text-md'>
+                        {timeAgo(new Date(post.createdAt))}
+                      </p>
                       <p className='font-sm h-full w-full text-sm text-neutral-400'>
                         {truncateText(post.content, 200)}
                       </p>
