@@ -48,7 +48,6 @@ const BlogPage = () => {
     fetchPost()
   }, [postId])
 
-  console.log(post)
   if (loading) return <p>Loading...</p>
   if (!post) return <p>Post not found</p>
 

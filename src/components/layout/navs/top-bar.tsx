@@ -44,7 +44,7 @@ import {
 export function TopBar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [copied, setCopied] = useState(false)
-  const [email] = useState(
+  const [address] = useState(
     'https://erasmus-plus-project-git-armandascode-zekscripts-projects.vercel.app/'
   )
   const router = useRouter()
@@ -67,7 +67,7 @@ export function TopBar() {
 
   const handleCopy = (event: React.MouseEvent) => {
     event.preventDefault() // Prevent the dropdown from closing
-    navigator.clipboard.writeText(email).then(() => {
+    navigator.clipboard.writeText(address).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 1000) // Reset the icon after 2 seconds
     })
@@ -132,7 +132,7 @@ export function TopBar() {
                 <DropdownMenuTrigger asChild>
                   <Avatar className='cursor-pointer'>
                     <AvatarImage
-                      src='https://i.pinimg.com/564x/9f/e2/43/9fe24317d8363d84b3eb3b93b9c756ae.jpg'
+                      src={user?.profilePic}
                       alt='Profile avatar'
                     />
                     <AvatarFallback>
@@ -150,12 +150,7 @@ export function TopBar() {
                       <User />
                       <span>Profile</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => router.push('/my-account/stats')}
-                    >
-                      <BarChartIcon />
-                      <span>Stats</span>
-                    </DropdownMenuItem>
+
                     <DropdownMenuItem
                       onClick={() =>
                         router.push(`/profiles/${user?.id}/create`)
@@ -202,7 +197,7 @@ export function TopBar() {
                           <input
                             type='text'
                             readOnly
-                            value={email}
+                            value={address}
                             className='rounded-md border border-gray-300 px-2 py-1 text-sm'
                           />
                           <button
@@ -234,7 +229,9 @@ export function TopBar() {
         </div>
       </div>
       <div className='flex h-full w-full justify-end'>
-        <div className='mb-4 ml-8 mr-8 hidden w-full justify-end border-t-2 border-indigo-500 lg:flex'>
+        <div
+          className={`mb-4 ml-8 mr-8 hidden w-full justify-end border-t-2 lg:flex`}
+        >
           <div className='mt-5'>
             <ThemeToggle></ThemeToggle>
           </div>

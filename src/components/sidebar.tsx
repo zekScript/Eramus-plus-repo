@@ -61,7 +61,7 @@ export default function SideBar() {
             navigateTo={`/profiles/${profileSettingsCurrentUser?.id}/settings/general`}
             exact
             scroll={false}
-            className='flex justify-start rounded-full px-3 py-1.5 text-slate-500 hover:text-indigo-500 [&.active]:bg-gradient-to-l [&.active]:from-transparent [&.active]:to-[#3d4450] [&.active]:bg-[length:200%_100%] [&.active]:bg-[position:100%_0] [&.active]:text-indigo-600'
+            className='flex justify-start rounded-full px-3 py-1.5 text-slate-500 hover:text-indigo-500 [&.active]:bg-gradient-to-l [&.active]:from-transparent [&.active]:to-[#3d4450] [&.active]:bg-[length:200%_100%] [&.active]:bg-[position:100%_0] [&.active]:text-gray-400'
           >
             General
           </NavLink>
@@ -86,7 +86,7 @@ export default function SideBar() {
             navigateTo={`/profiles/${profileSettingsCurrentUser?.id}/settings/theme`}
             exact
             scroll={false}
-            className='flex justify-start rounded-full px-3 py-1.5 text-slate-500 hover:text-indigo-500 [&.active]:bg-gradient-to-l [&.active]:from-transparent [&.active]:to-[#3d4450] [&.active]:bg-[length:200%_100%] [&.active]:bg-[position:100%_0] [&.active]:text-indigo-600'
+            className='flex justify-start rounded-full px-3 py-1.5 text-slate-500 hover:text-gray-300 [&.active]:bg-gradient-to-l [&.active]:from-transparent [&.active]:to-[#3d4450] [&.active]:bg-[length:200%_100%] [&.active]:bg-[position:100%_0] [&.active]:text-gray-400'
           >
             Theme
           </NavLink>
@@ -94,7 +94,7 @@ export default function SideBar() {
             navigateTo={`/profiles/${profileSettingsCurrentUser?.id}/settings/privacy`}
             exact
             scroll={false}
-            className='flex justify-start rounded-full px-3 py-1.5 text-slate-500 hover:text-indigo-500 [&.active]:bg-gradient-to-l [&.active]:from-transparent [&.active]:to-[#3d4450] [&.active]:bg-[length:200%_100%] [&.active]:bg-[position:100%_0] [&.active]:text-indigo-600'
+            className='flex justify-start rounded-full px-3 py-1.5 text-slate-500 hover:text-gray-300 [&.active]:bg-gradient-to-l [&.active]:from-transparent [&.active]:to-[#3d4450] [&.active]:bg-[length:200%_100%] [&.active]:bg-[position:100%_0] [&.active]:text-gray-400'
           >
             Privacy Settings
           </NavLink>

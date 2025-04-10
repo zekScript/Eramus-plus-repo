@@ -17,7 +17,6 @@ export async function createPost(formData: FormData) {
         content: content as string,
         slug: title.toLowerCase().replace(/\s+/g, '-'),
         author: { connect: { id: userID } },
-        
       },
     })
     return { success: true, message: 'Post created successfully.' }
@@ -65,14 +64,16 @@ export async function dislikePost(postId: string) {
   return updatedPost.dislikes
 }
 
-
-export async function updatePostVisibillity(id: string, postVisibillity: string) {
+export async function updatePostVisibillity(
+  id: string,
+  postVisibillity: string
+) {
   try {
     await prisma.post.update({
       where: { id },
-      data: { 
+      data: {
         postVisibillity: postVisibillity as string,
-       },
+      },
     })
   } catch (error) {
     console.error('Error updating post visibility:', error)
@@ -80,7 +81,6 @@ export async function updatePostVisibillity(id: string, postVisibillity: string)
 }
 
 export async function updatePostTag(id: string, postTag: string) {
-
   try {
     await prisma.post.update({
       where: { id },
@@ -93,9 +93,45 @@ export async function updatePostTag(id: string, postTag: string) {
   }
 }
 
+export async function updatePost(id: string, formData: FormData) {
+  const title = formData.get('title') as string
+  const content = formData.get('content') as string
+
+  if (!title || !content)
+    return { success: false, message: 'All fields are required.' }
+
+  try {
+    await prisma.post.update({
+      where: { id },
+      data: {
+        title: title,
+        content: content,
+        slug: title.toLowerCase().replace(/\s+/g, '-'),
+      },
+    })
+    return { success: true, message: 'Post updated successfully.' }
+  } catch (error) {
+    return {
+      success: false,
+      message: `Error updating post: ${console.error(error)}`,
+    }
+  }
+}
+
 export async function deletePost(id: string) {
   try {
     await prisma.post.delete({ where: { id } })
   } catch (error) {
-    console.error('Error deleting post:', error)}
+    console.error('Error deleting post:', error)
+  }
+}
+
+
+
+export async function getAuthorMadeTotalPostAmount(id: number) {
+  const postCount = await prisma.post.count({
+    where: { authorId: id },
+  })
+  return postCount
+
 }

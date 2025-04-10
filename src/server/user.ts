@@ -70,6 +70,22 @@ export async function updateUser(formData: FormData, id: number) {
   }
 }
 
+export async function updateProfilePrivacy(
+  id: number,
+  privacySettings: string
+) {
+  try {
+    await prisma.user.update({
+      where: { id },
+      data: {
+        privacyVisabillity: privacySettings as string,
+      },
+    })
+  } catch (error) {
+    console.error('Error updating post visibility:', error)
+  }
+}
+
 export async function deleteUser(id: number) {
   try {
     await prisma.user.delete({ where: { id } })
@@ -126,8 +142,5 @@ export async function loginUser(formData: FormData) {
 }
 
 export async function findUserById(id: number) {
-  // if(!id){
-  //   return { success: false, message: 'Wooooooooooooooooow no user here' }
-  // }
   return await prisma.user.findUnique({ where: { id } })
 }

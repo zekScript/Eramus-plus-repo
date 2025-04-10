@@ -43,7 +43,8 @@ export default async function Profiles({ params }: ProfileProps) {
     return 'Just now'
   }
 
-  const isPrivate = profiles?.isPrivate
+  console.log(profiles)
+  const profilePrivacy = profiles?.privacyVisabillity
   return (
     <div className='m-auto h-full w-[90%] justify-center'>
       <div className='flex h-full w-full'>
@@ -60,7 +61,7 @@ export default async function Profiles({ params }: ProfileProps) {
 
           <div className='ml-8 mt-4 flex h-full w-[95%] flex-col'>
             <h1 className='text-3xl font-bold'>{profiles?.name}</h1>
-            {!isPrivate ? (
+            {profilePrivacy !== 'private' ? (
               <div>
                 <p className='text-break text-md mt-4'>
                   {profiles?.bio ? (
@@ -85,7 +86,7 @@ export default async function Profiles({ params }: ProfileProps) {
         </div>
       </div>
 
-      {!isPrivate ? (
+      {profilePrivacy === 'public' ? (
         <div className='mt-12'>
           <div className='mb-12 flex w-[90%] border-b-2 border-indigo-500 text-2xl font-bold'>
             <h1>Posts made by {profiles?.name}</h1>

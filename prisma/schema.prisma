@@ -14,39 +14,39 @@ datasource db {
 }
 
 model User {
-  id             Int        @id @default(autoincrement())
-  name           String     @unique @db.VarChar(64)
-  password       String
-  email          String     @unique
-  accessAdmin    Boolean?   @default(false)
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
-  role           String     @default("USER")
-  followersCount Int        @default(0)
-  followingCount Int        @default(0)
-  postsCount     Int        @default(0)
-  isPrivate      Boolean    @default(false)
-  colorTheme     String     @default("#fff")
-  profilePic     String?    @default("https://t3.ftcdn.net/jpg/06/97/24/84/360_F_697248427_3i5BB12ezUHJ1LUj3EbroqkwpSkpBh9J.jpg")
-  bio            String?
-  posts          Post[]
-  Settings       Settings[]
+  id                 Int        @id @default(autoincrement())
+  name               String     @unique @db.VarChar(64)
+  password           String
+  email              String     @unique
+  accessAdmin        Boolean?   @default(false)
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  role               String     @default("USER")
+  followersCount     Int        @default(0)
+  followingCount     Int        @default(0)
+  postsCount         Int        @default(0)
+  privacyVisabillity String     @default("public")
+  colorTheme         String     @default("#fff")
+  profilePic         String?    @default("https://t3.ftcdn.net/jpg/06/97/24/84/360_F_697248427_3i5BB12ezUHJ1LUj3EbroqkwpSkpBh9J.jpg")
+  bio                String?
+  posts              Post[]
+  Settings           Settings[]
 }
 
 model Post {
-  id        String   @id @default(uuid())
-  title     String   @db.VarChar(120)
-  content   String
-  slug      String   @unique
-  badge     String?  @default("not specified")
-  createdAt DateTime @default(now()) @map("created_at")
-  postVisibillity String  @default("public")
-  likes     Int      @default(0)
-  dislikes  Int      @default(0)
-  views     Int      @default(0)
-  updatedAt DateTime @updatedAt
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+  id              String   @id @default(uuid())
+  title           String   @db.VarChar(120)
+  content         String
+  slug            String   @unique
+  badge           String?  @default("not specified")
+  createdAt       DateTime @default(now()) @map("created_at")
+  postVisibillity String   @default("public")
+  likes           Int      @default(0)
+  dislikes        Int      @default(0)
+  views           Int      @default(0)
+  updatedAt       DateTime @updatedAt
+  author          User     @relation(fields: [authorId], references: [id])
+  authorId        Int
 
   @@index([slug])
 }

@@ -40,12 +40,17 @@ export default function ColorPalletes() {
     '#708090', // Slate Gray
   ]
 
+  const changeColorWithPalettes = (value: string) => {
+    localStorage.setItem('colorTheme', value)
+  }
+
   return (
     <>
       {colors.map((color) => (
         <div
           key={color}
           className='h-16 w-16 rounded border shadow-md transition-transform hover:scale-105'
+          onClick={() => changeColorWithPalettes(color)}
           style={{ backgroundColor: color }}
           title={color}
         ></div>

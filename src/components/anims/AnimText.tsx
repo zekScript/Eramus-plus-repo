@@ -1,15 +1,18 @@
+'use client'
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import RedoAnimText from './RedoAnimText'
 import CursorBlinker from './CursorBlinker'
+import { getCurrentUser } from '@/server/currentUser'
 
 export interface IAnimTextProps {
   delay: number
 }
 
 export default function AnimText({ delay }: IAnimTextProps) {
+  const user = getCurrentUser()
   const [done, setDone] = useState(false)
-  const baseText = 'Welcome User Let me introduce myself'
+  const baseText = `Welcome ${user?.name || 'User'} Let me introduce myself`
 
   const count = useMotionValue(0)
   const rounded = useTransform(count, (latest) => Math.round(latest))

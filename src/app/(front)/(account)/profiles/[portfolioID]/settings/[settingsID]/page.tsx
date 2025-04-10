@@ -20,6 +20,7 @@ interface UserProfile {
   postsCount: number
   profilePic: string | null
   bio: string | null
+  privacyVisabillity: string
 }
 
 export default function SettingsPage() {

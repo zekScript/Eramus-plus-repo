@@ -10,7 +10,20 @@ import { usePathname } from 'next/navigation'
 import ThemeToggle from '@/components/theme-switch'
 import Cookies from 'js-cookie'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Headset, LogOut, Plus, Settings, User } from 'lucide-react'
+import {
+  Headset,
+  LogOut,
+  Plus,
+  Settings,
+  User,
+  Database,
+  BarChartIcon,
+  Share2,
+  Cog,
+  Check,
+  Copy,
+} from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 import {
   DropdownMenu,
@@ -18,10 +31,15 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useRouter } from 'next/navigation'
+import { getCurrentUser } from '@/server/currentUser'
 
 interface NavProps {
   items?: NavItem[]
@@ -29,6 +47,9 @@ interface NavProps {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const MobileNav: React.FC<NavProps> = ({ items }) => {
+  const user = getCurrentUser()
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [copied, setCopied] = useState(false)
   const router = useRouter()
   const logout = () => {
     Cookies.remove('authToken')
@@ -38,6 +59,25 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
 
   const isLoggedIn = Cookies.get('authToken') ? true : false
   const pathname = usePathname() || '/'
+  const [address] = useState(
+    'https://erasmus-plus-project-git-armandascode-zekscripts-projects.vercel.app/'
+  )
+
+  function getFirstLettersForFallback(str?: string) {
+    if (!str) return ''
+    return str
+      .split(' ') // Split the string into an array of words
+      .map((word) => word.charAt(0).toUpperCase()) // Take the first letter of each word and capitalize it
+      .join('') // Combine the letters without spaces
+  }
+
+  const handleCopy = (event: React.MouseEvent) => {
+    event.preventDefault() // Prevent the dropdown from closing
+    navigator.clipboard.writeText(address).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1000) // Reset the icon after 2 seconds
+    })
+  }
 
   return (
     <div className='flex items-center lg:hidden'>
@@ -81,35 +121,97 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
                 <DropdownMenuTrigger asChild>
                   <Avatar className='cursor-pointer'>
                     <AvatarImage
-                      src='https://i.pinimg.com/564x/9f/e2/43/9fe24317d8363d84b3eb3b93b9c756ae.jpg'
+                      src={user?.profilePic}
                       alt='Profile avatar'
                     />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarFallback>
+                      {getFirstLettersForFallback(user?.name ?? '')}
+                    </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className='w-56'>
-                  <DropdownMenuLabel>Admin</DropdownMenuLabel>
+                  <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => router.push(`/profiles/${user?.id}`)}
+                    >
                       <User />
                       <span>Profile</span>
                     </DropdownMenuItem>
-
-                    <DropdownMenuItem>
-                      <Settings />
-                      <span>Settings</span>
+                    <DropdownMenuItem
+                      onClick={() => router.push('/my-account/stats')}
+                    >
+                      <BarChartIcon />
+                      <span>Stats</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        router.push(`/profiles/${user?.id}/create`)
+                      }
+                    >
                       <Plus />
                       <span>Create</span>
                     </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        router.push(`/profiles/${user?.id}/all-posts`)
+                      }
+                    >
+                      <Database />
+                      <span>My posts</span>
+                    </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => router.push(`/profiles/${user?.id}/support`)}
+                  >
                     <Headset />
                     <span>Support</span>
                   </DropdownMenuItem>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <Share2 />
+                      <span>Share</span>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        router.push(`/profiles/${user?.id}/settings/general`)
+                      }
+                    >
+                      <Cog />
+                      <span>Edit Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        <DropdownMenuItem
+                          className='flex items-center gap-2'
+                          onSelect={(event) => event.preventDefault()} // Prevent default dropdown closing behavior
+                        >
+                          <input
+                            type='text'
+                            readOnly
+                            value={address}
+                            className='rounded-md border border-gray-300 px-2 py-1 text-sm'
+                          />
+                          <button
+                            onClick={handleCopy}
+                            aria-label='Copy to clipboard'
+                          >
+                            <div key={copied ? 'check' : 'copy'}>
+                              {copied ? (
+                                <Check size={16} />
+                              ) : (
+                                <Copy size={16} />
+                              )}
+                            </div>
+                          </button>
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                  <DropdownMenuSeparator />
+
                   <DropdownMenuItem onClick={logout}>
                     <LogOut />
                     <span>Log out</span>
