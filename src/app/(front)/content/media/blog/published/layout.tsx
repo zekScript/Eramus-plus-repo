@@ -1,6 +1,11 @@
 'use client'
 
-import { findPostById, likePost, dislikePost, getAuthorMadeTotalPostAmount } from '@/server/post'
+import {
+  findPostById,
+  likePost,
+  dislikePost,
+  getAuthorMadeTotalPostAmount,
+} from '@/server/post'
 import {
   CalendarDays,
   Eye,
@@ -93,8 +98,7 @@ const WikiLayout: React.FC<Props> = ({
   const [postCount, setPostCount] = useState(0)
 
   const handleCalcPostCount = async () => {
-
-    const count = await getAuthorMadeTotalPostAmount(user?.id as number);
+    const count = await getAuthorMadeTotalPostAmount(user?.id as number)
     setPostCount(count)
   }
   handleCalcPostCount()
@@ -217,7 +221,9 @@ const WikiLayout: React.FC<Props> = ({
                           </HoverCardContent>
                         </HoverCard>
 
-                        <p className='text-md text-gray-500'>{postCount} posts made</p>
+                        <p className='text-md text-gray-500'>
+                          {postCount} posts made
+                        </p>
                       </div>
 
                       <div>

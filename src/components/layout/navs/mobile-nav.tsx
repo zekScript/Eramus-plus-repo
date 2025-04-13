@@ -119,7 +119,7 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
           ) : (
             <div className='mt-12 gap-x-4'>
               {/* Import nav here */}
-              <UserNav/>
+              <UserNav />
             </div>
           )}
         </SheetContent>

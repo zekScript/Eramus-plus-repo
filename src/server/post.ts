@@ -126,12 +126,9 @@ export async function deletePost(id: string) {
   }
 }
 
-
-
 export async function getAuthorMadeTotalPostAmount(id: number) {
   const postCount = await prisma.post.count({
     where: { authorId: id },
   })
   return postCount
-
 }

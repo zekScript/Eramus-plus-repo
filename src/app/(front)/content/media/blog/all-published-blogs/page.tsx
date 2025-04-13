@@ -1,4 +1,3 @@
-
 import { getPosts } from './actions'
 
 export default async function BlogPage() {

@@ -46,7 +46,7 @@ export type PostItems = {
   views: number
   updatedAt: Date
   authorId: number
-} 
+}
 
 export type UserItems = {
   name: string

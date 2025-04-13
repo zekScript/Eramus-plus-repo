@@ -7,7 +7,6 @@ import { findUserById, updateUser } from '@/server/user'
 import { useEffect, useState } from 'react'
 import { UserItems } from '@/types'
 
-
 export default function SideBar() {
   const [profileSettingsCurrentUser, setProfileSettingsCurrentUser] =
     useState<UserItems | null>(null)

@@ -15,12 +15,9 @@ import { useRouter } from 'next/navigation'
 import { getCurrentUser } from '../../../server/currentUser'
 import UserNav from '@/components/userNav'
 
-
 export function TopBar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const isLoggedIn = Cookies.get('authToken') ? true : false
-
-  
 
   useEffect(() => {
     const handleScroll = () => {

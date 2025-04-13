@@ -7,8 +7,6 @@ import { findUserById } from '@/server/user'
 import { getCurrentUser } from '@/server/currentUser'
 import { UserItems } from '@/types'
 
-
-
 export default function SettingsPage() {
   const router = useRouter()
   const currentUser = getCurrentUser()

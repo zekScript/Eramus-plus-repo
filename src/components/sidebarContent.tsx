@@ -26,28 +26,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { UserItems } from '@/types'
 interface SideBarContentProps {
   params: {
     settingsID: string
   }
 }
 
-interface UserProfile {
-  name: string
-  id: number
-  password: string
-  email: string
-  accessAdmin: boolean | null
-  createdAt: Date
-  updatedAt: Date
-  role: string
-  followersCount: number
-  followingCount: number
-  postsCount: number
-  profilePic: string | null
-  bio: string | null
-  privacyVisabillity: string
-}
+
 
 // const pickColorAction = (e) => {
 // e.preventDefault()
@@ -76,7 +62,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
     setIsOpen((prev) => !prev) // Toggle the dropdown open/close
   }
   const [profileSettingsCurrentUser, setProfileSettingsCurrentUser] =
-    useState<UserProfile | null>(null)
+    useState<UserItems | null>(null)
 
   const [name, setName] = useState(profileSettingsCurrentUser?.name)
   const [privacy, setPrivacy] = useState('public')
