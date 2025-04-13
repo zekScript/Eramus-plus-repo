@@ -40,6 +40,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useRouter } from 'next/navigation'
 import { getCurrentUser } from '@/server/currentUser'
+import UserNav from '@/components/userNav'
 
 interface NavProps {
   items?: NavItem[]
@@ -117,107 +118,8 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
             </div>
           ) : (
             <div className='mt-12 gap-x-4'>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Avatar className='cursor-pointer'>
-                    <AvatarImage
-                      src={user?.profilePic}
-                      alt='Profile avatar'
-                    />
-                    <AvatarFallback>
-                      {getFirstLettersForFallback(user?.name ?? '')}
-                    </AvatarFallback>
-                  </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className='w-56'>
-                  <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem
-                      onClick={() => router.push(`/profiles/${user?.id}`)}
-                    >
-                      <User />
-                      <span>Profile</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => router.push('/my-account/stats')}
-                    >
-                      <BarChartIcon />
-                      <span>Stats</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() =>
-                        router.push(`/profiles/${user?.id}/create`)
-                      }
-                    >
-                      <Plus />
-                      <span>Create</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() =>
-                        router.push(`/profiles/${user?.id}/all-posts`)
-                      }
-                    >
-                      <Database />
-                      <span>My posts</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={() => router.push(`/profiles/${user?.id}/support`)}
-                  >
-                    <Headset />
-                    <span>Support</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <Share2 />
-                      <span>Share</span>
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuItem
-                      onClick={() =>
-                        router.push(`/profiles/${user?.id}/settings/general`)
-                      }
-                    >
-                      <Cog />
-                      <span>Edit Profile</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent>
-                        <DropdownMenuItem
-                          className='flex items-center gap-2'
-                          onSelect={(event) => event.preventDefault()} // Prevent default dropdown closing behavior
-                        >
-                          <input
-                            type='text'
-                            readOnly
-                            value={address}
-                            className='rounded-md border border-gray-300 px-2 py-1 text-sm'
-                          />
-                          <button
-                            onClick={handleCopy}
-                            aria-label='Copy to clipboard'
-                          >
-                            <div key={copied ? 'check' : 'copy'}>
-                              {copied ? (
-                                <Check size={16} />
-                              ) : (
-                                <Copy size={16} />
-                              )}
-                            </div>
-                          </button>
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
-                  <DropdownMenuSeparator />
-
-                  <DropdownMenuItem onClick={logout}>
-                    <LogOut />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              {/* Import nav here */}
+              <UserNav/>
             </div>
           )}
         </SheetContent>

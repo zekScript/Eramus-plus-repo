@@ -11,6 +11,7 @@ import {
   Copy,
   Check,
 } from 'lucide-react'
+import { UserItems, PostItems } from '@/types'
 import { useEffect, useState } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -48,19 +49,7 @@ const WikiLayout: React.FC<Props> = ({
   const [liked, setLiked] = useState(false)
   const [disliked, setDisliked] = useState(false)
 
-  const [user, setUser] = useState<{
-    id: number
-    name: string
-    password: string
-    email: string
-    accessAdmin: boolean | null
-    createdAt: Date
-    updatedAt: Date
-    role: string
-    followersCount: number
-    followingCount: number
-    bio: string | null
-  } | null>(null)
+  const [user, setUser] = useState<UserItems | null>(null)
 
   function timeAgo(date: Date): string {
     const now: Date = new Date()
@@ -90,20 +79,7 @@ const WikiLayout: React.FC<Props> = ({
     return 'Just now'
   }
 
-  const [post, setPost] = useState<{
-    id: string
-    title: string
-    content: string
-    slug: string
-    badge: string | null
-    createdAt: Date
-    postVisibillity: string
-    likes: number
-    dislikes: number
-    views: number
-    updatedAt: Date
-    authorId: number
-  } | null>(null)
+  const [post, setPost] = useState<PostItems | null>(null)
 
   const [loading, setLoading] = useState(true)
   const [copied, setCopied] = useState(false)

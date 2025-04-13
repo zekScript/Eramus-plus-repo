@@ -1,7 +1,4 @@
-import Link from 'next/link'
-import { X } from 'lucide-react'
-import { EyeOff } from 'lucide-react'
-import { Pencil } from 'lucide-react'
+
 import { getPosts } from './actions'
 
 export default async function BlogPage() {

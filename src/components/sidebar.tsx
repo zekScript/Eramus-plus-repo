@@ -5,25 +5,12 @@ import { useRouter, usePathname } from 'next/navigation'
 import NavLink from '@/components/nav-link'
 import { findUserById, updateUser } from '@/server/user'
 import { useEffect, useState } from 'react'
+import { UserItems } from '@/types'
 
-interface UserProfile {
-  name: string
-  id: number
-  password: string
-  email: string
-  accessAdmin: boolean | null
-  createdAt: Date
-  updatedAt: Date
-  role: string
-  followersCount: number
-  followingCount: number
-  postsCount: number
-  profilePic: string | null
-  bio: string | null
-}
+
 export default function SideBar() {
   const [profileSettingsCurrentUser, setProfileSettingsCurrentUser] =
-    useState<UserProfile | null>(null)
+    useState<UserItems | null>(null)
   const router = useRouter()
   const pathname = usePathname()
   const settingsID = pathname.split('/').pop()

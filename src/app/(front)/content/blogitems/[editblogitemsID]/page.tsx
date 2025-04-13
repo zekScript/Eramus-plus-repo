@@ -16,38 +16,23 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-interface ProfileProps {
-  params: { editblogitemsID: string }
-}
-
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Router, TriangleAlert, X } from 'lucide-react'
+import {  TriangleAlert, X } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
+import { PostItems } from '@/types'
 
-const EditPost: React.FC<ProfileProps> = ({ params }) => {
+const EditPost: React.FC = () => {
   const router = useRouter()
   const [deleteCard, setDeleteCard] = useState(false)
   const [confirmed, setConfirmed] = useState(false) // <-- checkbox state
   const searchParams = useSearchParams()
   const postId = searchParams.get('p')
 
-  const [post, setPost] = useState<{
-    id: string
-    title: string
-    content: string
-    slug: string
-    badge: string | null
-    createdAt: Date
-    postVisibillity: string
-    likes: number
-    dislikes: number
-    views: number
-    updatedAt: Date
-    authorId: number
-  } | null>(null)
+  const [post, setPost] = useState<PostItems | null>(null)
+
 
   const [loading, setLoading] = useState(true)
 
@@ -228,7 +213,7 @@ const EditPost: React.FC<ProfileProps> = ({ params }) => {
                               recovering this post. this is the last warning
                             </p>
                           </div>
-                          <form action={handleSubmit}>
+                          <form onSubmit={() => {  handleSubmit(); }}>
                             <div className='mb-3 mt-5 flex space-x-2'>
                               <input
                                 type='checkbox'

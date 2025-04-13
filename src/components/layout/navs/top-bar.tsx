@@ -13,65 +13,14 @@ import ThemeToggle from '@/components/theme-switch'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import { getCurrentUser } from '../../../server/currentUser'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import {
-  Headset,
-  LogOut,
-  Plus,
-  User,
-  Share2,
-  Copy,
-  Check,
-  Cog,
-  Database,
-} from 'lucide-react'
-import { BarChartIcon } from 'lucide-react'
+import UserNav from '@/components/userNav'
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 
 export function TopBar() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [copied, setCopied] = useState(false)
-  const [address] = useState(
-    'https://erasmus-plus-project-git-armandascode-zekscripts-projects.vercel.app/'
-  )
-  const router = useRouter()
   const isLoggedIn = Cookies.get('authToken') ? true : false
-  const user = getCurrentUser()
 
-  const logout = () => {
-    Cookies.remove('authToken')
-    window.location.reload()
-    router.push('/')
-  }
-
-  function getFirstLettersForFallback(str?: string) {
-    if (!str) return ''
-    return str
-      .split(' ') // Split the string into an array of words
-      .map((word) => word.charAt(0).toUpperCase()) // Take the first letter of each word and capitalize it
-      .join('') // Combine the letters without spaces
-  }
-
-  const handleCopy = (event: React.MouseEvent) => {
-    event.preventDefault() // Prevent the dropdown from closing
-    navigator.clipboard.writeText(address).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1000) // Reset the icon after 2 seconds
-    })
-  }
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -128,102 +77,7 @@ export function TopBar() {
             </div>
           ) : (
             <div className='mb-4 mt-3 hidden w-full justify-end gap-x-4 lg:flex'>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Avatar className='cursor-pointer'>
-                    <AvatarImage
-                      src={user?.profilePic}
-                      alt='Profile avatar'
-                    />
-                    <AvatarFallback>
-                      {getFirstLettersForFallback(user?.name ?? '')}
-                    </AvatarFallback>
-                  </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className='w-56'>
-                  <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem
-                      onClick={() => router.push(`/profiles/${user?.id}`)}
-                    >
-                      <User />
-                      <span>Profile</span>
-                    </DropdownMenuItem>
-
-                    <DropdownMenuItem
-                      onClick={() =>
-                        router.push(`/profiles/${user?.id}/create`)
-                      }
-                    >
-                      <Plus />
-                      <span>Create</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() =>
-                        router.push(`/profiles/${user?.id}/all-posts`)
-                      }
-                    >
-                      <Database />
-                      <span>My posts</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={() => router.push(`/profiles/${user?.id}/support`)}
-                  >
-                    <Headset />
-                    <span>Support</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <Share2 />
-                      <span>Share</span>
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuItem
-                      onClick={() =>
-                        router.push(`/profiles/${user?.id}/settings/general`)
-                      }
-                    >
-                      <Cog />
-                      <span>Edit Profile</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent>
-                        <DropdownMenuItem
-                          className='flex items-center gap-2'
-                          onSelect={(event) => event.preventDefault()} // Prevent default dropdown closing behavior
-                        >
-                          <input
-                            type='text'
-                            readOnly
-                            value={address}
-                            className='rounded-md border border-gray-300 px-2 py-1 text-sm'
-                          />
-                          <button
-                            onClick={handleCopy}
-                            aria-label='Copy to clipboard'
-                          >
-                            <div key={copied ? 'check' : 'copy'}>
-                              {copied ? (
-                                <Check size={16} />
-                              ) : (
-                                <Copy size={16} />
-                              )}
-                            </div>
-                          </button>
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
-                  <DropdownMenuSeparator />
-
-                  <DropdownMenuItem onClick={logout}>
-                    <LogOut />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <UserNav />
             </div>
           )}
         </div>

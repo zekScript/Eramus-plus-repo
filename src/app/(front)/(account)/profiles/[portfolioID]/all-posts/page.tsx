@@ -21,10 +21,8 @@ export default async function BlogPage({ params, searchParams }: ProfileProps) {
   const profileID: number = parseInt(params.portfolioID, 10)
   const profiles: any = await findUserById(profileID)
 
-  // ✅ Filter user posts first
   const userPosts = posts.filter((post) => post.authorId === profiles?.id)
 
-  // ✅ Pagination logic
   const currentPage = Number(searchParams.page) || 1
   const totalPages = Math.ceil(userPosts.length / POSTS_PER_PAGE)
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE

@@ -78,7 +78,7 @@ export async function updateProfilePrivacy(
     await prisma.user.update({
       where: { id },
       data: {
-        privacyVisabillity: privacySettings as string,
+        privacyVisibility: privacySettings as string,
       },
     })
   } catch (error) {

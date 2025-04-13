@@ -5,23 +5,9 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { findUserById } from '@/server/user'
 import { getCurrentUser } from '@/server/currentUser'
+import { UserItems } from '@/types'
 
-interface UserProfile {
-  name: string
-  id: number
-  password: string
-  email: string
-  accessAdmin: boolean | null
-  createdAt: Date
-  updatedAt: Date
-  role: string
-  followersCount: number
-  followingCount: number
-  postsCount: number
-  profilePic: string | null
-  bio: string | null
-  privacyVisabillity: string
-}
+
 
 export default function SettingsPage() {
   const router = useRouter()
@@ -30,7 +16,7 @@ export default function SettingsPage() {
   const segments = pathname.split('/')
   const userId = parseInt(segments[2], 10)
   const [profileSettingsCurrentUser, setProfileSettingsCurrentUser] =
-    useState<UserProfile | null>(null)
+    useState<UserItems | null>(null)
 
   useEffect(() => {
     findUserById(userId)
