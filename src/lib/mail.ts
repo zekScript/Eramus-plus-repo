@@ -34,7 +34,7 @@ export async function sendMail(formData: FormData) {
       to: EMAIL,
       subject: subjectForm,
       html: `Support ticket has been made by ${nameForm} <br/> his email address is: ${email} <br/>`,
-      text: message,
+      // text: message,
     })
     if (sendResult)
       return {
@@ -42,7 +42,6 @@ export async function sendMail(formData: FormData) {
         message:
           'Success! Your email is sent to our server. We will try to respond as fast as possible',
       }
-    console.log(sendResult)
   } catch (error) {
     console.log(error)
   }

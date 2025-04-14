@@ -19,6 +19,7 @@ const badgeVariants = cva(
         important: 'bg-red-600 shadow text-white',
         info: 'bg-blue-700 shadow text-white',
         announcement: 'bg-yellow-500 shadow text-white',
+        notspecified: 'bg-gray-500 shadow text-white',
       },
     },
     defaultVariants: {

@@ -13,64 +13,11 @@ import ThemeToggle from '@/components/theme-switch'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import { getCurrentUser } from '../../../server/currentUser'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import {
-  Headset,
-  LogOut,
-  Plus,
-  User,
-  Share2,
-  Copy,
-  Check,
-  LayoutDashboard,
-  Cog,
-} from 'lucide-react'
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+import UserNav from '@/components/userNav'
 
 export function TopBar() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [copied, setCopied] = useState(false)
-  const [email] = useState(
-    'https://erasmus-plus-project-git-armandascode-zekscripts-projects.vercel.app/'
-  )
-  const router = useRouter()
   const isLoggedIn = Cookies.get('authToken') ? true : false
-  const user = getCurrentUser()
-
-  const logout = () => {
-    Cookies.remove('authToken')
-    window.location.reload()
-    router.push('/')
-  }
-
-  function getFirstLettersForFallback(str?: string) {
-    if (!str) return ''
-    return str
-      .split(' ') // Split the string into an array of words
-      .map((word) => word.charAt(0).toUpperCase()) // Take the first letter of each word and capitalize it
-      .join('') // Combine the letters without spaces
-  }
-
-  const handleCopy = (event: React.MouseEvent) => {
-    event.preventDefault() // Prevent the dropdown from closing
-    navigator.clipboard.writeText(email).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1000) // Reset the icon after 2 seconds
-    })
-  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,99 +74,15 @@ export function TopBar() {
             </div>
           ) : (
             <div className='mb-4 mt-3 hidden w-full justify-end gap-x-4 lg:flex'>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Avatar className='cursor-pointer'>
-                    <AvatarImage
-                      src='https://i.pinimg.com/564x/9f/e2/43/9fe24317d8363d84b3eb3b93b9c756ae.jpg'
-                      alt='Profile avatar'
-                    />
-                    <AvatarFallback>
-                      {getFirstLettersForFallback(user?.name ?? '')}
-                    </AvatarFallback>
-                  </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className='w-56'>
-                  <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem
-                      onClick={() => router.push(`/profiles/${user?.id}`)}
-                    >
-                      <User />
-                      <span>Profile</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push('/dashboard')}>
-                      <LayoutDashboard />
-                      <span>Dashboard</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push('/create')}>
-                      <Plus />
-                      <span>Create</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={() => router.push('/profiles/5/support')}
-                  >
-                    <Headset />
-                    <span>Support</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <Share2 />
-                      <span>Share</span>
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuItem
-                      onClick={() =>
-                        router.push(`/profiles/${user?.id}/settings/general`)
-                      }
-                    >
-                      <Cog />
-                      <span>Edit Profile</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent>
-                        <DropdownMenuItem
-                          className='flex items-center gap-2'
-                          onSelect={(event) => event.preventDefault()} // Prevent default dropdown closing behavior
-                        >
-                          <input
-                            type='text'
-                            readOnly
-                            value={email}
-                            className='rounded-md border border-gray-300 px-2 py-1 text-sm'
-                          />
-                          <button
-                            onClick={handleCopy}
-                            aria-label='Copy to clipboard'
-                          >
-                            <div key={copied ? 'check' : 'copy'}>
-                              {copied ? (
-                                <Check size={16} />
-                              ) : (
-                                <Copy size={16} />
-                              )}
-                            </div>
-                          </button>
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
-                  <DropdownMenuSeparator />
-
-                  <DropdownMenuItem onClick={logout}>
-                    <LogOut />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <UserNav />
             </div>
           )}
         </div>
       </div>
       <div className='flex h-full w-full justify-end'>
-        <div className='mb-4 ml-8 mr-8 hidden w-full justify-end border-t-2 border-indigo-500 lg:flex'>
+        <div
+          className={`mb-4 ml-8 mr-8 hidden w-full justify-end border-t-2 lg:flex`}
+        >
           <div className='mt-5'>
             <ThemeToggle></ThemeToggle>
           </div>

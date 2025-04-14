@@ -12,6 +12,8 @@ type Props = {
 }
 
 const Footer: React.FC<Props> = ({ className }) => {
+  const nowYear = new Date(Date.now()).getFullYear()
+
   return (
     <footer className={cn(className, 'mt-12 space-y-10 pb-10')}>
       <div className='container'>
@@ -55,7 +57,7 @@ const Footer: React.FC<Props> = ({ className }) => {
 
         <div className='mt-1 flex flex-col items-start gap-x-4 md:mt-0 md:flex-row md:items-center'>
           <div className='mt-1 flex flex-col items-start gap-x-4 md:flex-row md:items-center'>
-            <PMuted>Copyright © 2023 Rounded SQ.</PMuted>
+            <PMuted>Copyright © {nowYear} Rounded SQ.</PMuted>
             <PMuted>All rights reserved.</PMuted>
           </div>
           <div className='mt-6 flex h-5 items-center space-x-4 md:ms-2 md:mt-0 md:space-x-2'>

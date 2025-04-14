@@ -1,18 +1,50 @@
-import { Button } from '@/components/ui/button'
-import BlogCard from '@/components/blogCard'
-import { blogPostSources } from '@/config/site'
 import { findUserById } from '@/server/user'
+import { getPostsMadeByYou } from './all-posts/actions'
+import Link from 'next/link'
 
 interface ProfileProps {
   params: { portfolioID: string }
 }
 
 export default async function Profiles({ params }: ProfileProps) {
-  const isPrivate = false // debug
+  const posts = await getPostsMadeByYou()
+
+  const truncateText = (text: string, length: number) =>
+    text.length > length ? `${text.slice(0, length)}...` : text
   const profileID: number = parseInt(params.portfolioID, 10)
 
   const profiles: any = await findUserById(profileID)
 
+  function timeAgo(date: Date): string {
+    const now: Date = new Date()
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)
+
+    const intervals: { [key: string]: number } = {
+      year: 31536000,
+      month: 2592000,
+      week: 604800,
+      day: 86400,
+      hour: 3600,
+      minute: 60,
+      second: 1,
+    }
+
+    if (seconds > intervals.year * 5) {
+      return `Posted on ${date.toLocaleDateString()}`
+    }
+
+    for (const [unit, value] of Object.entries(intervals)) {
+      const count = Math.floor(seconds / value)
+      if (count > 0) {
+        return `Posted ${count} ${unit}${count > 1 ? 's' : ''} ago`
+      }
+    }
+
+    return 'Just now'
+  }
+
+  console.log(profiles)
+  const profilePrivacy = profiles?.privacyVisabillity
   return (
     <div className='m-auto h-full w-[90%] justify-center'>
       <div className='flex h-full w-full'>
@@ -29,7 +61,7 @@ export default async function Profiles({ params }: ProfileProps) {
 
           <div className='ml-8 mt-4 flex h-full w-[95%] flex-col'>
             <h1 className='text-3xl font-bold'>{profiles?.name}</h1>
-            {!isPrivate ? (
+            {profilePrivacy !== 'private' ? (
               <div>
                 <p className='text-break text-md mt-4'>
                   {profiles?.bio ? (
@@ -54,15 +86,77 @@ export default async function Profiles({ params }: ProfileProps) {
         </div>
       </div>
 
-      {!isPrivate ? (
+      {profilePrivacy === 'public' ? (
         <div className='mt-12'>
-          <div className='mb-12 flex w-[92%] border-b-2 border-indigo-500'>
-            {/* <Link className='mb-2 text-2xl font-medium' href='/profiles/[USERID]/all-posts'>
-            All posts
-          </Link> */}
+          <div className='mb-12 flex w-[90%] border-b-2 border-indigo-500 text-2xl font-bold'>
+            <h1>Posts made by {profiles?.name}</h1>
           </div>
-          <div className='grid h-full w-full grid-cols-1 overflow-hidden lg:grid-cols-3'>
-            <BlogCard blogItems={blogPostSources.blogItems} />
+          <div className='grid h-full w-full overflow-hidden'>
+            {posts.length === 0 ? (
+              <p>No posts available</p>
+            ) : (
+              posts.slice(0, 8).map((post) => (
+                <div>
+                  {post.authorId === profiles?.id && (
+                    <div
+                      key={post.id}
+                      className='mb-6 flex w-[80%] justify-between space-x-3 space-y-6 border-b pb-4'
+                    >
+                      <div className='flex flex-col gap-2'>
+                        <div className='w-full'>
+                          {/* <h2 >
+                        {post.title}
+                      </h2> */}
+                          {/* fix it here */}
+                          <Link
+                            href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
+                            className='text-lg font-semibold text-indigo-500'
+                          >
+                            {post.title}
+                          </Link>
+                          <p className='text-sm text-gray-600'>
+                            Posted by {profiles?.name}
+                          </p>
+                          <p className='text-md'>
+                            {timeAgo(new Date(post.createdAt))}
+                          </p>
+                          <p className='font-sm h-full w-full text-sm text-neutral-400'>
+                            {truncateText(post.content, 200)}
+                          </p>
+                        </div>
+
+                        <div className='flex gap-3 text-sm font-semibold text-indigo-500'>
+                          {/* Extra options */}
+                          {/* <Link href='/my-account/stats'>Statistics</Link> */}
+                          {/* <p>Views: 999</p>
+                        <p>Likes: 999</p>
+                        <p>Dislikes: 999</p> */}
+                        </div>
+                      </div>
+
+                      {post.authorId === profiles?.id && (
+                        <div className='mb-2 space-y-2 text-sm'>
+                          {/* <Link href={`/content/blogitems/edit?p=${post.id}`} className='flex text-sm'>
+                            Post settings
+                            
+                          </Link> */}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))
+            )}
+            {posts.length > 8 && (
+              <div className='mt-4'>
+                <Link
+                  href={`/profiles/${profiles?.id}/all-posts`}
+                  className='text-indigo-500'
+                >
+                  Checkout more posts
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       ) : (

@@ -32,6 +32,39 @@ export type CarouselSourcesItem = {
   mainTitle: string
   description: string
 }
+
+export type PostItems = {
+  id: string
+  title: string
+  content: string
+  slug: string
+  badge: string | null
+  createdAt: Date
+  postVisibillity: string
+  likes: number
+  dislikes: number
+  views: number
+  updatedAt: Date
+  authorId: number
+}
+
+export type UserItems = {
+  name: string
+  id: number
+  password: string
+  email: string
+  accessAdmin: boolean | null
+  createdAt: Date
+  updatedAt: Date
+  role: string
+  followersCount: number
+  followingCount: number
+  postsCount: number
+  profilePic: string | null
+  bio: string | null
+  privacyVisabillity: string
+}
+
 // Blog items
 export type BlogSourcesItem = {
   id: number

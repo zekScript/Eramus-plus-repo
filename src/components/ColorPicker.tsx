@@ -16,8 +16,7 @@ const ColorPicker = () => {
 
   const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
-    setColor(event.target.value) // Get the color hex code
-    console.log('Selected Color:', event.target.value) // Log the selected color
+    localStorage.setItem('colorTheme', event.target.value)
   }
   return (
     <>

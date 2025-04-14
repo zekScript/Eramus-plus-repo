@@ -9,7 +9,12 @@ import { GlassEffectSwitch } from './ui/switch'
 import ColorPicker from './ColorPicker'
 import { useState, useEffect } from 'react'
 import { ChevronUp, ChevronDown } from 'lucide-react'
-import { findUserById, updateUser } from '@/server/user'
+import {
+  deleteUser,
+  findUserById,
+  updateProfilePrivacy,
+  updateUser,
+} from '@/server/user'
 import { useTheme } from 'next-themes'
 import { usePathname } from 'next/navigation'
 
@@ -21,27 +26,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { UserItems } from '@/types'
 interface SideBarContentProps {
   params: {
     settingsID: string
   }
 }
 
-interface UserProfile {
-  name: string
-  id: number
-  password: string
-  email: string
-  accessAdmin: boolean | null
-  createdAt: Date
-  updatedAt: Date
-  role: string
-  followersCount: number
-  followingCount: number
-  postsCount: number
-  profilePic: string | null
-  bio: string | null
-}
+
+
+// const pickColorAction = (e) => {
+// e.preventDefault()
+// }
 const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
   const [feedback, setFeedback] = useState({ success: false, message: '' })
   const [charCounter, setCharCounter] = useState(0)
@@ -66,7 +62,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
     setIsOpen((prev) => !prev) // Toggle the dropdown open/close
   }
   const [profileSettingsCurrentUser, setProfileSettingsCurrentUser] =
-    useState<UserProfile | null>(null)
+    useState<UserItems | null>(null)
 
   const [name, setName] = useState(profileSettingsCurrentUser?.name)
   const [privacy, setPrivacy] = useState('public')
@@ -98,8 +94,12 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
     setTheme('' + value)
   }
 
-  const handleSelectChangePrivacy = (value: string) => {
-    setPrivacy('' + value)
+  const handleSelectChangePrivacy = async (value: string) => {
+    await updateProfilePrivacy(profileSettingsCurrentUser?.id as number, value)
+  }
+
+  const deletAcc = async () => {
+    await deleteUser(profileSettingsCurrentUser?.id as number)
   }
 
   return (
@@ -155,6 +155,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                   {/* <p>Animations: </p>
                   <p>Images: </p> */}
                   <p>Coming Soon!</p>
+                  <Button onClick={deletAcc}>Delete account</Button>
                 </div>
               </div>
             </section>
@@ -282,84 +283,73 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
             You can change custom theme colors. also you can change what theme
             mode you prefer
           </p>
-          <form className='mt-3'>
-            {/* Whole container */}
-            <div className='mt-3 h-full w-full'>
-              {/* Container */}
+          {/* <form className='mt-3' action={(e) => pickColorAction(e)}> */}
+          {/* Whole container */}
+          <div className='mt-3 h-full w-full'>
+            {/* Container */}
 
-              <div className='border-settings mt-3 flex h-full w-full p-6'>
-                <div className='h-full w-full'>
-                  <h1 className='text-xl font-medium'>Choose your mode</h1>
-                  <p className='text-sm font-thin'>
-                    Change the colors that appear on your site
-                  </p>
-                </div>
-                {/* Selection */}
-                <div className='mr-3 flex items-center'>
-                  <Select onValueChange={handleSelectChange}>
-                    <SelectTrigger className='w-[140px]'>
-                      <SelectValue placeholder='Dark' />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value='dark'>Dark</SelectItem>
-                        <SelectItem value='light'>Light</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
+            <div className='border-settings mt-3 flex h-full w-full p-6'>
+              <div className='h-full w-full'>
+                <h1 className='text-xl font-medium'>Choose your mode</h1>
+                <p className='text-sm font-thin'>
+                  Change the colors that appear on your site
+                </p>
               </div>
+              {/* Selection */}
+              <div className='mr-3 flex items-center'>
+                <Select onValueChange={handleSelectChange}>
+                  <SelectTrigger className='w-[140px]'>
+                    <SelectValue placeholder='Dark' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value='dark'>Dark</SelectItem>
+                      <SelectItem value='light'>Light</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
 
-              <div className='border-settings mt-3 flex h-full w-full p-6'>
-                <div className='flex h-full w-full flex-col'>
-                  <div className='flex h-full w-full'>
-                    <div className='flex h-full w-full flex-col'>
-                      <h1 className='text-xl font-medium'>Color</h1>
-                    </div>
-
-                    {/* Selection */}
-                    <div className='mr-3 flex items-center gap-4'>
-                      <Select onOpenChange={setIsOpen}>
-                        <SelectTrigger className='w-[140px]'>
-                          <SelectValue placeholder='Manual' />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value='apple' disabled>
-                              Manual
-                            </SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                      {/* Chevron button */}
-                      <div
-                        onClick={handleChevronClick}
-                        className='cursor-pointer'
-                      >
-                        {isOpen ? <ChevronUp /> : <ChevronDown />}{' '}
-                        {/* Toggle Chevron based on isOpen */}
-                      </div>
-                    </div>
+            <div className='border-settings mt-3 flex h-full w-full p-6'>
+              <div className='flex h-full w-full flex-col'>
+                <div className='flex h-full w-full'>
+                  <div className='flex h-full w-full flex-col'>
+                    <h1 className='text-xl font-medium'>Color</h1>
                   </div>
 
-                  {/* Expanded content */}
-
-                  <div>
-                    {/* Color picker templates  */}
-                    {isOpen && (
-                      <div className='flex h-full w-full items-start'>
-                        <ColorPicker />
-                      </div>
-                    )}
+                  {/* Selection */}
+                  <div className='mr-3 flex items-center gap-4'>
+                    <Select onOpenChange={setIsOpen}></Select>
+                    {/* Chevron button */}
+                    <div
+                      onClick={handleChevronClick}
+                      className='cursor-pointer'
+                    >
+                      {isOpen ? <ChevronUp /> : <ChevronDown />}{' '}
+                      {/* Toggle Chevron based on isOpen */}
+                    </div>
                   </div>
+                </div>
+
+                {/* Expanded content */}
+
+                <div>
+                  {/* Color picker templates  */}
+                  {isOpen && (
+                    <div className='flex h-full w-full items-start'>
+                      <ColorPicker />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-            <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
-              <Button variant='secondary'>Save</Button>
-              <Button variant='outline'>Cancel</Button>
-            </div>
-          </form>
+          </div>
+          <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
+            <Button variant='secondary'>Save</Button>
+            <Button variant='outline'>Cancel</Button>
+          </div>
+          {/* </form> */}
         </div>
       )}
 
@@ -403,7 +393,9 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                     <h1 className='mb-3'>My profile:</h1>
                     <Select onValueChange={handleSelectChangePrivacy}>
                       <SelectTrigger className='w-[100px] border-none'>
-                        <span className='text-indigo-500'>Public</span>
+                        <span className='text-indigo-500'>
+                          {profileSettingsCurrentUser?.privacyVisabillity}
+                        </span>
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
