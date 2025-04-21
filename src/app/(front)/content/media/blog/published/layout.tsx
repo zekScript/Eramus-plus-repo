@@ -9,12 +9,11 @@ import {
 import {
   CalendarDays,
   Eye,
-  Share,
-  Share2,
   ThumbsDown,
   ThumbsUp,
   Copy,
   Check,
+  Share2,
 } from 'lucide-react'
 import { UserItems, PostItems } from '@/types'
 import { useEffect, useState } from 'react'
@@ -54,6 +53,8 @@ const WikiLayout: React.FC<Props> = ({
   const [liked, setLiked] = useState(false)
   const [disliked, setDisliked] = useState(false)
 
+  console.log(likes, dislikes)
+
   const [user, setUser] = useState<UserItems | null>(null)
 
   function timeAgo(date: Date): string {
@@ -86,7 +87,6 @@ const WikiLayout: React.FC<Props> = ({
 
   const [post, setPost] = useState<PostItems | null>(null)
 
-  const [loading, setLoading] = useState(true)
   const [copied, setCopied] = useState(false)
   const [address] = useState(
     'https://erasmus-plus-project-git-armandascode-zekscripts-projects.vercel.app/' +
@@ -111,8 +111,6 @@ const WikiLayout: React.FC<Props> = ({
         setPost(post)
       } catch (error) {
         console.error('Error fetching post:', error)
-      } finally {
-        setLoading(false)
       }
     }
 

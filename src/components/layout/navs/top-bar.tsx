@@ -11,8 +11,6 @@ import MobileNav from './mobile-nav'
 import { useEffect, useState } from 'react'
 import ThemeToggle from '@/components/theme-switch'
 import Cookies from 'js-cookie'
-import { useRouter } from 'next/navigation'
-import { getCurrentUser } from '../../../server/currentUser'
 import UserNav from '@/components/userNav'
 
 export function TopBar() {

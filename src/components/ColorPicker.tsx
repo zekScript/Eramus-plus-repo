@@ -1,12 +1,10 @@
 'use client'
 import ColorPalletes from './colorPalletes'
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import { Button } from '@/components/ui/button'
 
 const ColorPicker = () => {
   const colorInputRef = useRef<HTMLInputElement | null>(null) // Reference to the hidden input
-
-  const [color, setColor] = useState('#000000') // Default color (black)
 
   const handleButtonClick = () => {
     if (colorInputRef.current) {
@@ -44,7 +42,6 @@ const ColorPicker = () => {
               <input
                 ref={colorInputRef}
                 type='color'
-                value={color}
                 onChange={handleColorChange}
                 style={{ display: 'none' }} // Hide the input element
               />

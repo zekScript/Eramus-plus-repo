@@ -3,9 +3,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from './ui/button'
 import { Textarea } from './ui/textarea'
-import { getCurrentUser } from '@/server/currentUser'
 import * as React from 'react'
-import { GlassEffectSwitch } from './ui/switch'
 import ColorPicker from './ColorPicker'
 import { useState, useEffect } from 'react'
 import { ChevronUp, ChevronDown } from 'lucide-react'
@@ -33,13 +31,10 @@ interface SideBarContentProps {
   }
 }
 
-
-
 // const pickColorAction = (e) => {
 // e.preventDefault()
 // }
 const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
-  const [feedback, setFeedback] = useState({ success: false, message: '' })
   const [charCounter, setCharCounter] = useState(0)
   const { setTheme } = useTheme()
   const pathname = usePathname()
@@ -65,7 +60,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
     useState<UserItems | null>(null)
 
   const [name, setName] = useState(profileSettingsCurrentUser?.name)
-  const [privacy, setPrivacy] = useState('public')
+  console.log(name)
 
   let contentToDisplay = ''
   if (params.settingsID === 'general') {

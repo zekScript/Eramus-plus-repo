@@ -15,17 +15,16 @@ export default function CreatePost() {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
-  const [feedback, setFeedback] = useState({ success: false, message: '' })
-  const [error, setError] = useState<string | null>(null)
+  // const [feedback, setFeedback] = useState({ success: false, message: '' })
 
   const handleSubmit = async (formData: FormData) => {
     try {
       const result = await createPost(formData)
       if (result) {
-        setFeedback(result)
+        // setFeedback(result)
       }
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err) {
+      console.error(err)
     }
   }
 

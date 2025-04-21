@@ -19,7 +19,7 @@ import {
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { TriangleAlert, X } from 'lucide-react'
+import { TriangleAlert } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { PostItems } from '@/types'
@@ -148,7 +148,7 @@ const EditPost: React.FC = () => {
                 <div className='flex h-full w-full flex-col'>
                   <h1 className='text-md font-medium'>Change Post tag</h1>
                   <p className='text-sm'>
-                    You can change this post's tag ex. important: for important
+                    You can change this post tag ex. important: for important
                     information, info: for general news and etc.
                   </p>
                 </div>

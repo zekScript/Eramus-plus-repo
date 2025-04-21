@@ -19,7 +19,7 @@ const POSTS_PER_PAGE = 5
 export default async function BlogPage({ params, searchParams }: ProfileProps) {
   const posts = await getPostsMadeByYou()
   const profileID: number = parseInt(params.portfolioID, 10)
-  const profiles: any = await findUserById(profileID)
+  const profiles = await findUserById(profileID)
 
   const userPosts = posts.filter((post) => post.authorId === profiles?.id)
 

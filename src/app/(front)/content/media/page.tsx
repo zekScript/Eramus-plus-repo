@@ -1,7 +1,6 @@
 'use client'
 import BlogCard from '@/components/blogCard'
 import { blogPostSources } from '@/config/site'
-import { search } from '@/server/search'
 import { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 
