@@ -3,7 +3,7 @@ import { getPostsMadeByYou } from './actions'
 import Link from 'next/link'
 
 interface ProfileProps {
-  params: { portfolioID: string }
+  params: Promise<{ portfolioID: string }>
 }
 
 export default async function Profiles({ params }: ProfileProps) {
@@ -11,7 +11,8 @@ export default async function Profiles({ params }: ProfileProps) {
 
   const truncateText = (text: string, length: number) =>
     text.length > length ? `${text.slice(0, length)}...` : text
-  const profileID: number = parseInt(params.portfolioID, 10)
+  const resolvedParams = await params
+  const profileID: number = parseInt(resolvedParams.portfolioID, 10)
 
   const profiles = await findUserById(profileID)
 

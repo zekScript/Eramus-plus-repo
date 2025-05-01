@@ -9,21 +9,24 @@ import {
 } from '@/components/ui/pagination'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
-interface ProfileProps {
-  params: { portfolioID: string } // Changed from Promise<{ portfolioID: string }>
-  searchParams: { page?: string }
+type PageProps = {
+  params: Promise<{ portfolioID: string }>
+  searchParams?: Promise<{ page?: string }>
 }
 
 const POSTS_PER_PAGE = 5
 
-export default async function BlogPage({ params, searchParams }: ProfileProps) {
+const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
   const posts = await getPostsMadeByYou()
-  const profileID: number = parseInt(params.portfolioID, 10) // Removed await
+
+  const { portfolioID } = await params
+  const profileID: number = parseInt(portfolioID, 10)
   const profiles = await findUserById(profileID)
 
   const userPosts = posts.filter((post) => post.authorId === profiles?.id)
 
-  const currentPage = Number(searchParams.page) || 1
+  const resolvedSearchParams = await searchParams
+  const currentPage = Number(resolvedSearchParams?.page ?? 1)
   const totalPages = Math.ceil(userPosts.length / POSTS_PER_PAGE)
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE
   const paginatedPosts = userPosts.slice(
@@ -146,3 +149,5 @@ export default async function BlogPage({ params, searchParams }: ProfileProps) {
     </div>
   )
 }
+
+export default BlogPage

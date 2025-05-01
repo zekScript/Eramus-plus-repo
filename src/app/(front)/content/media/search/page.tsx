@@ -22,7 +22,7 @@ type ResultProps = {
 }
 
 interface SearchParamsProps {
-  searchParams: { page?: string }
+  searchParams: Promise<{ page?: string }>
 }
 const SearchQueryPage: React.FC<SearchParamsProps> = () => {
   const router = useRouter()

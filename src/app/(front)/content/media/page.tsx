@@ -14,7 +14,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
 interface SearchParamsProps {
-  searchParams: { page?: string }
+  searchParams: Promise<{ page?: string }>
 }
 
 const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
@@ -63,7 +63,15 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
   }
   const POSTS_PER_PAGE = 5
 
-  const currentPage = Number(searchParams?.page) || 1
+  const [currentPage, setCurrentPage] = useState(1)
+
+  useEffect(() => {
+    const fetchPage = async () => {
+      const params = await searchParams
+      setCurrentPage(Number(params.page) || 1)
+    }
+    fetchPage()
+  }, [searchParams])
   const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE)
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE
   const paginatedPosts = posts.slice(startIndex, startIndex + POSTS_PER_PAGE)
