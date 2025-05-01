@@ -1,5 +1,5 @@
 import { findUserById } from '@/server/user'
-import { getPostsMadeByYou } from './all-posts/actions'
+import { getPostsMadeByYou } from './actions'
 import Link from 'next/link'
 
 interface ProfileProps {

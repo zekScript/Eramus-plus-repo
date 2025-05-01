@@ -10,7 +10,7 @@ import {
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface ProfileProps {
-  params: { portfolioID: string }
+  params: { portfolioID: string } // Changed from Promise<{ portfolioID: string }>
   searchParams: { page?: string }
 }
 
@@ -18,7 +18,7 @@ const POSTS_PER_PAGE = 5
 
 export default async function BlogPage({ params, searchParams }: ProfileProps) {
   const posts = await getPostsMadeByYou()
-  const profileID: number = parseInt(params.portfolioID, 10)
+  const profileID: number = parseInt(params.portfolioID, 10) // Removed await
   const profiles = await findUserById(profileID)
 
   const userPosts = posts.filter((post) => post.authorId === profiles?.id)
@@ -107,7 +107,6 @@ export default async function BlogPage({ params, searchParams }: ProfileProps) {
           )}
         </div>
 
-        {/* ✅ Pagination */}
         {totalPages > 1 && (
           <Pagination className='mt-8'>
             <PaginationContent>

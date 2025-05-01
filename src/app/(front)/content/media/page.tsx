@@ -1,51 +1,178 @@
 'use client'
-import BlogCard from '@/components/blogCard'
-import { blogPostSources } from '@/config/site'
 import { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+import { PostItems } from '@/types'
+import { getPosts } from './actions'
+import { useEffect } from 'react'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+} from '@/components/ui/pagination'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 
-const Media: React.FC = () => {
+interface SearchParamsProps {
+  searchParams: { page?: string }
+}
+
+const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
   const router = useRouter()
   const pathname = usePathname()
 
+  const [posts, setPosts] = useState<PostItems[]>([])
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const fetchedPosts = await getPosts()
+      setPosts(fetchedPosts)
+    }
+
+    fetchPosts()
+  }, [])
+
   const [inputValue, setInputValue] = useState('')
+
+  function timeAgo(date: Date): string {
+    const now: Date = new Date()
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)
+
+    const intervals: { [key: string]: number } = {
+      year: 31536000,
+      month: 2592000,
+      week: 604800,
+      day: 86400,
+      hour: 3600,
+      minute: 60,
+      second: 1,
+    }
+
+    if (seconds > intervals.year * 5) {
+      return `Posted on ${date.toLocaleDateString()}`
+    }
+
+    for (const [unit, value] of Object.entries(intervals)) {
+      const count = Math.floor(seconds / value)
+      if (count > 0) {
+        return `Posted ${count} ${unit}${count > 1 ? 's' : ''} ago`
+      }
+    }
+
+    return 'Just now'
+  }
+  const POSTS_PER_PAGE = 5
+
+  const currentPage = Number(searchParams?.page) || 1
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE)
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE
+  const paginatedPosts = posts.slice(startIndex, startIndex + POSTS_PER_PAGE)
+
+  const truncateText = (text: string, length: number) =>
+    text.length > length ? `${text.slice(0, length)}...` : text
 
   const searchQuery = () => {
     router.push(pathname + `/search?q=${inputValue}`)
   }
   return (
-    <>
-      <h1 className='mb-12 mt-12 text-center font-serif text-6xl italic'>
-        Media
-      </h1>
-      {/* Search query */}
-      <div className='h-[50vh] w-full'>
-        <div className='flex h-full w-full items-center justify-center'>
-          <div className='flex w-full max-w-2xl items-center justify-between rounded-full border-2 bg-black p-4 shadow-md'>
-            <form
-              action={searchQuery}
-              className='flex h-full w-full items-center justify-between'
+    <div className='p-4'>
+      <div className='m-auto w-[50%]'>
+        <form
+          action={searchQuery}
+          className='flex h-full w-full items-center justify-center'
+        >
+          <div className='relative w-full'>
+            <input
+              type='text'
+              placeholder='Search...'
+              name='searchInput'
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              className='h-[50px] w-full border-none outline-none'
+            />
+            <button
+              // onClick={togglePasswordVisibility}
+              className='absolute inset-y-0 bottom-2 right-4 text-gray-400'
+              type='button' // Prevents form submission
             >
-              <input
-                type='text'
-                placeholder='Search...'
-                name='searchInput'
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                className='h-full w-full border-none bg-black outline-none'
-              />
-              <button className='ml-4 rounded-full bg-blue-500 px-4 py-2 text-white'>
-                Search
-              </button>
-            </form>
+              Search
+            </button>
           </div>
+        </form>
+        <div className='flex h-full w-full flex-col text-[1.4rem] font-bold'>
+          <div className='mr-4 mt-4 flex w-full justify-end gap-2'></div>
         </div>
       </div>
 
-      <div className='m-auto grid h-full w-full grid-cols-1 gap-y-20 p-9 lg:grid-cols-3'>
-        <BlogCard blogItems={blogPostSources.blogItems} />
+      <div className='m-auto mb-6 flex flex-col justify-between space-y-6 border-b pb-4'>
+        {paginatedPosts.length === 0 ? (
+          <p>No posts available</p>
+        ) : (
+          paginatedPosts.map((post) => (
+            <div key={post.id}>
+              <div className='mb-6 flex w-full justify-between space-x-3 space-y-6 pb-4'>
+                <div className='flex flex-col gap-2'>
+                  <div className='w-full'>
+                    <Link
+                      href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
+                      className='text-lg font-semibold text-indigo-500'
+                    >
+                      {post.title}
+                    </Link>
+                    <p className='text-sm text-gray-600'>
+                      {/* Posted by {profiles?.name} */}
+                    </p>
+                    <p className='text-md'>
+                      {timeAgo(new Date(post.createdAt))}
+                    </p>
+                    <p className='font-sm h-full w-full text-sm text-neutral-400'>
+                      {truncateText(post.content, 200)}
+                    </p>
+                  </div>
+                </div>
+                <div className='mb-2 space-y-2 text-sm'></div>
+              </div>
+            </div>
+          ))
+        )}
+
+        {totalPages > 1 && (
+          <Pagination className='mt-8'>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationLink
+                  href={`?page=${Math.max(currentPage - 1, 1)}`}
+                  className='cursor-pointer'
+                >
+                  <ChevronLeft className='h-4 w-4' />
+                </PaginationLink>
+              </PaginationItem>
+
+              {Array.from({ length: totalPages }).map((_, idx) => (
+                <PaginationItem key={idx}>
+                  <PaginationLink
+                    href={`?page=${idx + 1}`}
+                    isActive={idx + 1 === currentPage}
+                    className='cursor-pointer'
+                  >
+                    {idx + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+
+              <PaginationItem>
+                <PaginationLink
+                  href={`?page=${Math.min(currentPage + 1, totalPages)}`}
+                  className='cursor-pointer'
+                >
+                  <ChevronRight className='h-4 w-4' />
+                </PaginationLink>
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        )}
       </div>
-    </>
+    </div>
   )
 }
 

@@ -7,11 +7,13 @@ import { useSearchParams } from 'next/navigation'
 
 import ReactMarkdown from 'react-markdown'
 import { PostItems } from '@/types'
+import { useMDXComponentsPost } from '../../../../../../../../mdx-components-post'
 
 const BlogPage = () => {
   // Accessing the search parameters correctly
   const searchParams = useSearchParams()
   const postId = searchParams.get('p') // Correctly accessing the 'p' parameter
+  const MDXcomponents = useMDXComponentsPost({})
 
   const [post, setPost] = useState<PostItems | null>(null)
   useEffect(() => {
@@ -23,7 +25,7 @@ const BlogPage = () => {
         setPost(post)
       } catch (error) {
         console.error('Error fetching post:', error)
-      } 
+      }
     }
 
     fetchPost()
@@ -38,7 +40,9 @@ const BlogPage = () => {
         <div className='mr-3 w-full'>
           <h2 className='mt-4 text-xl font-bold'>{post.title}</h2>
 
-          <ReactMarkdown>{post.content}</ReactMarkdown>
+          <ReactMarkdown components={MDXcomponents}>
+            {post.content}
+          </ReactMarkdown>
         </div>
 
         {/* Make a sidebar menu for the details of the blog */}

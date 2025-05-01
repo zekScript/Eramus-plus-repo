@@ -76,7 +76,7 @@ export const carouselItems: CarouselSources = {
 
     {
       id: 2,
-      src: 'https://market.fp.ps.netease.com/file/6704da94f083126d846b2729h175EmYB05',
+      src: '#', //https://market.fp.ps.netease.com/file/6704da94f083126d846b2729h175EmYB05
       mainTitle: 'Front-end development',
       description:
         'I make simple front-end design to make user never get lost in the website',
