@@ -6,31 +6,16 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 import ReactMarkdown from 'react-markdown'
+import { PostItems } from '@/types'
+import { useMDXComponentsPost } from '../../../../../../../../mdx-components-post'
 
 const BlogPage = () => {
-  const [deleteCard, setDeleteCard] = useState(false)
-
   // Accessing the search parameters correctly
   const searchParams = useSearchParams()
   const postId = searchParams.get('p') // Correctly accessing the 'p' parameter
+  const MDXcomponents = useMDXComponentsPost({})
 
-  const [post, setPost] = useState<{
-    id: string
-    title: string
-    content: string
-    slug: string
-    badge: string | null
-    createdAt: Date
-    postVisibillity: string
-    likes: number
-    dislikes: number
-    views: number
-    updatedAt: Date
-    authorId: number
-  } | null>(null)
-
-  const [loading, setLoading] = useState(true)
-
+  const [post, setPost] = useState<PostItems | null>(null)
   useEffect(() => {
     if (!postId) return
 
@@ -40,15 +25,12 @@ const BlogPage = () => {
         setPost(post)
       } catch (error) {
         console.error('Error fetching post:', error)
-      } finally {
-        setLoading(false)
       }
     }
 
     fetchPost()
   }, [postId])
 
-  if (loading) return <p>Loading...</p>
   if (!post) return <p>Post not found</p>
 
   return (
@@ -58,7 +40,9 @@ const BlogPage = () => {
         <div className='mr-3 w-full'>
           <h2 className='mt-4 text-xl font-bold'>{post.title}</h2>
 
-          <ReactMarkdown>{post.content}</ReactMarkdown>
+          <ReactMarkdown components={MDXcomponents}>
+            {post.content}
+          </ReactMarkdown>
         </div>
 
         {/* Make a sidebar menu for the details of the blog */}

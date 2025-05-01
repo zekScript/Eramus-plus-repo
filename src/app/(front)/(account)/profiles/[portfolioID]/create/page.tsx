@@ -6,26 +6,27 @@ import { usePathname } from 'next/navigation'
 import SidebarForPosts from '@/components/sidebar-for-posts'
 import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
+import { useMDXComponentsPost } from '../../../../../../../mdx-components-post'
 
 export default function CreatePost() {
   const pathname = usePathname()
   const segments = pathname.split('/')
   const userId: number = parseInt(segments[2], 10)
+  const MDXcomponents = useMDXComponentsPost({})
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
-  const [feedback, setFeedback] = useState({ success: false, message: '' })
-  const [error, setError] = useState<string | null>(null)
+  // const [feedback, setFeedback] = useState({ success: false, message: '' })
 
   const handleSubmit = async (formData: FormData) => {
     try {
       const result = await createPost(formData)
       if (result) {
-        setFeedback(result)
+        // setFeedback(result)
       }
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err) {
+      console.error(err)
     }
   }
 
@@ -65,7 +66,7 @@ export default function CreatePost() {
             <div className='ml-7 mr-7 flex justify-between'>
               <button
                 type='submit'
-                className='rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700'
+                className='rounded bg-indigo-500 px-4 py-2 text-white hover:bg-indigo-600'
               >
                 Post your blog
               </button>
@@ -79,7 +80,7 @@ export default function CreatePost() {
           <h1 className='text-2xl font-semibold'>Live Preview</h1>
           <h2 className='mt-4 text-xl font-bold'>{title}</h2>
           <div className='prose prose-invert max-w-none text-white'>
-            <ReactMarkdown>{content}</ReactMarkdown>
+            <ReactMarkdown components={MDXcomponents}>{content}</ReactMarkdown>
           </div>
         </div>
       </div>

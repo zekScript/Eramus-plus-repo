@@ -2,19 +2,18 @@
 
 import {
   findPostById,
-  likePost,
-  dislikePost,
+  // likePost,
+  // dislikePost,
   getAuthorMadeTotalPostAmount,
 } from '@/server/post'
 import {
   CalendarDays,
   Eye,
-  Share,
-  Share2,
   ThumbsDown,
   ThumbsUp,
   Copy,
   Check,
+  Share2,
 } from 'lucide-react'
 import { UserItems, PostItems } from '@/types'
 import { useEffect, useState } from 'react'
@@ -35,24 +34,26 @@ import { findUserById } from '@/server/user'
 
 type Props = {
   children: React.ReactNode
-  initialLikes: number
-  initialDislikes: number
+  // initialLikes: number
+  // initialDislikes: number
 }
 
 const WikiLayout: React.FC<Props> = ({
   children,
-  initialLikes,
-  initialDislikes,
+  // initialLikes,
+  // initialDislikes,
 }) => {
   const searchParams = useSearchParams()
   const postId = searchParams.get('p') as string
   const currentLoggedInUser = getCurrentUser()
   const pathname = usePathname()
 
-  const [likes, setLikes] = useState(initialLikes)
-  const [dislikes, setDislikes] = useState(initialDislikes)
-  const [liked, setLiked] = useState(false)
-  const [disliked, setDisliked] = useState(false)
+  // const [likes, setLikes] = useState(initialLikes)
+  // const [dislikes, setDislikes] = useState(initialDislikes)
+  // const [liked, setLiked] = useState(false)
+  // const [disliked, setDisliked] = useState(false)
+
+  // console.log(likes, dislikes)
 
   const [user, setUser] = useState<UserItems | null>(null)
 
@@ -86,7 +87,6 @@ const WikiLayout: React.FC<Props> = ({
 
   const [post, setPost] = useState<PostItems | null>(null)
 
-  const [loading, setLoading] = useState(true)
   const [copied, setCopied] = useState(false)
   const [address] = useState(
     'https://erasmus-plus-project-git-armandascode-zekscripts-projects.vercel.app/' +
@@ -111,27 +111,25 @@ const WikiLayout: React.FC<Props> = ({
         setPost(post)
       } catch (error) {
         console.error('Error fetching post:', error)
-      } finally {
-        setLoading(false)
       }
     }
 
     fetchPost()
   }, [postId])
 
-  const handleLike = async () => {
-    if (liked) return
-    const updatedLikes = await likePost(postId)
-    setLikes(updatedLikes)
-    setLiked(true)
-  }
+  // const handleLike = async () => {
+  //   if (liked) return
+  //   const updatedLikes = await likePost(postId)
+  //   setLikes(updatedLikes)
+  //   setLiked(true)
+  // }
 
-  const handleDislike = async () => {
-    if (disliked) return
-    const updatedDislikes = await dislikePost(postId)
-    setDislikes(updatedDislikes)
-    setDisliked(true)
-  }
+  // const handleDislike = async () => {
+  //   if (disliked) return
+  //   const updatedDislikes = await dislikePost(postId)
+  //   setDislikes(updatedDislikes)
+  //   setDisliked(true)
+  // }
 
   function getFirstLettersForFallback(str?: string) {
     if (!str) return ''
@@ -290,30 +288,30 @@ const WikiLayout: React.FC<Props> = ({
                       >
                         <Button
                           variant='outline'
-                          onClick={handleLike}
+                          // onClick={handleLike}
                           className='flex items-center gap-1'
                         >
                           <ThumbsUp
-                            className={
-                              liked
-                                ? 'rounded-full bg-gray-100 text-slate-600'
-                                : ''
-                            }
+                          // className={
+                          //   liked
+                          //     ? 'rounded-full bg-gray-100 text-slate-600'
+                          //     : ''
+                          // }
                           />
                           <span>{post.likes}</span>
                         </Button>
 
                         <Button
                           variant='outline'
-                          onClick={handleDislike}
+                          // onClick={handleDislike}
                           className='flex items-center gap-1'
                         >
                           <ThumbsDown
-                            className={
-                              disliked
-                                ? 'rounded-full bg-gray-100 text-slate-600'
-                                : ''
-                            }
+                          // className={
+                          //   disliked
+                          //     ? 'rounded-full bg-gray-100 text-slate-600'
+                          //     : ''
+                          // }
                           />
                           <span>{post.dislikes}</span>
                         </Button>

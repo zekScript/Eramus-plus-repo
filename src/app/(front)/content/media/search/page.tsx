@@ -4,57 +4,50 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { search } from '@/server/search' // Import the server action
 import { useRouter, usePathname } from 'next/navigation'
+import { PostItems } from '@/types'
+
 import {
-      Select,
-      SelectContent,
-      SelectGroup,
-      SelectItem,
-      SelectTrigger,
-      SelectValue,
-    } from '@/components/ui/select'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+} from '@/components/ui/pagination'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 
+type ResultProps = {
+  success: boolean
+  message: string
+  posts: PostItems[]
+}
 
-//     ---------------
-
-
-
-
-const SearchQueryPage: React.FC = () => {
-
-      
-      
-      
-       
-      
-        
-      
-       
-
-      // ---------------------
+interface SearchParamsProps {
+  searchParams: Promise<{ page?: string }>
+}
+const SearchQueryPage: React.FC<SearchParamsProps> = () => {
   const router = useRouter()
   const pathname = usePathname()
-  console.log('pathname', pathname)
 
   const [inputValue, setInputValue] = useState('')
 
   const searchQuery = () => {
-    router.push(pathname +
-      `?q=${inputValue}`)
+    router.push(pathname + `?q=${inputValue}`)
   }
-  const searchParams = useSearchParams()
-  const [result, setResult] = useState<any>(null)
+  const searchParams = useSearchParams() // This remains unchanged
+  const [result, setResult] = useState<ResultProps | null>(null)
   const q = searchParams.get('q') || ''
 
   useEffect(() => {
     const getResults = async () => {
       const data = await search(q) // Call server action directly
-      setResult(data)
+      setResult({
+        ...data,
+        posts: data.posts || [], // Ensure posts is always an array
+      })
     }
 
     if (q) getResults()
   }, [q])
-
 
   const truncateText = (text: string, length: number) =>
     text.length > length ? `${text.slice(0, length)}...` : text
@@ -86,40 +79,57 @@ const SearchQueryPage: React.FC = () => {
 
     return 'Just now'
   }
-  const [isOpen, setIsOpen] = useState(false) // State to manage dropdown visibility
+  // const [isOpen, setIsOpen] = useState(false) // State to manage dropdown visibility
 
-  const handleChevronClick = () => {
-      setIsOpen((prev) => !prev) // Toggle the dropdown open/close
-    }
+  // const handleChevronClick = () => {
+  //   setIsOpen((prev) => !prev) // Toggle the dropdown open/close
+  // }
+
+  const POSTS_PER_PAGE = 5
+
+  const currentPage = Number(searchParams.get('page')) || 1
+  const totalPages = result
+    ? Math.ceil(result.posts.length / POSTS_PER_PAGE)
+    : 0
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE
+  const paginatedPosts =
+    result?.posts?.slice(startIndex, startIndex + POSTS_PER_PAGE) || []
 
   return (
     <div className='p-4'>
-      <div className='w-[50%] m-auto'>
-
-            <form
-              action={searchQuery}
-              className='flex h-full w-full items-center justify-center '
+      <div className='m-auto w-[50%]'>
+        <form
+          action={searchQuery}
+          className='flex h-full w-full items-center justify-center'
+        >
+          <div className='relative w-full'>
+            <input
+              type='text'
+              placeholder='Search...'
+              name='searchInput'
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              defaultValue={q}
+              className='h-[50px] w-full border-none outline-none'
+            />
+            <button
+              // onClick={togglePasswordVisibility}
+              className='absolute inset-y-0 bottom-2 right-4 text-gray-400'
+              type='button' // Prevents form submission
             >
-              <input
-                type='text'
-                placeholder='Search...'
-                name='searchInput'
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                className='h-[50px] w-full border-none outline-none'
-              />
-              {/* <button className='ml-4 rounded-full bg-indigo-600 px-4 py-2 text-white'>
+              Search
+            </button>
+          </div>
+
+          {/* <button className='ml-4 rounded-full bg-indigo-600 px-4 py-2 text-white'>
                 Search
               </button> */}
-            </form>
-            <div className=' flex h-full w-full flex-col text-[1.4rem] font-bold'>
-                  
-                  <div>
-                        Filter window
-                  </div>
-          
+        </form>
+        <div className='flex h-full w-full flex-col text-[1.4rem] font-bold'>
+          {/* <div>Filter window</div> */}
+
           {/* Whole container */}
-          <div className='mt-3 h-full w-full'>
+          {/* <div className='mt-3 h-full w-full'>
             <div className='border-settings mt-3 flex h-full w-full p-6'>
               <div className='flex h-full w-full flex-col'>
                 <div className='flex h-full w-full'>
@@ -127,74 +137,156 @@ const SearchQueryPage: React.FC = () => {
                     <h1 className='text-xl font-medium'>Filters</h1>
                   </div>
 
-                  {/* Selection */}
                   <div className='mr-3 flex items-center gap-4'>
-                        {/* onOpenChange={setIsOpen} */}
-                    <Select ></Select>
-                    {/* Chevron button */}
+                    <Select></Select>
                     <div
                       onClick={handleChevronClick}
                       className='cursor-pointer'
                     >
                       {isOpen ? <ChevronUp /> : <ChevronDown />}{' '}
-                      {/* Toggle Chevron based on isOpen */}
                     </div>
                   </div>
                 </div>
 
-                {/* Expanded content */}
 
                 <div>
-                  {/* Color picker templates  */}
                   {isOpen && (
                     <div className='flex h-full w-full items-start'>
-                      <h1>Hello world</h1>
+
+                      <div className='space-y-2 mt-7'>
+                        <div>
+                        <h4>category</h4>
+                        <Select>
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Select Category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Categories</SelectLabel>
+                            <SelectItem value="info">Info</SelectItem>
+                            <SelectItem value="important">Important</SelectItem>
+                            <SelectItem value="announcement">Announcement</SelectItem>
+                            <SelectItem value="not specified">Not Specified</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                        </div>
+                        
+                        <div>
+                          <h1>Search by user</h1>
+                        <input placeholder='search by user...'></input>
+
+                        </div>
+
+
+                      </div>
+
                     </div>
                   )}
                 </div>
               </div>
             </div>
-          </div>
-          <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
-            
-          </div>
+          </div> */}
+          <div className='mr-4 mt-4 flex w-full justify-end gap-2'></div>
         </div>
       </div>
-      <h1 className='text-xl font-bold'>Search Results</h1>
-      {result?.success ? (
-        <ul className='mt-4 space-y-2'>
-          {result.posts.map((post: any) => (
-            <div
-            key={post.id}
-            className='m-auto mb-6 flex w-[50%] justify-between space-y-6 border-b pb-4'
-          >
-            <div className='flex flex-col gap-2'>
-              <div className='w-full'>
-                <h2 className='text-lg font-semibold text-indigo-500'>
-                  {post.title}
-                </h2>
-                <p className='text-sm'>{timeAgo(new Date(post.createdAt))}</p>
-                <p className='font-sm h-full w-full text-sm text-gray-500'>
-                  {truncateText(post.content, 200)}
-                </p>
-              </div>
 
-              <div className='flex gap-3 text-sm font-semibold text-indigo-500'>
-                {/* Extra options */}
-                {/* <Link href='/stats'>Statistics</Link>
-                <p>Views: 999</p>
-                <p>Likes: 999</p>
-                <p>Dislikes: 999</p> */}
+      {paginatedPosts.length === 0 ? (
+        <p>No posts available</p>
+      ) : (
+        paginatedPosts.map((post) => (
+          <div key={post.id}>
+            <div className='mb-6 flex w-full justify-between space-x-3 space-y-6 pb-4'>
+              <div className='flex flex-col gap-2'>
+                <div className='w-full'>
+                  <Link
+                    href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
+                    className='text-lg font-semibold text-indigo-500'
+                  >
+                    {post.title}
+                  </Link>
+                  <p className='text-sm text-gray-600'>
+                    {/* Posted by {profiles?.name} */}
+                  </p>
+                  <p className='text-md'>{timeAgo(new Date(post.createdAt))}</p>
+                  <p className='font-sm h-full w-full text-sm text-neutral-400'>
+                    {truncateText(post.content, 200)}
+                  </p>
+                </div>
               </div>
+              <div className='mb-2 space-y-2 text-sm'></div>
             </div>
           </div>
-          ))}
-        </ul>
-      ) : (
-        <p className='mt-4 text-gray-500'>
-          {result?.message || 'Searching...'}
-        </p>
+        ))
       )}
+
+      {totalPages > 1 && (
+        <Pagination className='mt-8'>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationLink
+                href={`?q=${q}&page=${Math.max(currentPage - 1, 1)}`}
+                className='cursor-pointer'
+              >
+                <ChevronLeft className='h-4 w-4' />
+              </PaginationLink>
+            </PaginationItem>
+
+            {Array.from({ length: totalPages }).map((_, idx) => (
+              <PaginationItem key={idx}>
+                <PaginationLink
+                  href={`?q=${q}&page=${idx + 1}`}
+                  isActive={idx + 1 === currentPage}
+                  className='cursor-pointer'
+                >
+                  {idx + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            <PaginationItem>
+              <PaginationLink
+                href={`?q=${q}&page=${Math.min(currentPage + 1, totalPages)}`}
+                className='cursor-pointer'
+              >
+                <ChevronRight className='h-4 w-4' />
+              </PaginationLink>
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
+
+      {/* {result?.success ? (
+        <div className='mt-4 space-y-2'>
+          {result.posts.map((post: PostItems) => (
+            <div
+              key={post.id}
+              className='m-auto mb-6 flex w-[50%] justify-between space-y-6 pb-4'
+            >
+              <div className='flex flex-col gap-2'>
+                <div className='w-full'>
+                  <h2 className='text-lg font-semibold text-indigo-500'>
+                    {post.title}
+                  </h2>
+                  <p className='text-sm'>{timeAgo(new Date(post.createdAt))}</p>
+                  <p className='font-sm h-full w-full text-sm text-gray-500'>
+                    
+                    <ReactMarkdown>{truncateText(post.content, 200)}</ReactMarkdown>
+                  </p>
+                </div>
+
+                <div className='flex gap-3 text-sm font-semibold text-indigo-500'>
+                  
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className='m-auto w-full flex justify-center mt-7'>
+          <Loader />
+        </div>
+      )} */}
     </div>
   )
 }

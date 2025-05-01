@@ -11,7 +11,6 @@ import {
   Cog,
   Database,
 } from 'lucide-react'
-import { BarChartIcon } from 'lucide-react'
 
 import { useState } from 'react'
 import Cookies from 'js-cookie'
@@ -38,7 +37,6 @@ const UserNav: React.FC = () => {
     'https://erasmus-plus-project-git-armandascode-zekscripts-projects.vercel.app/'
   )
   const router = useRouter()
-  const isLoggedIn = Cookies.get('authToken') ? true : false
   const user = getCurrentUser()
 
   const logout = () => {

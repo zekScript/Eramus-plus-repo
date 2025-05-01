@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { sendMail } from '@/lib/mail'
+import { sendMail } from '@/server/mail'
 import { getCurrentUser } from '@/server/currentUser'
 import { Label } from '@radix-ui/react-dropdown-menu'
 import { useState } from 'react'
@@ -10,7 +10,6 @@ export default function Support() {
 
   const user = getCurrentUser()
 
-  // Comunicate with back-end server
   const send = async (formData: FormData) => {
     const result = await sendMail(formData)
     if (result) {
@@ -24,8 +23,8 @@ export default function Support() {
       <div className='h-full w-full bg-gray-500 text-center'>
         <h1 className='p-7 text-3xl'>Contact us</h1>
       </div>
-      <div className='mt-7 flex h-full w-full flex-col'>
-        <form className='contactContainer w-full text-xl'>
+      <div className='flex h-full w-full flex-col'>
+        <form className='contactContainer w-full space-y-5 text-xl'>
           {/* In the input should be from the db current user his name and mail inside the input */}
           <Label>Your Name</Label>
           <input

@@ -1,9 +1,9 @@
 import { findUserById } from '@/server/user'
-import { getPostsMadeByYou } from './all-posts/actions'
+import { getPostsMadeByYou } from './actions'
 import Link from 'next/link'
 
 interface ProfileProps {
-  params: { portfolioID: string }
+  params: Promise<{ portfolioID: string }>
 }
 
 export default async function Profiles({ params }: ProfileProps) {
@@ -11,9 +11,10 @@ export default async function Profiles({ params }: ProfileProps) {
 
   const truncateText = (text: string, length: number) =>
     text.length > length ? `${text.slice(0, length)}...` : text
-  const profileID: number = parseInt(params.portfolioID, 10)
+  const resolvedParams = await params
+  const profileID: number = parseInt(resolvedParams.portfolioID, 10)
 
-  const profiles: any = await findUserById(profileID)
+  const profiles = await findUserById(profileID)
 
   function timeAgo(date: Date): string {
     const now: Date = new Date()
@@ -51,7 +52,7 @@ export default async function Profiles({ params }: ProfileProps) {
         {/* Avatar */}
         <div className='mb-4 ml-4 mr-6 mt-4 flex'>
           <img
-            src={profiles.profilePic ?? undefined}
+            src={profiles?.profilePic ?? undefined}
             width={210}
             height={200}
             alt='Avatar'
@@ -96,12 +97,9 @@ export default async function Profiles({ params }: ProfileProps) {
               <p>No posts available</p>
             ) : (
               posts.slice(0, 8).map((post) => (
-                <div>
+                <div key={post.id}>
                   {post.authorId === profiles?.id && (
-                    <div
-                      key={post.id}
-                      className='mb-6 flex w-[80%] justify-between space-x-3 space-y-6 border-b pb-4'
-                    >
+                    <div className='mb-6 flex w-[80%] justify-between space-x-3 space-y-6 border-b pb-4'>
                       <div className='flex flex-col gap-2'>
                         <div className='w-full'>
                           {/* <h2 >

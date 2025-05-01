@@ -1,4 +1,3 @@
-// app/lib/actions.ts
 'use server'
 
 import prisma from '@/lib/db'

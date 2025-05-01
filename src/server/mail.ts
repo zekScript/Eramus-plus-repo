@@ -33,8 +33,7 @@ export async function sendMail(formData: FormData) {
       from: EMAIL,
       to: EMAIL,
       subject: subjectForm,
-      html: `Support ticket has been made by ${nameForm} <br/> his email address is: ${email} <br/>`,
-      // text: message,
+      text: `Support ticket has been made by ${nameForm} his email address is: ${email}`,
     })
     if (sendResult)
       return {
