@@ -3,8 +3,6 @@ import { getPostsMadeByYou } from './actions'
 import Link from 'next/link'
 import { getCurrentUserServer } from '@/server/currentUserServer'
 
-
-
 interface ProfileProps {
   params: Promise<{ portfolioID: string }>
 }

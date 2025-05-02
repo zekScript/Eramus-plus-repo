@@ -6,7 +6,6 @@ import { Label } from '@radix-ui/react-dropdown-menu'
 import { useState, useEffect } from 'react'
 import { useToast } from '@/components/ui/use-toast'
 
-
 export default function Support() {
   const { toast } = useToast()
   const [feedback, setFeedback] = useState({ success: false, message: '' })
@@ -21,13 +20,13 @@ export default function Support() {
   }
 
   useEffect(() => {
-      if (feedback.message) {
-        toast({
-          title: feedback.success ? 'Success' : 'Err...',
-          description: feedback.message,
-        })
-      }
-    }, [feedback, toast])
+    if (feedback.message) {
+      toast({
+        title: feedback.success ? 'Success' : 'Err...',
+        description: feedback.message,
+      })
+    }
+  }, [feedback, toast])
 
   return (
     <div>
@@ -36,7 +35,7 @@ export default function Support() {
         <h1 className='p-7 text-3xl'>Contact us</h1>
       </div>
       <div className='flex h-full w-full flex-col'>
-        <form  className='contactContainer w-full space-y-5 text-xl'>
+        <form className='contactContainer w-full space-y-5 text-xl'>
           {/* In the input should be from the db current user his name and mail inside the input */}
           <Label>Your Name</Label>
           <input
@@ -72,7 +71,6 @@ export default function Support() {
             >
               Send Message
             </Button>
-            
           </div>
         </form>
       </div>

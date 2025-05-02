@@ -75,7 +75,7 @@ export default function CreatePost() {
               className='h-[400px] w-full resize-none rounded bg-background p-3 text-white'
               placeholder='Supports markdown, check documentation below for more details'
             ></textarea>
-            <div className=' mr-7 flex justify-between'>
+            <div className='mr-7 flex justify-between'>
               <button
                 type='submit'
                 className='rounded bg-indigo-500 px-4 py-2 text-white hover:bg-indigo-600'

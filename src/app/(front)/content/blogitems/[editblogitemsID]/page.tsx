@@ -33,10 +33,11 @@ const EditPost: React.FC = () => {
   const [confirmed, setConfirmed] = useState(false) // <-- checkbox state
   const searchParams = useSearchParams()
   const postId = searchParams.get('p')
-  const [feedbackDel, setFeedbackDel] = useState({ success: false, message: '' })
+  const [feedbackDel, setFeedbackDel] = useState({
+    success: false,
+    message: '',
+  })
   const { toast } = useToast()
-
-
 
   const [post, setPost] = useState<PostItems | null>(null)
   useEffect(() => {
@@ -48,13 +49,12 @@ const EditPost: React.FC = () => {
         setPost(post)
       } catch (error) {
         console.error('Error fetching post:', error)
-      } 
+      }
     }
 
     fetchPost()
   }, [postId])
 
-  
   useEffect(() => {
     if (feedbackDel.message) {
       toast({
@@ -74,8 +74,6 @@ const EditPost: React.FC = () => {
     await updatePostVisibillity(post.id, value)
   }
 
-  
-
   const handleMainPostSubmit = async (formData: FormData) => {
     const result = await updatePost(post.id, formData)
     setFeedbackDel(result)
@@ -85,7 +83,7 @@ const EditPost: React.FC = () => {
     if (confirmed) {
       const result = await deletePost(post.id)
       setFeedbackDel(result)
-      if(result.success){
+      if (result.success) {
         router.push(`/profiles/${user?.id}/all-posts`)
       }
     } else {
@@ -96,8 +94,6 @@ const EditPost: React.FC = () => {
   const cancelDelete = () => {
     setDeleteCard(false)
   }
-
-  
 
   return (
     <div className='m-auto h-full w-[50%] justify-center'>
@@ -154,7 +150,7 @@ const EditPost: React.FC = () => {
                 <div className='mr-3 flex items-center gap-4'>
                   <Select onValueChange={handleSelectChangeOnVisibillity}>
                     <SelectTrigger className='w-[180px]'>
-                      <SelectValue placeholder="Change visibillity" />
+                      <SelectValue placeholder='Change visibillity' />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
@@ -215,10 +211,14 @@ const EditPost: React.FC = () => {
                   {deleteCard && (
                     <div className='fixed bottom-0 left-0 right-0 top-0 z-50 flex h-full w-full flex-col bg-black bg-opacity-50'>
                       <div className='flex h-full w-full flex-col items-center justify-center'>
-                        
-                        <div className='flex flex-col items-center justify-center rounded-lg border-2 bg-[#111] p-6 shadow-2xl text-white'>
-                        <div onClick={cancelDelete} className='cursor-pointer flex justify-end w-full'><X size={24}/></div>
-                          <h1 className='text-2xl mb-4'>Are you sure?</h1>
+                        <div className='flex flex-col items-center justify-center rounded-lg border-2 bg-[#111] p-6 text-white shadow-2xl'>
+                          <div
+                            onClick={cancelDelete}
+                            className='flex w-full cursor-pointer justify-end'
+                          >
+                            <X size={24} />
+                          </div>
+                          <h1 className='mb-4 text-2xl'>Are you sure?</h1>
 
                           <Separator></Separator>
 
@@ -237,30 +237,32 @@ const EditPost: React.FC = () => {
                               recovering this post. this is the last warning
                             </p>
                           </div>
-                          
-                            <div className='mb-3 mt-5 flex space-x-2'>
-                              <input
-                                type='checkbox'
-                                onChange={(e) => setConfirmed(e.target.checked)}
-                              ></input>
-                              <p>Yes, I am sure. I want to delete this blog</p>
-                            </div>
 
-                            <div className='ml-2 mr-2 mt-4 flex w-full justify-center'>
-                              <button onClick={handleSubmit} className='w-full bg-[#1e1e1e] text-base'>
-                                Delete this post
-                              </button>
-                            </div>
+                          <div className='mb-3 mt-5 flex space-x-2'>
+                            <input
+                              type='checkbox'
+                              onChange={(e) => setConfirmed(e.target.checked)}
+                            ></input>
+                            <p>Yes, I am sure. I want to delete this blog</p>
+                          </div>
+
+                          <div className='ml-2 mr-2 mt-4 flex w-full justify-center'>
+                            <button
+                              onClick={handleSubmit}
+                              className='w-full bg-[#1e1e1e] text-base'
+                            >
+                              Delete this post
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
                   )}
                 </div>
               </div>
-<div className='mt-6 text-gray-700'>
-<p>These settings will change automatically</p>
-
-</div>
+              <div className='mt-6 text-gray-700'>
+                <p>These settings will change automatically</p>
+              </div>
             </div>
           </div>
         </div>

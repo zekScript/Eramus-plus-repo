@@ -23,7 +23,8 @@ export async function createPost(formData: FormData) {
   } catch (error) {
     return {
       success: false,
-      message: "Unexpected error. We suggest contacting support or refreshing the page and try again",
+      message:
+        'Unexpected error. We suggest contacting support or refreshing the page and try again',
     }
   }
 }
@@ -128,7 +129,7 @@ export async function deletePost(id: string) {
       success: false,
       message: `Error deleting your post`,
     }
-    }
+  }
 }
 
 export async function getAuthorMadeTotalPostAmount(id: number) {

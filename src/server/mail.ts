@@ -2,7 +2,6 @@
 import nodemailer from 'nodemailer'
 
 export async function sendMail(formData: FormData) {
-  
   const nameForm = formData.get('name') as string
   const email = formData.get('email') as string
   const subjectForm = formData.get('subject') as string
@@ -40,7 +39,7 @@ export async function sendMail(formData: FormData) {
       from: EMAIL,
       to: email,
       subject: subjectForm,
-      html: htmlContent
+      html: htmlContent,
       // text: `Support ticket has been made by ${nameForm} his email address is: ${email} User content: ${message}`,
     })
     if (sendResult)
@@ -49,16 +48,13 @@ export async function sendMail(formData: FormData) {
         message:
           'Success! Your email is sent to our email. We will try to respond as fast as possible',
       }
-      else{
-        return {
-          success: false,
-          message:
-            'Error. Something is not quite right try again',
-        }
+    else {
+      return {
+        success: false,
+        message: 'Error. Something is not quite right try again',
       }
+    }
   } catch (error) {
     console.log(error)
   }
 }
-
-

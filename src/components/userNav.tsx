@@ -42,7 +42,6 @@ const UserNav: React.FC = () => {
   const logout = () => {
     Cookies.remove('authToken')
     window.location.reload()
-    
   }
 
   function getFirstLettersForFallback(str?: string) {
