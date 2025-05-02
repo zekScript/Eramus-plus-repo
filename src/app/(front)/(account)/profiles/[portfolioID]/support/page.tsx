@@ -3,9 +3,12 @@ import { Button } from '@/components/ui/button'
 import { sendMail } from '@/server/mail'
 import { getCurrentUser } from '@/server/currentUser'
 import { Label } from '@radix-ui/react-dropdown-menu'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useToast } from '@/components/ui/use-toast'
+
 
 export default function Support() {
+  const { toast } = useToast()
   const [feedback, setFeedback] = useState({ success: false, message: '' })
 
   const user = getCurrentUser()
@@ -17,6 +20,15 @@ export default function Support() {
     }
   }
 
+  useEffect(() => {
+      if (feedback.message) {
+        toast({
+          title: feedback.success ? 'Success' : 'Err...',
+          description: feedback.message,
+        })
+      }
+    }, [feedback, toast])
+
   return (
     <div>
       {/* Title page */}
@@ -24,7 +36,7 @@ export default function Support() {
         <h1 className='p-7 text-3xl'>Contact us</h1>
       </div>
       <div className='flex h-full w-full flex-col'>
-        <form className='contactContainer w-full space-y-5 text-xl'>
+        <form  className='contactContainer w-full space-y-5 text-xl'>
           {/* In the input should be from the db current user his name and mail inside the input */}
           <Label>Your Name</Label>
           <input
@@ -60,15 +72,7 @@ export default function Support() {
             >
               Send Message
             </Button>
-            {feedback.message && (
-              <div
-                className={`ml-5 mt-4 w-full p-3 text-start ${
-                  feedback.success ? 'text-green-700' : 'text-red-700'
-                }`}
-              >
-                {feedback.message}
-              </div>
-            )}
+            
           </div>
         </form>
       </div>

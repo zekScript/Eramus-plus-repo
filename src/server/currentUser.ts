@@ -1,25 +1,13 @@
 import jwt from 'jsonwebtoken'
 import Cookies from 'js-cookie'
+import { UserItems } from '@/types'
 
 export function getCurrentUser() {
   const token = Cookies.get('authToken')
   if (!token) return null
 
   try {
-    const decoded = jwt.decode(token) as {
-      id: number
-      email: string
-      role: string
-      name: string
-      updatedAt: Date
-      createdAt: Date
-      friendsCount: number
-      followersCount: number
-      followingCount: number
-      postsCount: number
-      profilePic: string
-      bio: string
-    }
+    const decoded = jwt.decode(token) as UserItems
 
     return decoded
   } catch (error) {

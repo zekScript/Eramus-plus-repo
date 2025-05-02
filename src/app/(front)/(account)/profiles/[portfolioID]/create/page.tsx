@@ -7,8 +7,11 @@ import SidebarForPosts from '@/components/sidebar-for-posts'
 import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
 import { useMDXComponentsPost } from '../../../../../../../mdx-components-post'
+import { useEffect } from 'react'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function CreatePost() {
+  const { toast } = useToast()
   const pathname = usePathname()
   const segments = pathname.split('/')
   const userId: number = parseInt(segments[2], 10)
@@ -17,18 +20,27 @@ export default function CreatePost() {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
-  // const [feedback, setFeedback] = useState({ success: false, message: '' })
+  const [feedback, setFeedback] = useState({ success: false, message: '' })
 
   const handleSubmit = async (formData: FormData) => {
     try {
       const result = await createPost(formData)
       if (result) {
-        // setFeedback(result)
+        setFeedback(result)
       }
     } catch (err) {
       console.error(err)
     }
   }
+
+  useEffect(() => {
+    if (feedback.message) {
+      toast({
+        title: feedback.success ? 'Success' : 'Err...',
+        description: feedback.message,
+      })
+    }
+  }, [feedback, toast])
 
   return (
     <div className='h-full w-full'>
@@ -63,7 +75,7 @@ export default function CreatePost() {
               className='h-[400px] w-full resize-none rounded bg-background p-3 text-white'
               placeholder='Supports markdown, check documentation below for more details'
             ></textarea>
-            <div className='ml-7 mr-7 flex justify-between'>
+            <div className=' mr-7 flex justify-between'>
               <button
                 type='submit'
                 className='rounded bg-indigo-500 px-4 py-2 text-white hover:bg-indigo-600'

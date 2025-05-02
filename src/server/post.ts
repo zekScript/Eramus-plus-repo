@@ -23,7 +23,7 @@ export async function createPost(formData: FormData) {
   } catch (error) {
     return {
       success: false,
-      message: `Error 404: ${console.error(error)} title: ${title}, content: ${content} userID: ${userID}`,
+      message: "Unexpected error. We suggest contacting support or refreshing the page and try again",
     }
   }
 }
@@ -121,9 +121,14 @@ export async function updatePost(id: string, formData: FormData) {
 export async function deletePost(id: string) {
   try {
     await prisma.post.delete({ where: { id } })
+    return { success: true, message: 'Post deleted successfully.' }
   } catch (error) {
-    console.error('Error deleting post:', error)
-  }
+    console.error(error)
+    return {
+      success: false,
+      message: `Error deleting your post`,
+    }
+    }
 }
 
 export async function getAuthorMadeTotalPostAmount(id: number) {

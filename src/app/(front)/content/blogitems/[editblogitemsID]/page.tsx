@@ -19,22 +19,26 @@ import {
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { TriangleAlert } from 'lucide-react'
+import { TriangleAlert, X } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { PostItems } from '@/types'
+import { useToast } from '@/components/ui/use-toast'
+import { getCurrentUser } from '@/server/currentUser'
 
 const EditPost: React.FC = () => {
+  const user = getCurrentUser()
   const router = useRouter()
   const [deleteCard, setDeleteCard] = useState(false)
   const [confirmed, setConfirmed] = useState(false) // <-- checkbox state
   const searchParams = useSearchParams()
   const postId = searchParams.get('p')
+  const [feedbackDel, setFeedbackDel] = useState({ success: false, message: '' })
+  const { toast } = useToast()
+
+
 
   const [post, setPost] = useState<PostItems | null>(null)
-
-  const [loading, setLoading] = useState(true)
-
   useEffect(() => {
     if (!postId) return
 
@@ -44,15 +48,22 @@ const EditPost: React.FC = () => {
         setPost(post)
       } catch (error) {
         console.error('Error fetching post:', error)
-      } finally {
-        setLoading(false)
-      }
+      } 
     }
 
     fetchPost()
   }, [postId])
 
-  if (loading) return <p>Loading...</p>
+  
+  useEffect(() => {
+    if (feedbackDel.message) {
+      toast({
+        title: feedbackDel.success ? 'Success' : 'Err...',
+        description: feedbackDel.message,
+      })
+    }
+  }, [feedbackDel, toast])
+
   if (!post) return <p>Post not found</p>
 
   const handleSelectChangeOnTag = async (value: string) => {
@@ -63,18 +74,30 @@ const EditPost: React.FC = () => {
     await updatePostVisibillity(post.id, value)
   }
 
+  
+
+  const handleMainPostSubmit = async (formData: FormData) => {
+    const result = await updatePost(post.id, formData)
+    setFeedbackDel(result)
+  }
+
   const handleSubmit = async () => {
     if (confirmed) {
-      await deletePost(post.id)
-      router.push(`/profiles/${post.authorId}/all-posts`)
+      const result = await deletePost(post.id)
+      setFeedbackDel(result)
+      if(result.success){
+        router.push(`/profiles/${user?.id}/all-posts`)
+      }
     } else {
       return null
     }
   }
 
-  const handleMainPostSubmit = async (formData: FormData) => {
-    await updatePost(post.id, formData)
+  const cancelDelete = () => {
+    setDeleteCard(false)
   }
+
+  
 
   return (
     <div className='m-auto h-full w-[50%] justify-center'>
@@ -131,7 +154,7 @@ const EditPost: React.FC = () => {
                 <div className='mr-3 flex items-center gap-4'>
                   <Select onValueChange={handleSelectChangeOnVisibillity}>
                     <SelectTrigger className='w-[180px]'>
-                      <SelectValue placeholder='Change visibility' />
+                      <SelectValue placeholder="Change visibillity" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
@@ -192,8 +215,10 @@ const EditPost: React.FC = () => {
                   {deleteCard && (
                     <div className='fixed bottom-0 left-0 right-0 top-0 z-50 flex h-full w-full flex-col bg-black bg-opacity-50'>
                       <div className='flex h-full w-full flex-col items-center justify-center'>
-                        <div className='flex flex-col items-center justify-center rounded-lg border-2 bg-[#111] p-6 shadow-2xl'>
-                          <h1 className='text-2xl'>Are you sure?</h1>
+                        
+                        <div className='flex flex-col items-center justify-center rounded-lg border-2 bg-[#111] p-6 shadow-2xl text-white'>
+                        <div onClick={cancelDelete} className='cursor-pointer flex justify-end w-full'><X size={24}/></div>
+                          <h1 className='text-2xl mb-4'>Are you sure?</h1>
 
                           <Separator></Separator>
 
@@ -208,15 +233,11 @@ const EditPost: React.FC = () => {
                           </div>
                           <div className='w-[70%]'>
                             <p>
-                              Deleting this post there will be going back nor
+                              Deleting this post there will be no going back nor
                               recovering this post. this is the last warning
                             </p>
                           </div>
-                          <form
-                            onSubmit={() => {
-                              handleSubmit()
-                            }}
-                          >
+                          
                             <div className='mb-3 mt-5 flex space-x-2'>
                               <input
                                 type='checkbox'
@@ -226,17 +247,20 @@ const EditPost: React.FC = () => {
                             </div>
 
                             <div className='ml-2 mr-2 mt-4 flex w-full justify-center'>
-                              <button className='w-full bg-[#1e1e1e] text-base'>
+                              <button onClick={handleSubmit} className='w-full bg-[#1e1e1e] text-base'>
                                 Delete this post
                               </button>
                             </div>
-                          </form>
                         </div>
                       </div>
                     </div>
                   )}
                 </div>
               </div>
+<div className='mt-6 text-gray-700'>
+<p>These settings will change automatically</p>
+
+</div>
             </div>
           </div>
         </div>

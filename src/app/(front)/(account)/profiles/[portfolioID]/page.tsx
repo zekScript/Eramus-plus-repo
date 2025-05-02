@@ -1,12 +1,16 @@
 import { findUserById } from '@/server/user'
 import { getPostsMadeByYou } from './actions'
 import Link from 'next/link'
+import { getCurrentUserServer } from '@/server/currentUserServer'
+
+
 
 interface ProfileProps {
   params: Promise<{ portfolioID: string }>
 }
 
 export default async function Profiles({ params }: ProfileProps) {
+  const currentUser = await getCurrentUserServer()
   const posts = await getPostsMadeByYou()
 
   const truncateText = (text: string, length: number) =>
@@ -44,7 +48,6 @@ export default async function Profiles({ params }: ProfileProps) {
     return 'Just now'
   }
 
-  console.log(profiles)
   const profilePrivacy = profiles?.privacyVisabillity
   return (
     <div className='m-auto h-full w-[90%] justify-center'>
@@ -62,20 +65,20 @@ export default async function Profiles({ params }: ProfileProps) {
 
           <div className='ml-8 mt-4 flex h-full w-[95%] flex-col'>
             <h1 className='text-3xl font-bold'>{profiles?.name}</h1>
-            {profilePrivacy !== 'private' ? (
+            {profilePrivacy !== 'private' || currentUser?.id == profiles?.id ? (
               <div>
                 <p className='text-break text-md mt-4'>
                   {profiles?.bio ? (
                     profiles.bio
                   ) : (
-                    <p className='text-red-500'>
+                    <p className='text-indigo-500'>
                       No bio information available yet
                     </p>
                   )}
                 </p>
               </div>
             ) : (
-              <p className='mt-4 text-red-500'>
+              <p className='mt-4 text-indigo-500'>
                 This profile is set to private by {profiles?.name}
               </p>
             )}
@@ -87,7 +90,7 @@ export default async function Profiles({ params }: ProfileProps) {
         </div>
       </div>
 
-      {profilePrivacy === 'public' ? (
+      {profilePrivacy === 'public' || currentUser?.id == profiles?.id ? (
         <div className='mt-12'>
           <div className='mb-12 flex w-[90%] border-b-2 border-indigo-500 text-2xl font-bold'>
             <h1>Posts made by {profiles?.name}</h1>
