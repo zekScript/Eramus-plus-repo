@@ -43,15 +43,15 @@ export default function CreatePost() {
   }, [feedback, toast])
 
   return (
-    <div className='h-full w-full'>
-      <div className='flex'>
+    <div className='h-full w-full '>
+      <div className='  md:flex'>
         {/* Sidebar */}
-        <div className='w-[15%]'>
+        {/* <div className='w-[15%]'>
           <SidebarForPosts />
-        </div>
+        </div> */}
 
         {/* Editor */}
-        <div className='w-[45%] bg-neutral-900 p-4'>
+        <div className=' w-full md:w-[50%] bg-neutral-900 p-4'>
           <form action={handleSubmit} className='space-y-4'>
             <input type='hidden' name='userID' value={userId} />
 
@@ -75,10 +75,10 @@ export default function CreatePost() {
               className='h-[400px] w-full resize-none rounded bg-background p-3 text-white'
               placeholder='Supports markdown, check documentation below for more details'
             ></textarea>
-            <div className='mr-7 flex justify-between'>
+            <div className=' flex justify-between'>
               <button
                 type='submit'
-                className='rounded bg-indigo-500 px-4 py-2 text-white hover:bg-indigo-600'
+                className='rounded bg-indigo-500 px-2 py-2 text-white hover:bg-indigo-600'
               >
                 Post your blog
               </button>
@@ -88,7 +88,7 @@ export default function CreatePost() {
         </div>
 
         {/* Output Preview */}
-        <div className='w-[40%] border-l-2 p-4'>
+        <div className='w-[50%] border-l-2 p-4 h-full'>
           <h1 className='text-2xl font-semibold'>Live Preview</h1>
           <h2 className='mt-4 text-xl font-bold'>{title}</h2>
           <div className='prose prose-invert max-w-none text-white'>

@@ -26,7 +26,7 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
         <SheetTrigger aria-controls={'mobile-nav'}>
           <Menu />
         </SheetTrigger>
-        <SheetContent side='left' className='w-3/5'>
+        <SheetContent side='right' className='w-3/5'>
           <Link href='/'>
             <Icons.logo className='w-40 cursor-pointer fill-primary pb-6' />
           </Link>
@@ -52,7 +52,7 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
             <ThemeToggle></ThemeToggle>
           </div>
           {!isLoggedIn ? (
-            <div className='mt-12 gap-x-8'>
+            <div className='mt-6 gap-y-2 flex flex-col'>
               <Link href='/signin'>Sign in</Link>
               <Link href='/login'>Log in</Link>
             </div>

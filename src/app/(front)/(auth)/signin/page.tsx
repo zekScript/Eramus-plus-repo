@@ -1,12 +1,13 @@
 'use client'
 import { createUser } from '../../../../server/user'
 import Image from 'next/image'
-import { useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Eye, EyeOff, Check, X } from 'lucide-react'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function AuthPage() {
+  const { toast } = useToast()
   const [feedback, setFeedback] = useState({ success: false, message: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [password, setPassword] = useState('')
@@ -40,22 +41,21 @@ export default function AuthPage() {
     setFeedback(result)
   }
 
-  const router = useRouter()
-  const pathname = usePathname()
 
-  if (feedback.success) {
-    setTimeout(() => {
-      router.push('/login')
-    }, 1500)
-  } else if (feedback.success && pathname === '/signin') {
-    setTimeout(() => {
-      router.push('/')
-    }, 1500)
-  }
+  useEffect(() => {
+    if (feedback.message) {
+      toast({
+        title: feedback.success ? 'Success' : 'Err...',
+        description: feedback.message,
+      })
+    }
+  }, [feedback, toast])
+
+  
   return (
     <>
       <div className='flex h-screen w-full'>
-        <div className='flex h-screen w-1/2 flex-col items-center justify-center p-8'>
+        <div className='flex h-[50vh]  w-full flex-col items-center justify-center p-8'>
           <h1 className='mb-6 text-3xl font-bold'>Sign Up</h1>
           <form
             className='w-full max-w-sm'
@@ -132,38 +132,19 @@ export default function AuthPage() {
             </div>
             <button
               type='submit'
-              className='w-full rounded-md bg-blue-500 p-3 text-white hover:bg-blue-600'
+              className='w-full rounded-md bg-indigo-500 p-3 text-white hover:bg-indigo-400'
             >
               Sign Up
             </button>
           </form>
 
-          {feedback.message && (
-            <div
-              className={`mt-4 w-full rounded-md p-3 text-center ${
-                feedback.success
-                  ? 'bg-green-100 text-green-700'
-                  : 'bg-red-100 text-red-700'
-              }`}
-            >
-              {feedback.message}
-            </div>
-          )}
+          
           <Link className='mt-5' href='/login'>
             Have an account already? Log in
           </Link>
         </div>
 
-        {/* Background Image Section */}
-        <div className='sign-in-image h-full w-1/2 bg-cover bg-center'>
-          <Image
-            src='/signinWallpaper.jpg'
-            width={1500}
-            height={1500}
-            className='h-full'
-            alt='Background Image to relax'
-          />
-        </div>
+        
       </div>
     </>
   )

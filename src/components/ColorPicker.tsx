@@ -21,7 +21,7 @@ const ColorPicker = () => {
       <div className='flex flex-col space-y-4'>
         <p className='mb-3 mt-12 text-sm font-normal'>Portfolio colors</p>
         {/* Color Template boxes */}
-        <div className='grid grid-cols-3 gap-1 md:grid-cols-4 md:gap-4 lg:grid-cols-7 lg:gap-1'>
+        <div className='grid grid-cols-5 gap-1 sm:grid-cols-4 md:gap-2 lg:grid-cols-7 lg:gap-1'>
           {/* Color boxes */}
           <ColorPalletes></ColorPalletes>
         </div>

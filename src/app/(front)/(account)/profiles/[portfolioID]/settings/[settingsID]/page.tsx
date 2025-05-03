@@ -26,6 +26,8 @@ export default function SettingsPage() {
       })
   }, [userId])
 
+  
+
   useEffect(() => {
     // Redirect to /general if the current path doesn't include these routers
     if (
@@ -53,7 +55,7 @@ export default function SettingsPage() {
 
   return (
     <>
-      <div className='m-auto h-full w-[60%] justify-center'>
+      <div className='m-auto h-full w-full sm:w-[70%] justify-center '>
         <div className='flex h-full w-full'>
           {/* Avatar */}
           <div className='mb-4 ml-4 mr-6 mt-4 flex'>
@@ -61,11 +63,12 @@ export default function SettingsPage() {
               src={profileSettingsCurrentUser?.profilePic as string}
               width={128}
               height={128}
-              // className="w-[184px] h-[184px]"
+              onClick={() => router.push(`/profiles/${profileSettingsCurrentUser?.id}`)}
+              className="w-[128px] h-[128px] sm:w-[184px] sm:h-[184px] cursor-pointer"
               alt='Avatar'
             ></img>
             {/* User Details */}
-            <div className='ml-8 flex h-full items-center'>
+            <div className='ml-8 flex h-full items-center '>
               <Button
                 variant='link'
                 onClick={() => {
@@ -87,6 +90,8 @@ export default function SettingsPage() {
               >
                 Edit profile
               </Button>
+              
+              
             </div>
           </div>
         </div>

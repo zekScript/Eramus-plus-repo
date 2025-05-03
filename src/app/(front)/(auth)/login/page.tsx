@@ -2,11 +2,13 @@
 
 import { loginUser } from '../../../../server/user'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function LoginPage() {
+  const { toast } = useToast()
   const [feedback, setFeedback] = useState({ success: false, message: '' })
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -22,11 +24,20 @@ export default function LoginPage() {
     }
   }
 
+  useEffect(() => {
+      if (feedback.message) {
+        toast({
+          title: feedback.success ? 'Success' : 'Err...',
+          description: feedback.message,
+        })
+      }
+    }, [feedback, toast])
+
   return (
     <>
       <div className='flex h-screen w-full'>
         {/* Login Form Section */}
-        <div className='flex h-screen w-1/2 flex-col items-center justify-center p-8'>
+        <div className='flex h-[50vh] w-full flex-col items-center justify-center p-8'>
           <h1 className='mb-6 text-3xl font-bold'>Log In</h1>
           <form
             className='w-full max-w-sm'
@@ -50,39 +61,24 @@ export default function LoginPage() {
             />
             <button
               type='submit'
-              className='w-full rounded-md bg-blue-500 p-3 text-white hover:bg-blue-600'
+              className='w-full rounded-md bg-indigo-500 p-3 text-white hover:bg-indigo-400'
             >
               Log In
             </button>
           </form>
 
-          {feedback.message && (
-            <div
-              className={`mt-4 w-full rounded-md p-3 text-center ${
-                feedback.success
-                  ? 'bg-green-100 text-green-700'
-                  : 'bg-red-100 text-red-700'
-              }`}
-            >
-              {feedback.message}
-            </div>
-          )}
+           
+          <div className='flex flex-col space-y-1 mt-2'>
+          <Link  href='/signin'>
+                      Don’t have an account? Sign Up
+                    </Link>
 
-          <Link className='mt-5' href='/signin'>
-            Don’t have an account? Sign Up
-          </Link>
+                    <Link  href="/forgot-passwd">I don't remember my password</Link>
+          </div>
+          
         </div>
 
-        {/* Background Image Section */}
-        <div className='login-image h-full w-1/2 bg-cover bg-center'>
-          <Image
-            src='/signinWallpaper.jpg'
-            width={1500}
-            height={1500}
-            className='h-full'
-            alt='Background Image to relax'
-          />
-        </div>
+        
       </div>
     </>
   )

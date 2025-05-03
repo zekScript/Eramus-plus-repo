@@ -96,9 +96,9 @@ const EditPost: React.FC = () => {
   }
 
   return (
-    <div className='m-auto h-full w-[50%] justify-center'>
+    <div className='m-auto h-full w-[80%] justify-center'>
       <form action={(formData) => handleMainPostSubmit(formData)}>
-        <h1 className='text-end'>Blog id: {post.id}</h1>
+        <h1 className='text-center text-sm md:text-end md:text-base'>Blog id: {post.id}</h1>
         <div className='mb-7 mt-7'>
           <div className='mt-12'>
             <label className='text-xs'>Blog title:</label>
@@ -133,9 +133,9 @@ const EditPost: React.FC = () => {
             </Link>
           </div>
 
-          <div className='mt-3 flex h-full w-full border-2 border-indigo-500 p-6'>
+          <div className='mt-3 flex h-full w-full border-2 border-indigo-500 p-3 md:p-6'>
             <div className='flex h-full w-full flex-col'>
-              <div className='flex h-full w-full'>
+              <div className='flex space-y-4 flex-col h-full w-full  md:flex md:flex-row'>
                 <div className='flex h-full w-full flex-col'>
                   <h1 className='text-md font-medium'>
                     Change blog visibility
@@ -149,7 +149,7 @@ const EditPost: React.FC = () => {
 
                 <div className='mr-3 flex items-center gap-4'>
                   <Select onValueChange={handleSelectChangeOnVisibillity}>
-                    <SelectTrigger className='w-[180px]'>
+                    <SelectTrigger className='w-[150px] md:w-[180px]'>
                       <SelectValue placeholder='Change visibillity' />
                     </SelectTrigger>
                     <SelectContent>
@@ -163,7 +163,7 @@ const EditPost: React.FC = () => {
                 </div>
               </div>
 
-              <div className='mt-4 flex h-full w-full'>
+              <div className='mt-4  h-full w-full flex space-y-4 flex-col md:flex md:flex-row'>
                 <div className='flex h-full w-full flex-col'>
                   <h1 className='text-md font-medium'>Change Post tag</h1>
                   <p className='text-sm'>
@@ -175,7 +175,7 @@ const EditPost: React.FC = () => {
                 {/* Selection */}
                 <div className='mr-3 flex items-center gap-4'>
                   <Select onValueChange={handleSelectChangeOnTag}>
-                    <SelectTrigger className='w-[180px]'>
+                    <SelectTrigger className='w-[150px] md:w-[180px]'>
                       <SelectValue placeholder='Change post tag' />
                     </SelectTrigger>
                     <SelectContent>
@@ -193,7 +193,7 @@ const EditPost: React.FC = () => {
                 </div>
               </div>
 
-              <div className='mt-7 flex h-full w-full'>
+              <div className='mt-7 flex h-full w-full space-y-4 flex-col md:flex md:flex-row'>
                 <div className='flex h-full w-full flex-col'>
                   <h1 className='text-md font-medium'>Delete this blog</h1>
                   <p className='text-sm'>
@@ -267,7 +267,7 @@ const EditPost: React.FC = () => {
           </div>
         </div>
 
-        <div className='flex w-full justify-end gap-4 space-x-4'>
+        <div className='flex w-full justify-end  space-x-3'>
           <Button variant='outline'>Cancel</Button>
           <Button>Save</Button>
         </div>

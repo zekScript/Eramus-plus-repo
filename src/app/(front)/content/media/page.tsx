@@ -10,7 +10,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from '@/components/ui/pagination'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
 import Link from 'next/link'
 
 interface SearchParamsProps {
@@ -72,6 +72,9 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
     }
     fetchPage()
   }, [searchParams])
+  
+
+
   const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE)
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE
   const paginatedPosts = posts.slice(startIndex, startIndex + POSTS_PER_PAGE)
@@ -83,8 +86,8 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
     router.push(pathname + `/search?q=${inputValue}`)
   }
   return (
-    <div className='p-4'>
-      <div className='m-auto w-[50%]'>
+    <div >
+      <div className='m-auto w-full md:w-[70%]'>
         <form
           action={searchQuery}
           className='flex h-full w-full items-center justify-center'
@@ -96,14 +99,14 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
               name='searchInput'
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              className='h-[50px] w-full border-none outline-none'
+              className='h-[50px] w-full border-none p-4 outline-none'
             />
             <button
               // onClick={togglePasswordVisibility}
-              className='absolute inset-y-0 bottom-2 right-4 text-gray-400'
+              className='absolute inset-y-0 bottom-2 right-4 text-gray-400 '
               type='button' // Prevents form submission
             >
-              Search
+              <Search></Search>
             </button>
           </div>
         </form>
@@ -112,23 +115,23 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
         </div>
       </div>
 
-      <div className='m-auto mb-6 flex flex-col justify-between space-y-6 border-b pb-4'>
+      <div className='m-auto mb-6 flex flex-col justify-between space-y-6 pb-4'>
         {paginatedPosts.length === 0 ? (
           <p>No posts available</p>
         ) : (
           paginatedPosts.map((post) => (
             <div key={post.id}>
-              <div className='mb-6 flex w-full justify-between space-x-3 space-y-6 pb-4'>
+              <div onClick={() => router.push(`/content/media/blog/published/${post.slug}&?p=${post.id}`)} className='cursor-pointer flex w-full justify-between space-y-2'>
                 <div className='flex flex-col gap-2'>
                   <div className='w-full'>
-                    <Link
-                      href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
+                    <h1
+                      // href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
                       className='text-lg font-semibold text-indigo-500'
                     >
                       {post.title}
-                    </Link>
+                    </h1>
                     <p className='text-sm text-gray-600'>
-                      {/* Posted by {profiles?.name} */}
+                      Posted by {post.authorId}
                     </p>
                     <p className='text-md'>
                       {timeAgo(new Date(post.createdAt))}

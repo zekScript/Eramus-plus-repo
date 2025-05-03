@@ -12,7 +12,7 @@ export default async function Profiles({ params }: ProfileProps) {
   const posts = await getPostsMadeByYou()
 
   const truncateText = (text: string, length: number) =>
-    text.length > length ? `${text.slice(0, length)}...` : text
+  text.length > length ? `${text.slice(0, length)}...` : text
   const resolvedParams = await params
   const profileID: number = parseInt(resolvedParams.portfolioID, 10)
 
@@ -51,13 +51,12 @@ export default async function Profiles({ params }: ProfileProps) {
     <div className='m-auto h-full w-[90%] justify-center'>
       <div className='flex h-full w-full'>
         {/* Avatar */}
-        <div className='mb-4 ml-4 mr-6 mt-4 flex'>
+        <div className='mb-4 mt-4 flex'>
           <img
             src={profiles?.profilePic ?? undefined}
-            width={210}
-            height={200}
+            
             alt='Avatar'
-            className='rounded-[100%]'
+            className='rounded-[100%] w-[150px] h-full sm:w-[210px]'
           />
           {/* User Details */}
 
@@ -89,8 +88,8 @@ export default async function Profiles({ params }: ProfileProps) {
       </div>
 
       {profilePrivacy === 'public' || currentUser?.id == profiles?.id ? (
-        <div className='mt-12'>
-          <div className='mb-12 flex w-[90%] border-b-2 border-indigo-500 text-2xl font-bold'>
+        <div className='mt-4'>
+          <div className='mb-6 flex w-[100%] space-y-2 border-b-2 border-indigo-500 text-2xl font-bold'>
             <h1>Posts made by {profiles?.name}</h1>
           </div>
           <div className='grid h-full w-full overflow-hidden'>
@@ -100,19 +99,19 @@ export default async function Profiles({ params }: ProfileProps) {
               posts.slice(0, 8).map((post) => (
                 <div key={post.id}>
                   {post.authorId === profiles?.id && (
-                    <div className='mb-6 flex w-[80%] justify-between space-x-3 space-y-6 border-b pb-4'>
+                    <div  className='mb-6 flex w-[100%] justify-between space-x-3 space-y-6  pb-4'>
                       <div className='flex flex-col gap-2'>
-                        <div className='w-full'>
+                        <div className='w-full '>
                           {/* <h2 >
                         {post.title}
                       </h2> */}
                           {/* fix it here */}
-                          <Link
-                            href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
+                          <h1
+                            // href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
                             className='text-lg font-semibold text-indigo-500'
                           >
                             {post.title}
-                          </Link>
+                          </h1>
                           <p className='text-sm text-gray-600'>
                             Posted by {profiles?.name}
                           </p>
@@ -133,12 +132,12 @@ export default async function Profiles({ params }: ProfileProps) {
                         </div>
                       </div>
 
-                      {post.authorId === profiles?.id && (
-                        <div className='mb-2 space-y-2 text-sm'>
-                          {/* <Link href={`/content/blogitems/edit?p=${post.id}`} className='flex text-sm'>
-                            Post settings
+                      {post.authorId === currentUser?.id && (
+                        <div className='mb-2 space-y-2 text-sm flex justify-end'>
+                          <Link href={`/content/blogitems/edit?p=${post.id}`} className='flex text-sm'>
+                            Post Properties
                             
-                          </Link> */}
+                          </Link>
                         </div>
                       )}
                     </div>

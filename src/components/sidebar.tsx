@@ -28,7 +28,7 @@ export default function SideBar() {
 
   return (
     <>
-      <div className='flex w-full justify-end text-sm'>
+      <div className='flex w-full justify-start text-sm sm:justify-end'>
         <Button
           variant='link'
           onClick={() =>
@@ -40,8 +40,8 @@ export default function SideBar() {
       </div>
       {/* <div className='mt-2 flex h-full bg-red-500 w-full justify-start'>
       </div> */}
-      <div className='flex'>
-        <div className='flex w-[250px] flex-col'>
+      <div className='flex flex-col sm:flex sm:flex-row'>
+        <div className='flex w-full sm:w-[250px] sm:flex sm:flex-col'>
           {/* Settings */}
           <NavLink
             navigateTo={`/profiles/${profileSettingsCurrentUser?.id}/settings/general`}
