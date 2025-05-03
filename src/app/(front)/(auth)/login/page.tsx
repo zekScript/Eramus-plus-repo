@@ -1,7 +1,6 @@
 'use client'
 
 import { loginUser } from '../../../../server/user'
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -25,13 +24,13 @@ export default function LoginPage() {
   }
 
   useEffect(() => {
-      if (feedback.message) {
-        toast({
-          title: feedback.success ? 'Success' : 'Err...',
-          description: feedback.message,
-        })
-      }
-    }, [feedback, toast])
+    if (feedback.message) {
+      toast({
+        title: feedback.success ? 'Success' : 'Err...',
+        description: feedback.message,
+      })
+    }
+  }, [feedback, toast])
 
   return (
     <>
@@ -67,18 +66,12 @@ export default function LoginPage() {
             </button>
           </form>
 
-           
-          <div className='flex flex-col space-y-1 mt-2'>
-          <Link  href='/signin'>
-                      Don’t have an account? Sign Up
-                    </Link>
+          <div className='mt-2 flex flex-col space-y-1'>
+            <Link href='/signin'>Do not have an account? Sign Up</Link>
 
-                    <Link  href="/forgot-passwd">I don't remember my password</Link>
+            {/* <Link href='/forgot-passwd'>I dot remember my password</Link> */}
           </div>
-          
         </div>
-
-        
       </div>
     </>
   )

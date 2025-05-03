@@ -1,6 +1,5 @@
 'use client'
 import { createUser } from '../../../../server/user'
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Eye, EyeOff, Check, X } from 'lucide-react'
@@ -41,7 +40,6 @@ export default function AuthPage() {
     setFeedback(result)
   }
 
-
   useEffect(() => {
     if (feedback.message) {
       toast({
@@ -51,11 +49,10 @@ export default function AuthPage() {
     }
   }, [feedback, toast])
 
-  
   return (
     <>
       <div className='flex h-screen w-full'>
-        <div className='flex h-[50vh]  w-full flex-col items-center justify-center p-8'>
+        <div className='flex h-[50vh] w-full flex-col items-center justify-center p-8'>
           <h1 className='mb-6 text-3xl font-bold'>Sign Up</h1>
           <form
             className='w-full max-w-sm'
@@ -138,13 +135,10 @@ export default function AuthPage() {
             </button>
           </form>
 
-          
           <Link className='mt-5' href='/login'>
             Have an account already? Log in
           </Link>
         </div>
-
-        
       </div>
     </>
   )

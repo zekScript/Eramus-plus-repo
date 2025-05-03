@@ -41,7 +41,7 @@ export default function SideBar() {
       {/* <div className='mt-2 flex h-full bg-red-500 w-full justify-start'>
       </div> */}
       <div className='flex flex-col sm:flex sm:flex-row'>
-        <div className='flex w-full sm:w-[250px] sm:flex sm:flex-col'>
+        <div className='flex w-full sm:flex sm:w-[250px] sm:flex-col'>
           {/* Settings */}
           <NavLink
             navigateTo={`/profiles/${profileSettingsCurrentUser?.id}/settings/general`}

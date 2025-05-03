@@ -98,7 +98,9 @@ const EditPost: React.FC = () => {
   return (
     <div className='m-auto h-full w-[80%] justify-center'>
       <form action={(formData) => handleMainPostSubmit(formData)}>
-        <h1 className='text-center text-sm md:text-end md:text-base'>Blog id: {post.id}</h1>
+        <h1 className='text-center text-sm md:text-end md:text-base'>
+          Blog id: {post.id}
+        </h1>
         <div className='mb-7 mt-7'>
           <div className='mt-12'>
             <label className='text-xs'>Blog title:</label>
@@ -135,7 +137,7 @@ const EditPost: React.FC = () => {
 
           <div className='mt-3 flex h-full w-full border-2 border-indigo-500 p-3 md:p-6'>
             <div className='flex h-full w-full flex-col'>
-              <div className='flex space-y-4 flex-col h-full w-full  md:flex md:flex-row'>
+              <div className='flex h-full w-full flex-col space-y-4 md:flex md:flex-row'>
                 <div className='flex h-full w-full flex-col'>
                   <h1 className='text-md font-medium'>
                     Change blog visibility
@@ -163,7 +165,7 @@ const EditPost: React.FC = () => {
                 </div>
               </div>
 
-              <div className='mt-4  h-full w-full flex space-y-4 flex-col md:flex md:flex-row'>
+              <div className='mt-4 flex h-full w-full flex-col space-y-4 md:flex md:flex-row'>
                 <div className='flex h-full w-full flex-col'>
                   <h1 className='text-md font-medium'>Change Post tag</h1>
                   <p className='text-sm'>
@@ -193,7 +195,7 @@ const EditPost: React.FC = () => {
                 </div>
               </div>
 
-              <div className='mt-7 flex h-full w-full space-y-4 flex-col md:flex md:flex-row'>
+              <div className='mt-7 flex h-full w-full flex-col space-y-4 md:flex md:flex-row'>
                 <div className='flex h-full w-full flex-col'>
                   <h1 className='text-md font-medium'>Delete this blog</h1>
                   <p className='text-sm'>
@@ -267,7 +269,7 @@ const EditPost: React.FC = () => {
           </div>
         </div>
 
-        <div className='flex w-full justify-end  space-x-3'>
+        <div className='flex w-full justify-end space-x-3'>
           <Button variant='outline'>Cancel</Button>
           <Button>Save</Button>
         </div>

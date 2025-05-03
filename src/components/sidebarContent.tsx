@@ -112,7 +112,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
             }
           >
             <section id='general'>
-              <div className=' w-[100%] space-y-4'>
+              <div className='w-[100%] space-y-4'>
                 <Label htmlFor='newName'>Name</Label>
                 <Input
                   type='text'
@@ -272,7 +272,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
 
       {/* Theme Settings */}
       {contentToDisplay === 'theme' && (
-        <div className=' flex h-full w-full flex-col text-[1.4rem] font-bold'>
+        <div className='flex h-full w-full flex-col text-[1.4rem] font-bold'>
           <h1>Custom Themes</h1>
           <p className='mt-3 text-sm font-medium text-gray-600'>
             You can change custom theme colors. also you can change what theme
@@ -350,7 +350,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
 
       {/* Privacy Settings */}
       {contentToDisplay === 'privacy' && (
-        <div className=' flex h-full w-full flex-col text-[1.4rem] font-bold'>
+        <div className='flex h-full w-full flex-col text-[1.4rem] font-bold'>
           <h1>Privacy Settings</h1>
           <p className='mt-3 text-sm font-medium text-gray-600'>
             Manage your privacy settings here.

@@ -53,7 +53,7 @@ export type UserItems = {
   id: number
   password: string
   email: string
-  profilePic: string
+  // profilePic: string
   accessAdmin: boolean | null
   createdAt: Date
   updatedAt: Date

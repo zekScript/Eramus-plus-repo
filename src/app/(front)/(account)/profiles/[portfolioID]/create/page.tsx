@@ -3,7 +3,6 @@
 import { createPost } from '@/server/post'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import SidebarForPosts from '@/components/sidebar-for-posts'
 import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
 import { useMDXComponentsPost } from '../../../../../../../mdx-components-post'
@@ -43,15 +42,15 @@ export default function CreatePost() {
   }, [feedback, toast])
 
   return (
-    <div className='h-full w-full '>
-      <div className='  md:flex'>
+    <div className='h-full w-full'>
+      <div className='md:flex'>
         {/* Sidebar */}
         {/* <div className='w-[15%]'>
           <SidebarForPosts />
         </div> */}
 
         {/* Editor */}
-        <div className=' w-full md:w-[50%] bg-neutral-900 p-4'>
+        <div className='w-full bg-neutral-900 p-4 md:w-[50%]'>
           <form action={handleSubmit} className='space-y-4'>
             <input type='hidden' name='userID' value={userId} />
 
@@ -75,7 +74,7 @@ export default function CreatePost() {
               className='h-[400px] w-full resize-none rounded bg-background p-3 text-white'
               placeholder='Supports markdown, check documentation below for more details'
             ></textarea>
-            <div className=' flex justify-between'>
+            <div className='flex justify-between'>
               <button
                 type='submit'
                 className='rounded bg-indigo-500 px-2 py-2 text-white hover:bg-indigo-600'
@@ -88,7 +87,7 @@ export default function CreatePost() {
         </div>
 
         {/* Output Preview */}
-        <div className='w-[50%] border-l-2 p-4 h-full'>
+        <div className='h-full w-[50%] border-l-2 p-4'>
           <h1 className='text-2xl font-semibold'>Live Preview</h1>
           <h2 className='mt-4 text-xl font-bold'>{title}</h2>
           <div className='prose prose-invert max-w-none text-white'>

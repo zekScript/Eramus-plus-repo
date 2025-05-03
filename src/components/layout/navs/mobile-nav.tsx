@@ -52,7 +52,7 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
             <ThemeToggle></ThemeToggle>
           </div>
           {!isLoggedIn ? (
-            <div className='mt-6 gap-y-2 flex flex-col'>
+            <div className='mt-6 flex flex-col gap-y-2'>
               <Link href='/signin'>Sign in</Link>
               <Link href='/login'>Log in</Link>
             </div>

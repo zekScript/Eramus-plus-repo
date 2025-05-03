@@ -11,7 +11,6 @@ import {
   PaginationLink,
 } from '@/components/ui/pagination'
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
-import Link from 'next/link'
 
 interface SearchParamsProps {
   searchParams: Promise<{ page?: string }>
@@ -72,8 +71,6 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
     }
     fetchPage()
   }, [searchParams])
-  
-
 
   const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE)
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE
@@ -86,10 +83,13 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
     router.push(pathname + `/search?q=${inputValue}`)
   }
   return (
-    <div >
+    <div>
       <div className='m-auto w-full md:w-[70%]'>
         <form
-          action={searchQuery}
+          onSubmit={(e) => {
+            e.preventDefault() // Prevent the default form submission
+            searchQuery() // Trigger the search logic
+          }}
           className='flex h-full w-full items-center justify-center'
         >
           <div className='relative w-full'>
@@ -103,8 +103,7 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
             />
             <button
               // onClick={togglePasswordVisibility}
-              className='absolute inset-y-0 bottom-2 right-4 text-gray-400 '
-              type='button' // Prevents form submission
+              className='absolute inset-y-0 bottom-2 right-4 text-gray-400'
             >
               <Search></Search>
             </button>
@@ -121,7 +120,14 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
         ) : (
           paginatedPosts.map((post) => (
             <div key={post.id}>
-              <div onClick={() => router.push(`/content/media/blog/published/${post.slug}&?p=${post.id}`)} className='cursor-pointer flex w-full justify-between space-y-2'>
+              <div
+                onClick={() =>
+                  router.push(
+                    `/content/media/blog/published/${post.slug}&?p=${post.id}`
+                  )
+                }
+                className='flex w-full cursor-pointer justify-between space-y-2'
+              >
                 <div className='flex flex-col gap-2'>
                   <div className='w-full'>
                     <h1
@@ -130,9 +136,9 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
                     >
                       {post.title}
                     </h1>
-                    <p className='text-sm text-gray-600'>
+                    {/* <p className='text-sm text-gray-600'>
                       Posted by {post.authorId}
-                    </p>
+                    </p> */}
                     <p className='text-md'>
                       {timeAgo(new Date(post.createdAt))}
                     </p>

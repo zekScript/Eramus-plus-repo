@@ -12,7 +12,7 @@ export default async function Profiles({ params }: ProfileProps) {
   const posts = await getPostsMadeByYou()
 
   const truncateText = (text: string, length: number) =>
-  text.length > length ? `${text.slice(0, length)}...` : text
+    text.length > length ? `${text.slice(0, length)}...` : text
   const resolvedParams = await params
   const profileID: number = parseInt(resolvedParams.portfolioID, 10)
 
@@ -54,9 +54,8 @@ export default async function Profiles({ params }: ProfileProps) {
         <div className='mb-4 mt-4 flex'>
           <img
             src={profiles?.profilePic ?? undefined}
-            
             alt='Avatar'
-            className='rounded-[100%] w-[150px] h-full sm:w-[210px]'
+            className='h-full w-[150px] rounded-[100%] sm:w-[210px]'
           />
           {/* User Details */}
 
@@ -99,9 +98,9 @@ export default async function Profiles({ params }: ProfileProps) {
               posts.slice(0, 8).map((post) => (
                 <div key={post.id}>
                   {post.authorId === profiles?.id && (
-                    <div  className='mb-6 flex w-[100%] justify-between space-x-3 space-y-6  pb-4'>
+                    <div className='mb-6 flex w-[100%] justify-between space-x-3 space-y-6 pb-4'>
                       <div className='flex flex-col gap-2'>
-                        <div className='w-full '>
+                        <div className='w-full'>
                           {/* <h2 >
                         {post.title}
                       </h2> */}
@@ -133,10 +132,12 @@ export default async function Profiles({ params }: ProfileProps) {
                       </div>
 
                       {post.authorId === currentUser?.id && (
-                        <div className='mb-2 space-y-2 text-sm flex justify-end'>
-                          <Link href={`/content/blogitems/edit?p=${post.id}`} className='flex text-sm'>
+                        <div className='mb-2 flex justify-end space-y-2 text-sm'>
+                          <Link
+                            href={`/content/blogitems/edit?p=${post.id}`}
+                            className='flex text-sm'
+                          >
                             Post Properties
-                            
                           </Link>
                         </div>
                       )}

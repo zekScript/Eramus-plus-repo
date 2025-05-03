@@ -31,7 +31,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { cn } from '@/lib/utils'
 import { getCurrentUser } from '@/server/currentUser'
 import { findUserById } from '@/server/user'
-import Image from 'next/image'
 
 type Props = {
   children: React.ReactNode
@@ -164,11 +163,10 @@ const WikiLayout: React.FC<Props> = ({
 
   return (
     <>
-      <div className='flex h-full w-full flex-row '>
-        <div className='flex flex-col h-full w-full md:flex lg:flex-row'>
-          
+      <div className='flex h-full w-full flex-row'>
+        <div className='flex h-full w-full flex-col md:flex lg:flex-row'>
           {children}
-          
+
           <div className='h-full w-full'>
             <div className='h-full w-full'>
               <div>
@@ -177,7 +175,6 @@ const WikiLayout: React.FC<Props> = ({
                 ) : (
                   <div>
                     <div className='flex h-full w-full justify-between space-x-2'>
-                      
                       <div>
                         <HoverCard>
                           <HoverCardTrigger asChild>
@@ -238,7 +235,7 @@ const WikiLayout: React.FC<Props> = ({
                       </div>
                     </div>
 
-                    <div className='mt-3 '>
+                    <div className='mt-3'>
                       <p className='text-sm'>
                         This post was made in:{' '}
                         {new Date(post.createdAt).toLocaleDateString()} (

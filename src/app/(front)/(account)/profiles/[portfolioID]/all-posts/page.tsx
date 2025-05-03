@@ -100,19 +100,16 @@ const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
                   </div>
                   {post.authorId == currentUser?.id ? (
                     <div className='mb-2 space-y-2 text-sm'>
-                    <Link
-                      href={`/content/blogitems/edit?p=${post.id}`}
-                      className='flex text-sm'
-                    >
-                      Post Properties
-                    </Link>
-                  </div>
-                  ): 
-                  
-                  (
+                      <Link
+                        href={`/content/blogitems/edit?p=${post.id}`}
+                        className='flex text-sm'
+                      >
+                        Post Properties
+                      </Link>
+                    </div>
+                  ) : (
                     <span></span>
                   )}
-                  
                 </div>
               </div>
             ))
@@ -159,4 +156,4 @@ const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
   )
 }
 
-export default BlogPage;
+export default BlogPage

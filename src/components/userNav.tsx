@@ -65,7 +65,10 @@ const UserNav: React.FC = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className='cursor-pointer'>
-            <AvatarImage src={user?.profilePic} alt='Profile avatar' />
+            <AvatarImage
+              src={user?.profilePic ?? undefined}
+              alt='Profile avatar'
+            />
             <AvatarFallback>
               {getFirstLettersForFallback(user?.name ?? '')}
             </AvatarFallback>

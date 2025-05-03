@@ -36,8 +36,8 @@ const BlogPage = () => {
   return (
     <>
       {/* Blog post content */}
-      <div className='flex h-full w-full '>
-        <div className=' w-full'>
+      <div className='flex h-full w-full'>
+        <div className='w-full'>
           <h2 className='mt-4 text-xl font-bold'>{post.title}</h2>
 
           <ReactMarkdown components={MDXcomponents}>

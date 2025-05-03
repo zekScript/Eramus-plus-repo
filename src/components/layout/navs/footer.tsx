@@ -20,7 +20,7 @@ const Footer: React.FC<Props> = ({ className }) => {
         <Separator orientation='horizontal' />
       </div>
 
-      <div className='mt-14 w-[100%] '>
+      <div className='mt-14 w-[100%]'>
         <h2 className='mb-7 text-xl font-bold'>
           Website designed by Armandas Latanauskas
         </h2>
@@ -36,7 +36,7 @@ const Footer: React.FC<Props> = ({ className }) => {
           with <a href='https://vercel.com/'>Varcel</a>
         </p>
         {/* Socials here */}
-        <div className='mt-7 flex w-full flex-row items-start md:justify-start justify-center gap-x-3 md:mt-4 md:items-center lg:flex-row'>
+        <div className='mt-7 flex w-full flex-row items-start justify-center gap-x-3 md:mt-4 md:items-center md:justify-start lg:flex-row'>
           <Link href='https://github.com/zekScript'>
             <Github />
           </Link>
