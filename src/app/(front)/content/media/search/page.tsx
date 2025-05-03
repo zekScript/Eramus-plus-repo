@@ -1,5 +1,4 @@
 'use client'
-
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { search } from '@/server/search' // Import the server action
@@ -12,9 +11,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from '@/components/ui/pagination'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import Link from 'next/link'
-
+import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
 type ResultProps = {
   success: boolean
   message: string
@@ -29,6 +26,7 @@ const SearchQueryPage: React.FC<SearchParamsProps> = () => {
   const pathname = usePathname()
 
   const [inputValue, setInputValue] = useState('')
+  // const [AthorUser, setAuthorUser] = useState<UserItems | null>(null)
 
   const searchQuery = () => {
     router.push(pathname + `?q=${inputValue}`)
@@ -97,9 +95,12 @@ const SearchQueryPage: React.FC<SearchParamsProps> = () => {
 
   return (
     <div className='p-4'>
-      <div className='m-auto w-[50%]'>
+      <div className='m-auto w-full md:w-[70%]'>
         <form
-          action={searchQuery}
+          onSubmit={(e) => {
+            e.preventDefault() // Prevent the default form submission
+            searchQuery() // Trigger the search logic
+          }}
           className='flex h-full w-full items-center justify-center'
         >
           <div className='relative w-full'>
@@ -109,21 +110,15 @@ const SearchQueryPage: React.FC<SearchParamsProps> = () => {
               name='searchInput'
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              defaultValue={q}
-              className='h-[50px] w-full border-none outline-none'
+              className='h-[50px] w-full border-none p-4 outline-none'
             />
             <button
               // onClick={togglePasswordVisibility}
               className='absolute inset-y-0 bottom-2 right-4 text-gray-400'
-              type='button' // Prevents form submission
             >
-              Search
+              <Search></Search>
             </button>
           </div>
-
-          {/* <button className='ml-4 rounded-full bg-indigo-600 px-4 py-2 text-white'>
-                Search
-              </button> */}
         </form>
         <div className='flex h-full w-full flex-col text-[1.4rem] font-bold'>
           {/* <div>Filter window</div> */}
@@ -196,15 +191,25 @@ const SearchQueryPage: React.FC<SearchParamsProps> = () => {
       ) : (
         paginatedPosts.map((post) => (
           <div key={post.id}>
-            <div className='mb-6 flex w-full justify-between space-x-3 space-y-6 pb-4'>
+            <div
+              onClick={() =>
+                router.push(
+                  `/content/media/blog/published/${post.slug}&?p=${post.id}`
+                )
+              }
+              className='flex w-full cursor-pointer justify-between space-y-2'
+            >
               <div className='flex flex-col gap-2'>
                 <div className='w-full'>
-                  <Link
-                    href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
+                  <h1
+                    // href={``}
                     className='text-lg font-semibold text-indigo-500'
                   >
                     {post.title}
-                  </Link>
+                  </h1>
+                  {/* <p className='text-sm text-gray-600'>
+                      Posted by {post.authorId}
+                    </p> */}
                   <p className='text-sm text-gray-600'>
                     {/* Posted by {profiles?.name} */}
                   </p>

@@ -3,9 +3,11 @@ import { Button } from '@/components/ui/button'
 import { sendMail } from '@/server/mail'
 import { getCurrentUser } from '@/server/currentUser'
 import { Label } from '@radix-ui/react-dropdown-menu'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function Support() {
+  const { toast } = useToast()
   const [feedback, setFeedback] = useState({ success: false, message: '' })
 
   const user = getCurrentUser()
@@ -16,6 +18,15 @@ export default function Support() {
       setFeedback(result)
     }
   }
+
+  useEffect(() => {
+    if (feedback.message) {
+      toast({
+        title: feedback.success ? 'Success' : 'Err...',
+        description: feedback.message,
+      })
+    }
+  }, [feedback, toast])
 
   return (
     <div>
@@ -60,15 +71,6 @@ export default function Support() {
             >
               Send Message
             </Button>
-            {feedback.message && (
-              <div
-                className={`ml-5 mt-4 w-full p-3 text-start ${
-                  feedback.success ? 'text-green-700' : 'text-red-700'
-                }`}
-              >
-                {feedback.message}
-              </div>
-            )}
           </div>
         </form>
       </div>

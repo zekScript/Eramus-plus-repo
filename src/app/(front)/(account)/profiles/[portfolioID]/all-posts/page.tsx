@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getPostsMadeByYou } from './actions'
 import { findUserById } from '@/server/user'
+import { getCurrentUserServer } from '@/server/currentUserServer'
 import {
   Pagination,
   PaginationContent,
@@ -18,6 +19,7 @@ const POSTS_PER_PAGE = 5
 
 const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
   const posts = await getPostsMadeByYou()
+  const currentUser = await getCurrentUserServer()
 
   const { portfolioID } = await params
   const profileID: number = parseInt(portfolioID, 10)
@@ -96,14 +98,18 @@ const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
                       </p>
                     </div>
                   </div>
-                  <div className='mb-2 space-y-2 text-sm'>
-                    <Link
-                      href={`/content/blogitems/edit?p=${post.id}`}
-                      className='flex text-sm'
-                    >
-                      Post Settings
-                    </Link>
-                  </div>
+                  {post.authorId == currentUser?.id ? (
+                    <div className='mb-2 space-y-2 text-sm'>
+                      <Link
+                        href={`/content/blogitems/edit?p=${post.id}`}
+                        className='flex text-sm'
+                      >
+                        Post Properties
+                      </Link>
+                    </div>
+                  ) : (
+                    <span></span>
+                  )}
                 </div>
               </div>
             ))

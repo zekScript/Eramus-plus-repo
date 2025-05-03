@@ -53,7 +53,7 @@ export default function SettingsPage() {
 
   return (
     <>
-      <div className='m-auto h-full w-[60%] justify-center'>
+      <div className='m-auto h-full w-full justify-center sm:w-[70%]'>
         <div className='flex h-full w-full'>
           {/* Avatar */}
           <div className='mb-4 ml-4 mr-6 mt-4 flex'>
@@ -61,7 +61,10 @@ export default function SettingsPage() {
               src={profileSettingsCurrentUser?.profilePic as string}
               width={128}
               height={128}
-              // className="w-[184px] h-[184px]"
+              onClick={() =>
+                router.push(`/profiles/${profileSettingsCurrentUser?.id}`)
+              }
+              className='h-[128px] w-[128px] cursor-pointer sm:h-[184px] sm:w-[184px]'
               alt='Avatar'
             ></img>
             {/* User Details */}

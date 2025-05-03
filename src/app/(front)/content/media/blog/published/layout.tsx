@@ -164,10 +164,10 @@ const WikiLayout: React.FC<Props> = ({
   return (
     <>
       <div className='flex h-full w-full flex-row'>
-        <div className='ml-[15%] flex h-full w-full'>
+        <div className='flex h-full w-full flex-col md:flex lg:flex-row'>
           {children}
 
-          <div className='h-full w-[55%]'>
+          <div className='h-full w-full'>
             <div className='h-full w-full'>
               <div>
                 {!post ? (
@@ -235,7 +235,6 @@ const WikiLayout: React.FC<Props> = ({
                       </div>
                     </div>
 
-                    <Separator />
                     <div className='mt-3'>
                       <p className='text-sm'>
                         This post was made in:{' '}
