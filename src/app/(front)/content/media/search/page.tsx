@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { search } from '@/server/search' // Import the server action
 import { useRouter, usePathname } from 'next/navigation'
 import { PostItems } from '@/types'
+import { truncateText } from '@/components/truncateText'
 
 import {
   Pagination,
@@ -46,9 +47,6 @@ const SearchQueryPage: React.FC<SearchParamsProps> = () => {
 
     if (q) getResults()
   }, [q])
-
-  const truncateText = (text: string, length: number) =>
-    text.length > length ? `${text.slice(0, length)}...` : text
 
   function timeAgo(date: Date): string {
     const now: Date = new Date()

@@ -107,7 +107,7 @@ const EditPost: React.FC = () => {
             <input
               className={cn(
                 'mt-1 w-full border-b-2 border-indigo-500 py-2 pl-1 text-sm shadow-sm transition focus:outline-none',
-                'border-gray-300 focus:border-b-indigo-500 focus:ring-2 focus:ring-transparent',
+                'focus:border-theme border-gray-300 focus:ring-2 focus:ring-transparent',
                 'bg-transparent'
               )}
               defaultValue={post.title}
@@ -120,7 +120,7 @@ const EditPost: React.FC = () => {
             <textarea
               className={cn(
                 'mt-1 w-full border-b-2 border-indigo-500 py-2 pl-1 text-sm shadow-sm transition focus:outline-none',
-                'border-gray-300 focus:border-b-indigo-500 focus:ring-2 focus:ring-transparent',
+                'focus:border-theme border-gray-300 focus:ring-2 focus:ring-transparent',
                 'bg-transparent',
                 'h-96 resize-none'
               )}
@@ -135,7 +135,7 @@ const EditPost: React.FC = () => {
             </Link>
           </div>
 
-          <div className='mt-3 flex h-full w-full border-2 border-indigo-500 p-3 md:p-6'>
+          <div className='border-theme mt-3 flex h-full w-full border-2 border-indigo-500 p-3 md:p-6'>
             <div className='flex h-full w-full flex-col'>
               <div className='flex h-full w-full flex-col space-y-4 md:flex md:flex-row'>
                 <div className='flex h-full w-full flex-col'>

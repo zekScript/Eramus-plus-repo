@@ -2,6 +2,7 @@ import { findUserById } from '@/server/user'
 import { getPostsMadeByYou } from './actions'
 import Link from 'next/link'
 import { getCurrentUserServer } from '@/server/currentUserServer'
+import { truncateText } from '@/components/truncateText'
 
 interface ProfileProps {
   params: Promise<{ portfolioID: string }>
@@ -11,8 +12,6 @@ export default async function Profiles({ params }: ProfileProps) {
   const currentUser = await getCurrentUserServer()
   const posts = await getPostsMadeByYou()
 
-  const truncateText = (text: string, length: number) =>
-    text.length > length ? `${text.slice(0, length)}...` : text
   const resolvedParams = await params
   const profileID: number = parseInt(resolvedParams.portfolioID, 10)
 
@@ -67,14 +66,14 @@ export default async function Profiles({ params }: ProfileProps) {
                   {profiles?.bio ? (
                     profiles.bio
                   ) : (
-                    <p className='text-indigo-500'>
+                    <p className='text-theme'>
                       No bio information available yet
                     </p>
                   )}
                 </p>
               </div>
             ) : (
-              <p className='mt-4 text-indigo-500'>
+              <p className='text-theme mt-4'>
                 This profile is set to private by {profiles?.name}
               </p>
             )}
@@ -88,8 +87,8 @@ export default async function Profiles({ params }: ProfileProps) {
 
       {profilePrivacy === 'public' || currentUser?.id == profiles?.id ? (
         <div className='mt-4'>
-          <div className='mb-6 flex w-[100%] space-y-2 border-b-2 border-indigo-500 text-2xl font-bold'>
-            <h1>Posts made by {profiles?.name}</h1>
+          <div className='border-theme mb-6 flex w-[100%] space-y-2 border-b-2 text-2xl font-bold'>
+            <h1 className='mb-2'>Posts made by {profiles?.name}</h1>
           </div>
           <div className='grid h-full w-full overflow-hidden'>
             {posts.length === 0 ? (

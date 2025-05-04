@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useMDXComponentsPost } from '../../../../../../../mdx-components-post'
 import { useEffect } from 'react'
 import { useToast } from '@/components/ui/use-toast'
+import { cn } from '@/lib/utils'
 
 export default function CreatePost() {
   const { toast } = useToast()
@@ -50,20 +51,22 @@ export default function CreatePost() {
         </div> */}
 
         {/* Editor */}
-        <div className='w-full bg-neutral-900 p-4 md:w-[50%]'>
+        <div className='light:bg-neutral-900 w-full p-4 md:w-[50%]'>
           <form action={handleSubmit} className='space-y-4'>
             <input type='hidden' name='userID' value={userId} />
 
-            <h1 className='text-2xl font-semibold text-white'>
-              Write Your Post
-            </h1>
+            <h1 className='text-2xl font-semibold'>Write Your Post</h1>
 
             <input
               name='title'
               type='text'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className='w-full rounded bg-background p-2 text-xl text-white'
+              className={cn(
+                'border-theme w-full rounded border-b-2 bg-background p-3 text-xl shadow-sm transition focus:outline-none',
+                'focus:border-theme border-gray-300 focus:ring-2 focus:ring-transparent',
+                'bg-transparent'
+              )}
               placeholder='Title'
             />
 
@@ -71,13 +74,17 @@ export default function CreatePost() {
               name='content'
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className='h-[400px] w-full resize-none rounded bg-background p-3 text-white'
+              className={cn(
+                'border-theme border-theme h-[400px] w-full resize-none rounded border-b-2 bg-background p-3 shadow-sm transition focus:outline-none',
+                'focus:border-theme border-gray-300 focus:ring-2 focus:ring-transparent',
+                'bg-transparent'
+              )}
               placeholder='Supports markdown, check documentation below for more details'
             ></textarea>
             <div className='flex justify-between'>
               <button
                 type='submit'
-                className='rounded bg-indigo-500 px-2 py-2 text-white hover:bg-indigo-600'
+                className='bg-theme rounded bg-indigo-500 px-2 py-2 text-white'
               >
                 Post your blog
               </button>
@@ -89,7 +96,7 @@ export default function CreatePost() {
         {/* Output Preview */}
         <div className='h-full w-[50%] border-l-2 p-4'>
           <h1 className='text-2xl font-semibold'>Live Preview</h1>
-          <h2 className='mt-4 text-xl font-bold'>{title}</h2>
+          <h2 className='mt-4 text-center text-3xl font-bold'>{title}</h2>
           <div className='prose prose-invert max-w-none text-white'>
             <ReactMarkdown components={MDXcomponents}>{content}</ReactMarkdown>
           </div>

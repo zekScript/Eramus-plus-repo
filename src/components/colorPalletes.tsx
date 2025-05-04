@@ -41,7 +41,8 @@ export default function ColorPalletes() {
   ]
 
   const changeColorWithPalettes = (value: string) => {
-    localStorage.setItem('colorTheme', value)
+    localStorage.setItem('themeColor', value)
+    document.documentElement.style.setProperty('--theme-color', value)
   }
 
   return (

@@ -5,6 +5,7 @@ import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
 import { cn } from '@/lib/utils'
 import { ThemeProvider } from '@/components/theme-provider'
+import ThemeInitializer from '@/components/theme-initializer'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const cal = localFont({
@@ -32,6 +33,8 @@ export default function RootLayout({
           cal.variable
         )}
       >
+        {/* Make theme colors work on root */}
+        <ThemeInitializer />
         <ThemeProvider
           attribute='class'
           defaultTheme='dark'

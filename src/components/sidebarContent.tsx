@@ -107,9 +107,13 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
             This is where you can change your custom name, Bio, and more.
           </p>
           <form
-            action={(formData) =>
-              handleSubmit(formData, profileSettingsCurrentUser?.id as number)
-            }
+            onSubmit={(e) => {
+              e.preventDefault() // Prevent default form submission
+              handleSubmit(
+                new FormData(e.target as HTMLFormElement),
+                profileSettingsCurrentUser?.id as number
+              )
+            }}
           >
             <section id='general'>
               <div className='w-[100%] space-y-4'>
@@ -340,10 +344,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
               </div>
             </div>
           </div>
-          <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
-            <Button variant='secondary'>Save</Button>
-            <Button variant='outline'>Cancel</Button>
-          </div>
+
           {/* </form> */}
         </div>
       )}
@@ -368,8 +369,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                   }}
                 >
                   <h1 className='mb-3'>
-                    Basic details:{' '}
-                    <span className='text-indigo-500'>Public</span>
+                    Basic details: <span className='text-theme'>Public</span>
                     <span className='ml-3 text-sm text-gray-700'>
                       (default)
                     </span>
@@ -388,7 +388,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                     <h1 className='mb-3'>My profile:</h1>
                     <Select onValueChange={handleSelectChangePrivacy}>
                       <SelectTrigger className='w-[100px] border-none'>
-                        <span className='text-indigo-500'>
+                        <span className='text-theme'>
                           {profileSettingsCurrentUser?.privacyVisabillity}
                         </span>
                       </SelectTrigger>
@@ -407,10 +407,6 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                 </div>
               </div>
             </section>
-            <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
-              <Button variant='secondary'>Save</Button>
-              <Button variant='outline'>Cancel</Button>
-            </div>
           </form>
         </div>
       )}

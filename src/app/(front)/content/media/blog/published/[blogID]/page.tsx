@@ -37,9 +37,8 @@ const BlogPage = () => {
     <>
       {/* Blog post content */}
       <div className='flex h-full w-full'>
-        <div className='w-full'>
-          <h2 className='mt-4 text-xl font-bold'>{post.title}</h2>
-
+        <div className='mr-8 w-full'>
+          <h2 className='mt-4 text-center text-3xl font-bold'>{post.title}</h2>
           <ReactMarkdown components={MDXcomponents}>
             {post.content}
           </ReactMarkdown>

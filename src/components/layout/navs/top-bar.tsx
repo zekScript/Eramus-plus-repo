@@ -50,7 +50,7 @@ export function TopBar() {
           <div className='flex w-full justify-start'>
             {/* LOGO */}
             <Link href='/'>
-              <Icons.logo className='w-40 cursor-pointer fill-primary pb-1' />
+              <Icons.logo className='logo-icon w-40 cursor-pointer fill-primary pb-1' />
             </Link>
           </div>
 
@@ -79,7 +79,7 @@ export function TopBar() {
       </div>
       <div className='flex h-full w-full justify-end'>
         <div
-          className={`mb-4 ml-8 mr-8 hidden w-full justify-end border-t-2 lg:flex`}
+          className={`border-theme mb-4 ml-8 mr-8 hidden w-full justify-end border-t-2 lg:flex`}
         >
           <div className='mt-5'>
             <ThemeToggle></ThemeToggle>

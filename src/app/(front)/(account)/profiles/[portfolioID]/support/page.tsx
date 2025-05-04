@@ -35,20 +35,20 @@ export default function Support() {
         <h1 className='p-7 text-3xl'>Contact us</h1>
       </div>
       <div className='flex h-full w-full flex-col'>
-        <form className='contactContainer w-full space-y-5 text-xl'>
+        <form className='contactContainer mt-6 w-full space-y-5 text-xl'>
           {/* In the input should be from the db current user his name and mail inside the input */}
           <Label>Your Name</Label>
           <input
             type='text'
             placeholder='Your Name'
-            defaultValue={user?.name}
+            value={user?.name}
             name='name'
           />
           <Label>Your Email address</Label>
           <input
             type='text'
             placeholder='Your Email address'
-            defaultValue={user?.email}
+            value={user?.email}
             name='email'
           />
           <Label>Subject</Label>

@@ -1,3 +1,4 @@
+'use client'
 import { motion } from 'framer-motion'
 
 const cursorVariants = {
@@ -18,7 +19,7 @@ export default function CursorBlinker() {
     <motion.div
       variants={cursorVariants}
       animate='blinking'
-      className='inline-block h-5 w-[1px] translate-y-1 bg-lime-500'
+      className='bg-theme inline-block h-5 w-[1px] translate-y-1 bg-lime-500'
     />
   )
 }

@@ -1,10 +1,20 @@
 'use client'
 import ColorPalletes from './colorPalletes'
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 
 const ColorPicker = () => {
   const colorInputRef = useRef<HTMLInputElement | null>(null) // Reference to the hidden input
+  const [selectedColor, setSelectedColor] = useState<string | null>(null)
+
+  // Load the saved color from localStorage on mount
+  useEffect(() => {
+    const savedColor = localStorage.getItem('themeColor')
+    if (savedColor) {
+      setSelectedColor(savedColor)
+      document.documentElement.style.setProperty('--theme-color', savedColor)
+    }
+  }, [])
 
   const handleButtonClick = () => {
     if (colorInputRef.current) {
@@ -14,7 +24,10 @@ const ColorPicker = () => {
 
   const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
-    localStorage.setItem('colorTheme', event.target.value)
+    const color = event.target.value
+    setSelectedColor(color)
+    localStorage.setItem('themeColor', color) // Save the color to localStorage
+    document.documentElement.style.setProperty('--theme-color', color) // Update the CSS variable
   }
   return (
     <>
@@ -42,6 +55,7 @@ const ColorPicker = () => {
               <input
                 ref={colorInputRef}
                 type='color'
+                value={selectedColor || '#000000'} // Default to black if no color is selected
                 onChange={handleColorChange}
                 style={{ display: 'none' }} // Hide the input element
               />
