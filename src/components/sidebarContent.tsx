@@ -108,8 +108,11 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
           </p>
           <form
             onSubmit={(e) => {
-              e.preventDefault(); // Prevent default form submission
-              handleSubmit(new FormData(e.target as HTMLFormElement), profileSettingsCurrentUser?.id as number);
+              e.preventDefault() // Prevent default form submission
+              handleSubmit(
+                new FormData(e.target as HTMLFormElement),
+                profileSettingsCurrentUser?.id as number
+              )
             }}
           >
             <section id='general'>
@@ -130,7 +133,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                   name='textAbout'
                   placeholder='I like to eat pizza...'
                 />
-                <p className='text-end text-[20px] font-normal '>
+                <p className='text-end text-[20px] font-normal'>
                   {charCounter} / 500
                 </p>
               </div>
@@ -307,7 +310,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
               </div>
             </div>
 
-            <div className='border-settings  mt-3 flex h-full w-full p-6'>
+            <div className='border-settings mt-3 flex h-full w-full p-6'>
               <div className='flex h-full w-full flex-col'>
                 <div className='flex h-full w-full'>
                   <div className='flex h-full w-full flex-col'>
@@ -341,7 +344,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
               </div>
             </div>
           </div>
-          
+
           {/* </form> */}
         </div>
       )}
@@ -366,8 +369,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                   }}
                 >
                   <h1 className='mb-3'>
-                    Basic details:{' '}
-                    <span className='text-theme'>Public</span>
+                    Basic details: <span className='text-theme'>Public</span>
                     <span className='ml-3 text-sm text-gray-700'>
                       (default)
                     </span>
@@ -405,7 +407,6 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                 </div>
               </div>
             </section>
-            
           </form>
         </div>
       )}

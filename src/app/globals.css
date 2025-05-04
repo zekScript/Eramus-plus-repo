@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 @layer base {
   :root {
     --background: hsl(0, 0%, 100%);
@@ -37,7 +35,6 @@
     --radius: 0.5rem;
 
     --theme-color: oklch(58.5% 0.233 277.117); /* Default theme color */
-
   }
 
   .dark {
@@ -79,18 +76,18 @@
   background-color: var(--theme-color);
 }
 
-.border-theme  {
+.border-theme {
   border-color: var(--theme-color);
 }
 
 svg.logo-icon {
-  color: var(--primary) !important; 
-  stroke: var(--primary) !important; 
+  color: var(--primary) !important;
+  stroke: var(--primary) !important;
 }
 
 svg {
-  color: var(--theme-color); 
-  stroke: var(--theme-color); 
+  color: var(--theme-color);
+  stroke: var(--theme-color);
 }
 
 .focus\:border-theme:focus {
@@ -100,10 +97,10 @@ svg {
 
 .\[\&\.active\]\:text-theme.active {
   --tw-text-opacity: 1;
-  color: var(--theme-color)
+  color: var(--theme-color);
 }
 
-.fill-theme{
+.fill-theme {
   fill: var(--theme-color);
 }
 
@@ -115,7 +112,7 @@ svg {
 /* For input fields in dark mode */
 .dark ::placeholder {
   color: var(--theme-color);
-  opacity: 1; 
+  opacity: 1;
 }
 
 ::-webkit-input-placeholder {
@@ -124,10 +121,6 @@ svg {
 :-ms-input-placeholder {
   color: var(--theme-color);
 }
-
-
-
-
 
 @layer base {
   * {
@@ -138,9 +131,6 @@ svg {
     @apply bg-background text-foreground;
   }
 }
-
-
-
 
 .devborder {
   border: 1px solid red;

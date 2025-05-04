@@ -165,14 +165,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </details>
     ),
-    
+
     img: (props) => (
       <img
         style={{
           display: 'inline-block',
           verticalAlign: 'middle',
           width: '50vh',
-          height: '100%'
+          height: '100%',
         }}
         {...props}
       />

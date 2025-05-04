@@ -4,9 +4,7 @@ import { useEffect, useState } from 'react'
 import { search } from '@/server/search' // Import the server action
 import { useRouter, usePathname } from 'next/navigation'
 import { PostItems } from '@/types'
-import ReactMarkdown from 'react-markdown'
 import { truncateText } from '@/components/truncateText'
-
 
 import {
   Pagination,
@@ -50,7 +48,6 @@ const SearchQueryPage: React.FC<SearchParamsProps> = () => {
     if (q) getResults()
   }, [q])
 
-  
   function timeAgo(date: Date): string {
     const now: Date = new Date()
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)
@@ -216,8 +213,7 @@ const SearchQueryPage: React.FC<SearchParamsProps> = () => {
                   </p>
                   <p className='text-md'>{timeAgo(new Date(post.createdAt))}</p>
                   <p className='font-sm h-full w-full text-sm text-neutral-400'>
-                               {truncateText(post.content, 200)}
-                    
+                    {truncateText(post.content, 200)}
                   </p>
                 </div>
               </div>

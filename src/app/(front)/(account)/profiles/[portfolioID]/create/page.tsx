@@ -11,7 +11,6 @@ import { useToast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
 
 export default function CreatePost() {
-  
   const { toast } = useToast()
   const pathname = usePathname()
   const segments = pathname.split('/')
@@ -52,27 +51,22 @@ export default function CreatePost() {
         </div> */}
 
         {/* Editor */}
-        <div className='w-full light:bg-neutral-900 p-4 md:w-[50%]'>
+        <div className='light:bg-neutral-900 w-full p-4 md:w-[50%]'>
           <form action={handleSubmit} className='space-y-4'>
             <input type='hidden' name='userID' value={userId} />
 
-            <h1 className='text-2xl font-semibold '>
-              Write Your Post
-            </h1>
+            <h1 className='text-2xl font-semibold'>Write Your Post</h1>
 
             <input
               name='title'
               type='text'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-
-className={cn(
-                'w-full rounded bg-background p-3 text-xl border-b-2 border-theme shadow-sm transition focus:outline-none',
-                'border-gray-300 focus:border-theme focus:ring-2 focus:ring-transparent',
-                'bg-transparent',
+              className={cn(
+                'border-theme w-full rounded border-b-2 bg-background p-3 text-xl shadow-sm transition focus:outline-none',
+                'focus:border-theme border-gray-300 focus:ring-2 focus:ring-transparent',
+                'bg-transparent'
               )}
-
-              
               placeholder='Title'
             />
 
@@ -81,8 +75,8 @@ className={cn(
               value={content}
               onChange={(e) => setContent(e.target.value)}
               className={cn(
-                'resize-none p-3 border-theme h-[400px] w-full rounded bg-background border-b-2 border-theme shadow-sm transition focus:outline-none',
-                'border-gray-300 focus:border-theme focus:ring-2 focus:ring-transparent',
+                'border-theme border-theme h-[400px] w-full resize-none rounded border-b-2 bg-background p-3 shadow-sm transition focus:outline-none',
+                'focus:border-theme border-gray-300 focus:ring-2 focus:ring-transparent',
                 'bg-transparent'
               )}
               placeholder='Supports markdown, check documentation below for more details'
@@ -90,7 +84,7 @@ className={cn(
             <div className='flex justify-between'>
               <button
                 type='submit'
-                className='rounded bg-indigo-500 px-2 py-2 text-white bg-theme'
+                className='bg-theme rounded bg-indigo-500 px-2 py-2 text-white'
               >
                 Post your blog
               </button>
@@ -102,7 +96,7 @@ className={cn(
         {/* Output Preview */}
         <div className='h-full w-[50%] border-l-2 p-4'>
           <h1 className='text-2xl font-semibold'>Live Preview</h1>
-          <h2 className='mt-4 text-3xl text-center font-bold'>{title}</h2>
+          <h2 className='mt-4 text-center text-3xl font-bold'>{title}</h2>
           <div className='prose prose-invert max-w-none text-white'>
             <ReactMarkdown components={MDXcomponents}>{content}</ReactMarkdown>
           </div>

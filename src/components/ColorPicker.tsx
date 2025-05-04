@@ -16,8 +16,6 @@ const ColorPicker = () => {
     }
   }, [])
 
-
-
   const handleButtonClick = () => {
     if (colorInputRef.current) {
       colorInputRef.current.click() // Trigger the color input when the button is clicked

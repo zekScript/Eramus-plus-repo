@@ -35,7 +35,7 @@ export default function Support() {
         <h1 className='p-7 text-3xl'>Contact us</h1>
       </div>
       <div className='flex h-full w-full flex-col'>
-        <form className='contactContainer w-full space-y-5 text-xl mt-6'>
+        <form className='contactContainer mt-6 w-full space-y-5 text-xl'>
           {/* In the input should be from the db current user his name and mail inside the input */}
           <Label>Your Name</Label>
           <input

@@ -1,6 +1,5 @@
 import type { MDXComponents } from 'mdx/types'
 
-
 export function useMDXComponentsPost(components: MDXComponents): MDXComponents {
   return {
     h1: ({ children }) => (
@@ -178,7 +177,7 @@ export function useMDXComponentsPost(components: MDXComponents): MDXComponents {
           display: 'inline-block',
           verticalAlign: 'middle',
           width: '50vh',
-          height: '100%'
+          height: '100%',
         }}
         {...props}
       />

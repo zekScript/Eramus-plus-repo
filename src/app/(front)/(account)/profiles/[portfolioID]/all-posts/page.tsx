@@ -11,7 +11,6 @@ import {
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { truncateText } from '@/components/truncateText'
 
-
 type PageProps = {
   params: Promise<{ portfolioID: string }>
   searchParams?: Promise<{ page?: string }>
@@ -38,7 +37,6 @@ const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
     startIndex + POSTS_PER_PAGE
   )
 
-  
   function timeAgo(date: Date): string {
     const now: Date = new Date()
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)
@@ -66,7 +64,7 @@ const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
   return (
     <div className='m-auto h-full w-[80%] justify-center'>
       <div className='mt-12'>
-        <div className='mb-12 flex w-full border-b-2 border-indigo-500 border-theme'>
+        <div className='border-theme mb-12 flex w-full border-b-2 border-indigo-500'>
           <h1 className='mb-2 text-2xl font-medium'>
             All posts made by {profiles?.name}
           </h1>

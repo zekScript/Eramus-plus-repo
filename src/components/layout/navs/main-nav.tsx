@@ -23,7 +23,7 @@ const MainNav: React.FC<MainNavProps> = ({ items }) => {
           return (
             <Link
               key={item.href}
-              className={`relative inline-flex rounded-full px-3 py-1.5 text-sm font-bold text-slate-500 no-underline duration-300 ease-in hover:text-gray-300 lg:text-base [&.active]:text-theme ${
+              className={`[&.active]:text-theme relative inline-flex rounded-full px-3 py-1.5 text-sm font-bold text-slate-500 no-underline duration-300 ease-in hover:text-gray-300 lg:text-base ${
                 isActive ? 'active' : ''
               }`}
               href={item.href}

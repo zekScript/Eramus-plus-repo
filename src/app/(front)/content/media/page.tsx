@@ -6,8 +6,6 @@ import { getPosts } from './actions'
 import { useEffect } from 'react'
 import { truncateText } from '@/components/truncateText'
 
-
-
 import {
   Pagination,
   PaginationContent,
@@ -80,7 +78,6 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE
   const paginatedPosts = posts.slice(startIndex, startIndex + POSTS_PER_PAGE)
 
-  
   const searchQuery = () => {
     router.push(pathname + `/search?q=${inputValue}`)
   }
@@ -144,8 +141,8 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
                     <p className='text-md'>
                       {timeAgo(new Date(post.createdAt))}
                     </p>
-                    <p className='font-sm h-full w-full text-sm text-neutral-400 flex flex-row gap-1'>
-                     {truncateText(post.content, 200)}
+                    <p className='font-sm flex h-full w-full flex-row gap-1 text-sm text-neutral-400'>
+                      {truncateText(post.content, 200)}
                     </p>
                   </div>
                 </div>
