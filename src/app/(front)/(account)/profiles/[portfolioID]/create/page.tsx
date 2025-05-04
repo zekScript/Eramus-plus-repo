@@ -102,7 +102,7 @@ className={cn(
         {/* Output Preview */}
         <div className='h-full w-[50%] border-l-2 p-4'>
           <h1 className='text-2xl font-semibold'>Live Preview</h1>
-          <h2 className='mt-4 text-xl font-bold'>{title}</h2>
+          <h2 className='mt-4 text-3xl text-center font-bold'>{title}</h2>
           <div className='prose prose-invert max-w-none text-white'>
             <ReactMarkdown components={MDXcomponents}>{content}</ReactMarkdown>
           </div>

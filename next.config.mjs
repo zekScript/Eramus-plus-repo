@@ -1,4 +1,5 @@
 import createMDX from '@next/mdx'
+import rehypePrism from 'rehype-prism' // Use import instead of require
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -11,9 +12,9 @@ const nextConfig = {
   // Optionally, add any other Next.js config below
 }
 
-const withMDX = createMDX({
-  // Add markdown plugins here, as desired
-})
+const withMDX = createMDX(
+  
+)
 
 // Merge MDX config with Next.js config
 export default withMDX(nextConfig)

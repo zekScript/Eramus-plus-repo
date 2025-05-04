@@ -37,12 +37,12 @@ const BlogPage = () => {
     <>
       {/* Blog post content */}
       <div className='flex h-full w-full'>
-        <div className='w-full'>
-          <h2 className='mt-4 text-xl font-bold'>{post.title}</h2>
-
-          <ReactMarkdown components={MDXcomponents}>
+        <div className='w-full mr-8'>
+          <h2 className='mt-4 text-3xl font-bold text-center'>{post.title}</h2>
+<ReactMarkdown components={MDXcomponents}>
             {post.content}
           </ReactMarkdown>
+          
         </div>
 
         {/* Make a sidebar menu for the details of the blog */}
