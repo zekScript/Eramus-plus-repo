@@ -64,9 +64,9 @@ const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
   }
 
   return (
-    <div className='m-auto h-full w-[90%] justify-center'>
+    <div className='m-auto h-full w-[80%] justify-center'>
       <div className='mt-12'>
-        <div className='mb-12 flex w-[90%] border-b-2 border-indigo-500'>
+        <div className='mb-12 flex w-full border-b-2 border-indigo-500 border-theme'>
           <h1 className='mb-2 text-2xl font-medium'>
             All posts made by {profiles?.name}
           </h1>
@@ -78,7 +78,7 @@ const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
           ) : (
             paginatedPosts.map((post) => (
               <div key={post.id}>
-                <div className='mb-6 flex w-[80%] justify-between space-x-3 space-y-6 border-b pb-4'>
+                <div className='mb-6 flex w-full justify-between space-x-3 space-y-6 border-b pb-4'>
                   <div className='flex flex-col gap-2'>
                     <div className='w-full'>
                       <Link
@@ -99,7 +99,7 @@ const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
                     </div>
                   </div>
                   {post.authorId == currentUser?.id ? (
-                    <div className='mb-2 space-y-2 text-sm'>
+                    <div className='mb-2 space-y-2 pr-4 text-sm'>
                       <Link
                         href={`/content/blogitems/edit?p=${post.id}`}
                         className='flex text-sm'

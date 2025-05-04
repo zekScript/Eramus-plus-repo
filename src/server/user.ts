@@ -44,7 +44,7 @@ export async function createUser(formData: FormData) {
     })
     return { success: true, message: 'User created successfully.' }
   } catch (error) {
-    return { success: false, message: 'Error creating user.' }
+    return { success: false, message: 'Error creating user. ' + error }
   }
 }
 

@@ -53,7 +53,7 @@ const Footer: React.FC<Props> = ({ className }) => {
       </div>
 
       <div className='flex h-full flex-col items-center justify-between gap-1 md:flex-row md:items-end'>
-        <Icons.logo className='w-40 fill-primary' />
+        <Icons.logo className='w-40 fill-primary logo-icon ' />
 
         <div className='mt-1 flex flex-col items-start gap-x-4 md:mt-0 md:flex-row md:items-center'>
           <div className='mt-1 flex flex-col items-start gap-x-4 md:flex-row md:items-center'>

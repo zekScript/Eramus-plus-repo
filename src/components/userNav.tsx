@@ -41,6 +41,7 @@ const UserNav: React.FC = () => {
 
   const logout = () => {
     Cookies.remove('authToken')
+    localStorage.removeItem("themeColor")
     window.location.reload()
   }
 

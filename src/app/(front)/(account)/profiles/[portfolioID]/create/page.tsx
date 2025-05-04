@@ -8,8 +8,10 @@ import Link from 'next/link'
 import { useMDXComponentsPost } from '../../../../../../../mdx-components-post'
 import { useEffect } from 'react'
 import { useToast } from '@/components/ui/use-toast'
+import { cn } from '@/lib/utils'
 
 export default function CreatePost() {
+  
   const { toast } = useToast()
   const pathname = usePathname()
   const segments = pathname.split('/')
@@ -50,11 +52,11 @@ export default function CreatePost() {
         </div> */}
 
         {/* Editor */}
-        <div className='w-full bg-neutral-900 p-4 md:w-[50%]'>
+        <div className='w-full light:bg-neutral-900 p-4 md:w-[50%]'>
           <form action={handleSubmit} className='space-y-4'>
             <input type='hidden' name='userID' value={userId} />
 
-            <h1 className='text-2xl font-semibold text-white'>
+            <h1 className='text-2xl font-semibold '>
               Write Your Post
             </h1>
 
@@ -63,7 +65,14 @@ export default function CreatePost() {
               type='text'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className='w-full rounded bg-background p-2 text-xl text-white'
+
+className={cn(
+                'w-full rounded bg-background p-3 text-xl border-b-2 border-theme shadow-sm transition focus:outline-none',
+                'border-gray-300 focus:border-theme focus:ring-2 focus:ring-transparent',
+                'bg-transparent',
+              )}
+
+              
               placeholder='Title'
             />
 
@@ -71,13 +80,17 @@ export default function CreatePost() {
               name='content'
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className='h-[400px] w-full resize-none rounded bg-background p-3 text-white'
+              className={cn(
+                'resize-none p-3 border-theme h-[400px] w-full rounded bg-background border-b-2 border-theme shadow-sm transition focus:outline-none',
+                'border-gray-300 focus:border-theme focus:ring-2 focus:ring-transparent',
+                'bg-transparent'
+              )}
               placeholder='Supports markdown, check documentation below for more details'
             ></textarea>
             <div className='flex justify-between'>
               <button
                 type='submit'
-                className='rounded bg-indigo-500 px-2 py-2 text-white hover:bg-indigo-600'
+                className='rounded bg-indigo-500 px-2 py-2 text-white bg-theme'
               >
                 Post your blog
               </button>

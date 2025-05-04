@@ -67,14 +67,14 @@ export default async function Profiles({ params }: ProfileProps) {
                   {profiles?.bio ? (
                     profiles.bio
                   ) : (
-                    <p className='text-indigo-500'>
+                    <p className='text-theme'>
                       No bio information available yet
                     </p>
                   )}
                 </p>
               </div>
             ) : (
-              <p className='mt-4 text-indigo-500'>
+              <p className='mt-4 text-theme'>
                 This profile is set to private by {profiles?.name}
               </p>
             )}
@@ -88,8 +88,8 @@ export default async function Profiles({ params }: ProfileProps) {
 
       {profilePrivacy === 'public' || currentUser?.id == profiles?.id ? (
         <div className='mt-4'>
-          <div className='mb-6 flex w-[100%] space-y-2 border-b-2 border-indigo-500 text-2xl font-bold'>
-            <h1>Posts made by {profiles?.name}</h1>
+          <div className='mb-6 flex w-[100%] space-y-2 border-b-2 border-theme text-2xl font-bold'>
+            <h1 className='mb-2'>Posts made by {profiles?.name}</h1>
           </div>
           <div className='grid h-full w-full overflow-hidden'>
             {posts.length === 0 ? (
