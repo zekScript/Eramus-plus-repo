@@ -2,6 +2,8 @@ import { findUserById } from '@/server/user'
 import { getPostsMadeByYou } from './actions'
 import Link from 'next/link'
 import { getCurrentUserServer } from '@/server/currentUserServer'
+import { truncateText } from '@/components/truncateText'
+
 
 interface ProfileProps {
   params: Promise<{ portfolioID: string }>
@@ -11,8 +13,7 @@ export default async function Profiles({ params }: ProfileProps) {
   const currentUser = await getCurrentUserServer()
   const posts = await getPostsMadeByYou()
 
-  const truncateText = (text: string, length: number) =>
-    text.length > length ? `${text.slice(0, length)}...` : text
+  
   const resolvedParams = await params
   const profileID: number = parseInt(resolvedParams.portfolioID, 10)
 

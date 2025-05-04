@@ -36,7 +36,7 @@ model Post {
   id              String   @id @default(uuid())
   title           String   @db.VarChar(120)
   content         String
-  slug            String   @unique
+  slug            String   
   badge           String?  @default("not specified")
   createdAt       DateTime @default(now()) @map("created_at")
   postVisibillity String   @default("public")

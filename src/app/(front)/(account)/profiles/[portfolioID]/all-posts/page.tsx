@@ -9,6 +9,8 @@ import {
   PaginationLink,
 } from '@/components/ui/pagination'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { truncateText } from '@/components/truncateText'
+
 
 type PageProps = {
   params: Promise<{ portfolioID: string }>
@@ -36,9 +38,7 @@ const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
     startIndex + POSTS_PER_PAGE
   )
 
-  const truncateText = (text: string, length: number) =>
-    text.length > length ? `${text.slice(0, length)}...` : text
-
+  
   function timeAgo(date: Date): string {
     const now: Date = new Date()
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)

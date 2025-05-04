@@ -24,7 +24,7 @@ export async function createPost(formData: FormData) {
     return {
       success: false,
       message:
-        'Unexpected error. We suggest contacting support or refreshing the page and try again',
+        'Unexpected error. We suggest contacting support or refreshing the page and try again' + error,
     }
   }
 }
