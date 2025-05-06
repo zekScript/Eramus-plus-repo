@@ -113,17 +113,22 @@ const WikiLayout: React.FC<Props> = ({
     fetchPost()
   }, [postId])
 
-
   const handleLike = async () => {
     if (liked) return
-    const updatedLikes = await likePost(postId, currentLoggedInUser?.id as number)
+    const updatedLikes = await likePost(
+      postId,
+      currentLoggedInUser?.id as number
+    )
     // setLikes(updatedLikes)
     setLiked(true)
   }
 
   const handleDislike = async () => {
     if (disliked) return
-    const updatedDislikes = await dislikePost(postId, currentLoggedInUser?.id as number)
+    const updatedDislikes = await dislikePost(
+      postId,
+      currentLoggedInUser?.id as number
+    )
     // setDislikes(updatedDislikes)
     setDisliked(true)
   }
@@ -161,7 +166,7 @@ const WikiLayout: React.FC<Props> = ({
   return (
     <>
       <div className='flex h-full w-full flex-row'>
-        <div className='flex h-full w-full flex-col-reverse  md:flex lg:flex-row'>
+        <div className='flex h-full w-full flex-col-reverse md:flex lg:flex-row'>
           {children}
 
           <div className='h-full w-full'>
@@ -272,7 +277,7 @@ const WikiLayout: React.FC<Props> = ({
                       </Badge>
                     </div>
 
-                    <div className='mt-6 flex flex-col border-b-2 border-theme pb-2'>
+                    <div className='border-theme mt-6 flex flex-col border-b-2 pb-2'>
                       <h3>Leave this post a rating</h3>
                     </div>
 
@@ -288,11 +293,11 @@ const WikiLayout: React.FC<Props> = ({
                           className='flex items-center gap-1'
                         >
                           <ThumbsUp
-                          className={
-                            liked
-                              ? 'rounded-full bg-gray-100 text-slate-600'
-                              : ''
-                          }
+                            className={
+                              liked
+                                ? 'rounded-full bg-gray-100 text-slate-600'
+                                : ''
+                            }
                           />
                           <span>{post.likes}</span>
                         </Button>
@@ -303,11 +308,11 @@ const WikiLayout: React.FC<Props> = ({
                           className='flex items-center gap-1'
                         >
                           <ThumbsDown
-                          className={
-                            disliked
-                              ? 'rounded-full bg-gray-100 text-slate-600'
-                              : ''
-                          }
+                            className={
+                              disliked
+                                ? 'rounded-full bg-gray-100 text-slate-600'
+                                : ''
+                            }
                           />
                           <span>{post.dislikes}</span>
                         </Button>

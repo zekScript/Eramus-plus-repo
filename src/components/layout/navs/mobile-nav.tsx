@@ -28,7 +28,7 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
         </SheetTrigger>
         <SheetContent side='right' className='w-3/5'>
           <Link href='/'>
-            <Icons.logo className='w-40 cursor-pointer fill-primary logo-icon pb-6' />
+            <Icons.logo className='logo-icon w-40 cursor-pointer fill-primary pb-6' />
           </Link>
           {/* MENU Items */}
           <div className='flex w-14 flex-col gap-y-4 text-xl font-bold'>
