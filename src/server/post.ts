@@ -40,8 +40,20 @@ export async function getPostById(blogID: string) {
   })
 }
 
-export async function likePost(postId: string) {
-  const updatedPost = await prisma.post.update({
+
+
+
+export async function likePost(postId: string, userID: number) {
+  try{
+  await prisma.postActions.create(
+    {
+      data: {
+        postReactedById: postId,
+        reactedAuthor: { connect: {id: userID}}
+      }
+    }
+  )
+  await prisma.post.update({
     where: { id: postId },
     data: {
       likes: {
@@ -49,12 +61,24 @@ export async function likePost(postId: string) {
       },
     },
   })
-
-  return updatedPost.likes
+  }
+  catch(err){
+    console.error(err)
+  }
+  
 }
 
-export async function dislikePost(postId: string) {
-  const updatedPost = await prisma.post.update({
+export async function dislikePost(postId: string, userID: number) {
+  try{
+  await prisma.postActions.create(
+    {
+      data: {
+        postReactedById: postId,
+        reactedAuthor: { connect: {id: userID}}
+      }
+    }
+  )
+  await prisma.post.update({
     where: { id: postId },
     data: {
       dislikes: {
@@ -62,8 +86,10 @@ export async function dislikePost(postId: string) {
       },
     },
   })
-
-  return updatedPost.dislikes
+  }
+  catch(err){
+    console.error(err)
+  }
 }
 
 export async function updatePostVisibillity(

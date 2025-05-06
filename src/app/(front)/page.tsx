@@ -17,7 +17,7 @@ const Page: React.FC = () => {
       <section className='ml-12 mt-16 md:ml-0 md:mt-5'>
         <div>
           <div
-            className='text-ratio mb-9 mt-64 h-full w-full pl-0 pr-0 md:pl-24 md:pr-24'
+            className='h-screen mb-9 mt-64 w-full pl-0 pr-0 md:pl-24 md:pr-24'
             ref={ref}
           >
             {isInView ? <A4Animation /> : <Loader></Loader>}

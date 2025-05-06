@@ -7,6 +7,9 @@
     --background: hsl(0, 0%, 100%);
     --foreground: hsl(0 0% 3.9%);
 
+    --theme-color: oklch(58.5% 0.233 277.117); /* Default theme color */
+
+
     --card: hsl(0 0% 100%);
     --card-foreground: hsl(0 0% 3.9%);
 
@@ -34,7 +37,6 @@
 
     --radius: 0.5rem;
 
-    --theme-color: oklch(58.5% 0.233 277.117); /* Default theme color */
   }
 
   .dark {
@@ -61,6 +63,7 @@
 
     --destructive: hsl(0 62.8% 30.6%);
     --destructive-foreground: hsl(0 0% 98%);
+
 
     --border: hsl(0 0% 14.9%);
     --input: hsl(0 0% 14.9%);
