@@ -75,7 +75,7 @@ export default function CreatePost() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               className={cn(
-                'border-theme border-theme h-[400px] w-full resize-none rounded border-b-2 bg-background p-3 shadow-sm transition focus:outline-none',
+                'border-theme h-[400px] w-full resize-none rounded border-b-2 bg-background p-3 shadow-sm transition focus:outline-none',
                 'focus:border-theme border-gray-300 focus:ring-2 focus:ring-transparent',
                 'bg-transparent'
               )}

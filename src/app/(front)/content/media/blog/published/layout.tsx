@@ -1,5 +1,4 @@
 'use client'
-
 import {
   findPostById,
   // likePost,
@@ -52,9 +51,6 @@ const WikiLayout: React.FC<Props> = ({
   // const [dislikes, setDislikes] = useState(initialDislikes)
   // const [liked, setLiked] = useState(false)
   // const [disliked, setDisliked] = useState(false)
-
-  // console.log(likes, dislikes)
-
   const [user, setUser] = useState<UserItems | null>(null)
 
   function timeAgo(date: Date): string {
@@ -119,15 +115,21 @@ const WikiLayout: React.FC<Props> = ({
 
   // const handleLike = async () => {
   //   if (liked) return
-  //   const updatedLikes = await likePost(postId)
-  //   setLikes(updatedLikes)
+  //   const updatedLikes = await likePost(
+  //     postId,
+  //     currentLoggedInUser?.id as number
+  //   )
+  //   // setLikes(updatedLikes)
   //   setLiked(true)
   // }
 
   // const handleDislike = async () => {
   //   if (disliked) return
-  //   const updatedDislikes = await dislikePost(postId)
-  //   setDislikes(updatedDislikes)
+  //   const updatedDislikes = await dislikePost(
+  //     postId,
+  //     currentLoggedInUser?.id as number
+  //   )
+  //   // setDislikes(updatedDislikes)
   //   setDisliked(true)
   // }
 
@@ -164,7 +166,7 @@ const WikiLayout: React.FC<Props> = ({
   return (
     <>
       <div className='flex h-full w-full flex-row'>
-        <div className='flex h-full w-full flex-col md:flex lg:flex-row'>
+        <div className='flex h-full w-full flex-col-reverse md:flex lg:flex-row'>
           {children}
 
           <div className='h-full w-full'>
@@ -275,7 +277,7 @@ const WikiLayout: React.FC<Props> = ({
                       </Badge>
                     </div>
 
-                    <div className='mt-6 flex flex-col border-b-2 border-slate-600 pb-2'>
+                    <div className='border-theme mt-6 flex flex-col border-b-2 pb-2'>
                       <h3>Leave this post a rating</h3>
                     </div>
 
