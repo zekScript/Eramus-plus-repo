@@ -31,8 +31,8 @@ export default function Support() {
   return (
     <div>
       {/* Title page */}
-      <div className='h-full w-full bg-gray-500 text-center'>
-        <h1 className='p-7 text-3xl'>Contact us</h1>
+      <div className='h-full w-full bg-neutral-900 text-center'>
+        <h1 className='p-7 text-3xl text-white'>Contact us</h1>
       </div>
       <div className='flex h-full w-full flex-col'>
         <form className='contactContainer mt-6 w-full space-y-5 text-xl'>

@@ -168,9 +168,15 @@ svg {
 }
 
 .contactContainer > input {
-  width: 100%;
+  width: 69%;
   height: 2rem;
   margin-top: 1rem;
+  border-bottom: 2px solid gray;
+  background: transparent;
+}
+
+.contactContainer > input:focus {
+  outline: none;
 }
 
 .contactContainer > label {
@@ -179,5 +185,12 @@ svg {
 }
 
 .contactContainer > textarea {
-  width: 100%;
+    width: 69%;
+  border-bottom: 2px solid gray;
+  background: transparent;
+
+}
+
+.contactContainer > textarea:focus {
+  outline: none;
 }
