@@ -127,10 +127,7 @@ const EditPost: React.FC = () => {
               name='content'
               defaultValue={post.content}
             ></textarea>
-            <Link
-              href='https://www.markdownguide.org/cheat-sheet/'
-              className='text-end'
-            >
+            <Link href='/docs/mdx' className='text-end'>
               Markdown writing documentation
             </Link>
           </div>

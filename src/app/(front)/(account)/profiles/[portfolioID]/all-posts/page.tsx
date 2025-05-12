@@ -78,23 +78,25 @@ const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
               <div key={post.id}>
                 <div className='mb-6 flex w-full justify-between space-x-3 space-y-6 border-b pb-4'>
                   <div className='flex flex-col gap-2'>
-                    <div className='w-full'>
-                      <Link
-                        href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
-                        className='text-lg font-semibold text-indigo-500'
-                      >
-                        {post.title}
-                      </Link>
-                      <p className='text-sm text-gray-600'>
-                        Posted by {profiles?.name}
-                      </p>
-                      <p className='text-md'>
-                        {timeAgo(new Date(post.createdAt))}
-                      </p>
-                      <p className='font-sm h-full w-full text-sm text-neutral-400'>
-                        {truncateText(post.content, 200)}
-                      </p>
-                    </div>
+                    <Link
+                      href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
+                    >
+                      <div className='w-full'>
+                        <h1 className='text-lg font-semibold text-indigo-500'>
+                          {post.title}
+                        </h1>
+
+                        <p className='text-sm text-gray-600'>
+                          Posted by {profiles?.name}
+                        </p>
+                        <p className='text-md'>
+                          {timeAgo(new Date(post.createdAt))}
+                        </p>
+                        <p className='font-sm h-full w-full text-sm text-neutral-400'>
+                          {truncateText(post.content, 200)}
+                        </p>
+                      </div>
+                    </Link>
                   </div>
                   {post.authorId == currentUser?.id ? (
                     <div className='mb-2 space-y-2 pr-4 text-sm'>

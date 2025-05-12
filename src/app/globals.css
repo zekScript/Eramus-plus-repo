@@ -185,10 +185,9 @@ svg {
 }
 
 .contactContainer > textarea {
-    width: 69%;
+  width: 69%;
   border-bottom: 2px solid gray;
   background: transparent;
-
 }
 
 .contactContainer > textarea:focus {

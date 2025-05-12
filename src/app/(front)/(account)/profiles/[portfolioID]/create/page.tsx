@@ -97,7 +97,7 @@ export default function CreatePost() {
         <div className='h-full w-[50%] border-l-2 p-4'>
           <h1 className='text-2xl font-semibold'>Live Preview</h1>
           <h2 className='mt-4 text-center text-3xl font-bold'>{title}</h2>
-          <div className='prose prose-invert max-w-none text-break'>
+          <div className='prose prose-invert text-break max-w-none'>
             <ReactMarkdown components={MDXcomponents}>{content}</ReactMarkdown>
           </div>
         </div>
