@@ -10,6 +10,7 @@ import {
   Check,
   Cog,
   Database,
+  MonitorSmartphone,
 } from 'lucide-react'
 
 import { useState } from 'react'
@@ -141,6 +142,12 @@ const UserNav: React.FC = () => {
             </DropdownMenuPortal>
           </DropdownMenuSub>
           <DropdownMenuSeparator />
+
+          {user?.role === 'ADMIN' ? <DropdownMenuItem
+            onClick={() => router.push(`/admin`)}>
+              <MonitorSmartphone/>
+              <span>Admin Management</span>
+            </DropdownMenuItem> : null}
 
           <DropdownMenuItem onClick={logout}>
             <LogOut />

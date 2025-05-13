@@ -62,11 +62,11 @@ const Footer: React.FC<Props> = ({ className }) => {
           </div>
           <div className='mt-6 flex h-5 items-center space-x-4 md:ms-2 md:mt-0 md:space-x-2'>
             <P className='hover:text-primary/60 underline'>
-              <Link href='/info/politika-zasebnosti'>Privacy</Link>
+              <Link href='/privacy/privacy'>Privacy</Link>
             </P>
             <Separator orientation='vertical' />
             <P className='hover:text-primary/60 underline'>
-              <Link href='/info/piskotki'>Cookies</Link>
+              <Link href='/privacy/cookies'>Cookies</Link>
             </P>
             <Separator orientation='vertical' />
           </div>

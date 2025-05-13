@@ -5,7 +5,7 @@ import { PostItems } from '@/types'
 import { getPosts } from './actions'
 import { useEffect } from 'react'
 import { truncateText } from '@/components/truncateText'
-
+import timeAgo from '@/components/time-ago'
 import {
   Pagination,
   PaginationContent,
@@ -13,6 +13,7 @@ import {
   PaginationLink,
 } from '@/components/ui/pagination'
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
+import Link from 'next/link'
 
 interface SearchParamsProps {
   searchParams: Promise<{ page?: string }>
@@ -35,33 +36,7 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
 
   const [inputValue, setInputValue] = useState('')
 
-  function timeAgo(date: Date): string {
-    const now: Date = new Date()
-    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)
-
-    const intervals: { [key: string]: number } = {
-      year: 31536000,
-      month: 2592000,
-      week: 604800,
-      day: 86400,
-      hour: 3600,
-      minute: 60,
-      second: 1,
-    }
-
-    if (seconds > intervals.year * 5) {
-      return `Posted on ${date.toLocaleDateString()}`
-    }
-
-    for (const [unit, value] of Object.entries(intervals)) {
-      const count = Math.floor(seconds / value)
-      if (count > 0) {
-        return `Posted ${count} ${unit}${count > 1 ? 's' : ''} ago`
-      }
-    }
-
-    return 'Just now'
-  }
+ 
   const POSTS_PER_PAGE = 5
 
   const [currentPage, setCurrentPage] = useState(1)
@@ -101,7 +76,6 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
               className='h-[50px] w-full border-none p-4 outline-none'
             />
             <button
-              // onClick={togglePasswordVisibility}
               className='absolute inset-y-0 bottom-2 right-4 text-gray-400'
             >
               <Search></Search>
@@ -119,12 +93,8 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
         ) : (
           paginatedPosts.map((post) => (
             <div key={post.id}>
-              <div
-                onClick={() =>
-                  router.push(
-                    `/content/media/blog/published/${post.slug}&?p=${post.id}`
-                  )
-                }
+              <Link
+                href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
                 className='flex w-full cursor-pointer justify-between space-y-2'
               >
                 <div className='flex flex-col gap-2'>
@@ -135,19 +105,19 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
                     >
                       {post.title}
                     </h1>
-                    {/* <p className='text-sm text-gray-600'>
+                    <p className='text-sm text-gray-600'>
                       Posted by {post.authorId}
-                    </p> */}
+                    </p>
                     <p className='text-md'>
                       {timeAgo(new Date(post.createdAt))}
                     </p>
-                    <p className='font-sm flex h-full w-full flex-row gap-1 text-sm text-neutral-400'>
+                    <p className='font-sm flex h-full w-full flex-row gap-1 text-sm text-neutral-400 text-break'>
                       {truncateText(post.content, 200)}
                     </p>
                   </div>
                 </div>
                 <div className='mb-2 space-y-2 text-sm'></div>
-              </div>
+              </Link>
             </div>
           ))
         )}

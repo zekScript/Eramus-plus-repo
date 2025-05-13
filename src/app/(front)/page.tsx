@@ -5,8 +5,12 @@ import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 
 import Loader from '@/components/anims/Loader'
+import { getCurrentUser } from '@/server/currentUser'
+
 
 const Page: React.FC = () => {
+  const user = getCurrentUser()
+  console.log(user)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
   return (
