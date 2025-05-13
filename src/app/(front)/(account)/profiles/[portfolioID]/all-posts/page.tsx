@@ -38,8 +38,6 @@ const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
     startIndex + POSTS_PER_PAGE
   )
 
-  
-
   return (
     <div className='m-auto h-full w-[80%] justify-center'>
       <div className='mt-12'>

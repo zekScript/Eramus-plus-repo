@@ -26,8 +26,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     h2: ({ children }) => (
       <h2
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'block',
           fontSize: '1.5em',
@@ -43,8 +42,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     h3: ({ children }) => (
       <h3
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'block',
           fontSize: '1.17em',
@@ -60,8 +58,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     h4: ({ children }) => (
       <h4
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'block',
           marginBlockStart: '1.33em',
@@ -76,8 +73,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     h5: ({ children }) => (
       <h5
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'block',
           fontSize: '.83em',
@@ -93,8 +89,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     h6: ({ children }) => (
       <h6
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'block',
           fontSize: '.67em',
@@ -110,8 +105,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     p: ({ children }) => (
       <p
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'block',
           marginBlockStart: '1em',
@@ -125,8 +119,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     a: ({ children, ...props }) => (
       <a
-              className='text-break'
-
+        className='text-break'
         style={{
           color: 'oklch(62.3% 0.214 259.815)',
           textDecoration: 'underline',
@@ -139,8 +132,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     ul: ({ children }) => (
       <ul
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'block',
           listStyleType: 'disc',
@@ -156,8 +148,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     li: ({ children }) => (
       <li
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'list-item',
           textAlign: 'match-parent',
@@ -168,8 +159,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     blockquote: ({ children }) => (
       <blockquote
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'block',
           marginBlockStart: '1em',
@@ -182,16 +172,17 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </blockquote>
     ),
     details: ({ children }) => (
-      <details         className='text-break'
- style={{ cursor: 'pointer', marginLeft: '32px' }}>
+      <details
+        className='text-break'
+        style={{ cursor: 'pointer', marginLeft: '32px' }}
+      >
         {children}
       </details>
     ),
 
     img: (props) => (
       <img
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'inline-block',
           verticalAlign: 'middle',
@@ -203,8 +194,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     pre: ({ children }) => (
       <pre
-              className='text-break'
-
+        className='text-break'
         style={{
           backgroundColor: '#1e1e1e', // Dark background
           color: '#d4d4d4', // Light text
@@ -218,8 +208,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     code: ({ children }) => (
       <code
-              className='text-break'
-
+        className='text-break'
         style={{
           backgroundColor: '#1e1e1e',
           padding: '0.2em 0.4em',

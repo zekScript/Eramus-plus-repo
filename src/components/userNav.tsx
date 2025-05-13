@@ -143,11 +143,12 @@ const UserNav: React.FC = () => {
           </DropdownMenuSub>
           <DropdownMenuSeparator />
 
-          {user?.role === 'ADMIN' ? <DropdownMenuItem
-            onClick={() => router.push(`/admin`)}>
-              <MonitorSmartphone/>
+          {user?.role === 'ADMIN' ? (
+            <DropdownMenuItem onClick={() => router.push(`/admin`)}>
+              <MonitorSmartphone />
               <span>Admin Management</span>
-            </DropdownMenuItem> : null}
+            </DropdownMenuItem>
+          ) : null}
 
           <DropdownMenuItem onClick={logout}>
             <LogOut />

@@ -19,6 +19,6 @@ export const config = {
     '/profiles/:userid/settings/:path*',
     '/profiles/:userid/create',
     '/content/blogitems/:path*',
-    '/admin'
+    '/admin',
   ],
 }

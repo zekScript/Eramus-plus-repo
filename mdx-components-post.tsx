@@ -4,8 +4,7 @@ export function useMDXComponentsPost(components: MDXComponents): MDXComponents {
   return {
     h1: ({ children }) => (
       <h1
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'block',
           fontSize: '2em',
@@ -21,8 +20,7 @@ export function useMDXComponentsPost(components: MDXComponents): MDXComponents {
     ),
     h2: ({ children }) => (
       <h2
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'block',
           fontSize: '1.5em',
@@ -38,7 +36,7 @@ export function useMDXComponentsPost(components: MDXComponents): MDXComponents {
     ),
     h3: ({ children }) => (
       <h3
-              className='text-break'
+        className='text-break'
         style={{
           display: 'block',
           fontSize: '1.17em',
@@ -54,7 +52,7 @@ export function useMDXComponentsPost(components: MDXComponents): MDXComponents {
     ),
     h4: ({ children }) => (
       <h4
-              className='text-break'
+        className='text-break'
         style={{
           display: 'block',
           marginBlockStart: '1.33em',
@@ -69,8 +67,7 @@ export function useMDXComponentsPost(components: MDXComponents): MDXComponents {
     ),
     h5: ({ children }) => (
       <h5
-              className='text-break'
-
+        className='text-break'
         style={{
           display: 'block',
           fontSize: '.83em',
@@ -86,7 +83,7 @@ export function useMDXComponentsPost(components: MDXComponents): MDXComponents {
     ),
     h6: ({ children }) => (
       <h6
-              className='text-break'
+        className='text-break'
         style={{
           display: 'block',
           fontSize: '.67em',
@@ -169,8 +166,10 @@ export function useMDXComponentsPost(components: MDXComponents): MDXComponents {
       </blockquote>
     ),
     details: ({ children }) => (
-      <details         className='text-break'
- style={{ cursor: 'pointer', marginLeft: '32px' }}>
+      <details
+        className='text-break'
+        style={{ cursor: 'pointer', marginLeft: '32px' }}
+      >
         {children}
       </details>
     ),

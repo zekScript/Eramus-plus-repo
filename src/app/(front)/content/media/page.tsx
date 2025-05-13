@@ -36,7 +36,6 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
 
   const [inputValue, setInputValue] = useState('')
 
- 
   const POSTS_PER_PAGE = 5
 
   const [currentPage, setCurrentPage] = useState(1)
@@ -75,9 +74,7 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
               onChange={(e) => setInputValue(e.target.value)}
               className='h-[50px] w-full border-none p-4 outline-none'
             />
-            <button
-              className='absolute inset-y-0 bottom-2 right-4 text-gray-400'
-            >
+            <button className='absolute inset-y-0 bottom-2 right-4 text-gray-400'>
               <Search></Search>
             </button>
           </div>
@@ -111,7 +108,7 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
                     <p className='text-md'>
                       {timeAgo(new Date(post.createdAt))}
                     </p>
-                    <p className='font-sm flex h-full w-full flex-row gap-1 text-sm text-neutral-400 text-break'>
+                    <p className='font-sm text-break flex h-full w-full flex-row gap-1 text-sm text-neutral-400'>
                       {truncateText(post.content, 200)}
                     </p>
                   </div>

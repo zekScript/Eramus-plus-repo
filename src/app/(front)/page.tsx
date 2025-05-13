@@ -7,7 +7,6 @@ import { useRef } from 'react'
 import Loader from '@/components/anims/Loader'
 import { getCurrentUser } from '@/server/currentUser'
 
-
 const Page: React.FC = () => {
   const user = getCurrentUser()
   console.log(user)
