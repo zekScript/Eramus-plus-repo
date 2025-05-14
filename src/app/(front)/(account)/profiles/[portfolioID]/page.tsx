@@ -90,7 +90,7 @@ export default async function Profiles({ params }: ProfileProps) {
           <div className='border-theme mb-6 flex w-[100%] space-y-2 border-b-2 text-2xl font-bold'>
             <h1 className='mb-2'>Posts made by {profiles?.name}</h1>
           </div>
-          <div className='grid h-full w-full overflow-hidden'>
+          <div className='h-full w-full'>
             {posts.length === 0 ? (
               <p>No posts available</p>
             ) : (
@@ -98,7 +98,7 @@ export default async function Profiles({ params }: ProfileProps) {
                 <div key={post.id}>
                   {post.authorId === profiles?.id && (
                     <div className='mb-6 flex w-[100%] justify-between space-x-3 space-y-6 pb-4'>
-                      <div className='flex flex-col gap-2'>
+                      <div className='flex w-[80%] flex-col gap-2'>
                         <Link
                           href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
                         >
@@ -112,7 +112,7 @@ export default async function Profiles({ params }: ProfileProps) {
                             <p className='text-md'>
                               {timeAgo(new Date(post.createdAt))}
                             </p>
-                            <p className='font-sm h-full w-full text-sm text-neutral-400'>
+                            <p className='font-sm text-break h-full w-full text-sm text-neutral-400'>
                               {truncateText(post.content, 200)}
                             </p>
                           </div>
@@ -126,9 +126,8 @@ export default async function Profiles({ params }: ProfileProps) {
                         <p>Dislikes: 999</p> */}
                         </div>
                       </div>
-
-                      {post.authorId === currentUser?.id && (
-                        <div className='mb-2 flex justify-end space-y-2 text-sm'>
+                      {post.authorId == currentUser?.id ? (
+                        <div className='mb-2 h-full space-y-2 pr-4 text-sm'>
                           <Link
                             href={`/content/blogitems/edit?p=${post.id}`}
                             className='flex text-sm'
@@ -136,6 +135,8 @@ export default async function Profiles({ params }: ProfileProps) {
                             Post Properties
                           </Link>
                         </div>
+                      ) : (
+                        <span></span>
                       )}
                     </div>
                   )}

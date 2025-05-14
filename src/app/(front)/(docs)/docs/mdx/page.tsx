@@ -74,7 +74,7 @@ function hello() {
   }
 
   return (
-    <div className='h-full w-full'>
+    <div className='h-full w-full text-white'>
       {/* Docs window */}
       <div className='m-auto h-full w-[75%] bg-gray-900'>
         <div className='flex w-full flex-col justify-between p-6 md:flex md:flex-row'>
