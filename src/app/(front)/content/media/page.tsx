@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/pagination'
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
 import Link from 'next/link'
+import { findUserById } from '@/server/user'
 
 interface SearchParamsProps {
   searchParams: Promise<{ page?: string }>
@@ -34,11 +35,29 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
     fetchPosts()
   }, [])
 
+
+  const [userNames, setUserNames] = useState<{ [id: number]: string }>({})
+
+useEffect(() => {
+  const fetchUserNames = async () => {
+    const names: { [id: number]: string } = {}
+    for (const post of posts) {
+      if (!names[post.authorId]) {
+        const user = await findUserById(post.authorId)
+        names[post.authorId] = user?.name || 'Unknown'
+      }
+    }
+    setUserNames(names)
+  }
+  if (posts.length > 0) fetchUserNames()
+}, [posts])
+
   const [inputValue, setInputValue] = useState('')
 
   const POSTS_PER_PAGE = 5
 
   const [currentPage, setCurrentPage] = useState(1)
+
 
   useEffect(() => {
     const fetchPage = async () => {
@@ -103,7 +122,7 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
                       {post.title}
                     </h1>
                     <p className='text-sm text-gray-600'>
-                      Posted by {post.authorId}
+                        Posted by {userNames[post.authorId] || 'Loading...'}
                     </p>
                     <p className='text-md'>
                       {timeAgo(new Date(post.createdAt))}

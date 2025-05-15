@@ -53,6 +53,7 @@ const BlogPage: React.FC<PageProps> = async ({ params, searchParams }) => {
           ) : (
             paginatedPosts.map((post) => (
               <div key={post.id}>
+                
                 <div className='mb-6 flex w-full justify-between space-x-3 space-y-6 border-b pb-4'>
                   <div className='flex flex-col gap-2'>
                     <Link

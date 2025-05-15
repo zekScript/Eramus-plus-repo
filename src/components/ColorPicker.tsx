@@ -22,13 +22,35 @@ const ColorPicker = () => {
     }
   }
 
+  function isColorBright(hex: string): boolean {
+  hex = hex.replace('#', '')
+  const r = parseInt(hex.substring(0, 2), 16)
+  const g = parseInt(hex.substring(2, 4), 16)
+  const b = parseInt(hex.substring(4, 6), 16)
+  // Standard luminance formula
+  const luminance = 0.299 * r + 0.587 * g + 0.114 * b
+  
+  return luminance > 186
+  
+}
+
+    
+
   const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
     const color = event.target.value
     setSelectedColor(color)
     localStorage.setItem('themeColor', color) // Save the color to localStorage
     document.documentElement.style.setProperty('--theme-color', color) // Update the CSS variable
+   const brightnessLevel = selectedColor && isColorBright(selectedColor) ? 'black' : 'white'
+    localStorage.setItem('brightnessLevel', brightnessLevel) // Save the brightness level to localStorage
+    document.documentElement.style.setProperty('--brightness-level', brightnessLevel) // Update the CSS variable
   }
+
+
+
+
+
   return (
     <>
       <div className='flex flex-col space-y-4'>

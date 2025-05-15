@@ -11,3 +11,13 @@ export async function findAllUsersFromDB() {
     return null
   }
 }
+
+export async function findAllPostsFromDB() {
+  try {
+    const posts = await prisma.post.findMany()
+    return posts
+  } catch (err) {
+    console.log('Error fetching posts from DB', err)
+    return null
+  }
+}

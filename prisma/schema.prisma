@@ -45,7 +45,7 @@ model Post {
   dislikes        Int      @default(0)
   views           Int      @default(0)
   updatedAt       DateTime @updatedAt
-  author          User     @relation(fields: [authorId], references: [id])
+  author          User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId        Int
 
   @@index([slug])

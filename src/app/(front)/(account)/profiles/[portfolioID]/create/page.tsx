@@ -64,7 +64,7 @@ export default function CreatePost() {
               onChange={(e) => setTitle(e.target.value)}
               className={cn(
                 'border-theme w-full rounded border-b-2 bg-background p-3 text-xl shadow-sm transition focus:outline-none',
-                'focus:border-theme border-gray-300 focus:ring-2 focus:ring-transparent',
+                'focus:border-theme border-gray-300  focus:ring-2 focus:ring-transparent',
                 'bg-transparent'
               )}
               placeholder='Title'
@@ -84,7 +84,7 @@ export default function CreatePost() {
             <div className='flex justify-between'>
               <button
                 type='submit'
-                className='bg-theme rounded bg-indigo-500 px-2 py-2 text-white'
+                className='bg-theme rounded bg-indigo-500 px-2 py-2 brightness-level-text'
               >
                 Post your blog
               </button>

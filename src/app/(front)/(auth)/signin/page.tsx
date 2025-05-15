@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Eye, EyeOff, Check, X } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
+import { redirect } from 'next/navigation'
 
 export default function AuthPage() {
   const { toast } = useToast()
@@ -46,6 +47,7 @@ export default function AuthPage() {
         title: feedback.success ? 'Success' : 'Err...',
         description: feedback.message,
       })
+      redirect('/login')
     }
   }, [feedback, toast])
 

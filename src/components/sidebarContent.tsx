@@ -6,6 +6,7 @@ import { Textarea } from './ui/textarea'
 import * as React from 'react'
 import ColorPicker from './ColorPicker'
 import { useState, useEffect } from 'react'
+import Cookies from 'js-cookie'
 import { ChevronUp, ChevronDown } from 'lucide-react'
 import {
   deleteUser,
@@ -15,6 +16,8 @@ import {
 } from '@/server/user'
 import { useTheme } from 'next-themes'
 import { usePathname } from 'next/navigation'
+import { Separator } from './ui/separator'
+import { X, TriangleAlert } from 'lucide-react'
 
 import {
   Select,
@@ -25,6 +28,9 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { UserItems } from '@/types'
+import { getCurrentUser } from '@/server/currentUser'
+import { useRouter } from 'next/navigation'
+import { useToast } from './ui/use-toast'
 interface SideBarContentProps {
   params: {
     settingsID: string
@@ -36,6 +42,13 @@ interface SideBarContentProps {
 // }
 const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
   const [charCounter, setCharCounter] = useState(0)
+  const user = getCurrentUser()
+  const router = useRouter()
+  const [feedback, setFeedback] = useState({ success: false, message: '' })
+  const { toast } = useToast()
+
+  const [confirmed, setConfirmed] = useState(false) // <-- checkbox state
+  const [isWantToDeletAcc, setisWantToDeletAcc] = useState(false)
   const { setTheme } = useTheme()
   const pathname = usePathname()
   const segments = pathname.split('/')
@@ -50,6 +63,15 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
         console.error('Error fetching user:', error)
       })
   }, [userId])
+
+  useEffect(() => {
+    if (feedback.message) {
+      toast({
+        title: feedback.success ? 'Success' : 'Err...',
+        description: feedback.message,
+      })
+    }
+  }, [feedback, toast])
 
   const [isOpen, setIsOpen] = useState(false) // State to manage dropdown visibility
 
@@ -82,7 +104,10 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
 
   const handleSubmit = async (formData: FormData, id: number) => {
     const result = await updateUser(formData, id)
-    console.log(result.message)
+    if (result.success && result.token) {
+      Cookies.remove('authToken')
+      Cookies.set('authToken', result.token, { expires: 62, path: '/' })
+    }
   }
 
   const handleSelectChange = (value: string) => {
@@ -93,8 +118,24 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
     await updateProfilePrivacy(profileSettingsCurrentUser?.id as number, value)
   }
 
-  const deletAcc = async () => {
-    await deleteUser(profileSettingsCurrentUser?.id as number)
+ 
+
+  const handleSubmiForDeletionAcc = async () => {
+    if (confirmed) {
+      const result = await deleteUser(profileSettingsCurrentUser?.id as number)
+      setFeedback(result)
+      if (result.success) {
+        router.push(`/signin`)
+        Cookies.remove('authToken')
+      }
+    } else {
+      return null
+    }
+  }
+
+  const cancelDelete = () => {
+    setisWantToDeletAcc(false)
+    return null
   }
 
   return (
@@ -154,7 +195,63 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                   {/* <p>Animations: </p>
                   <p>Images: </p> */}
                   <p>Coming Soon!</p>
-                  <Button onClick={deletAcc}>Delete account</Button>
+                  <Button
+                    onClick={() => {
+                      setisWantToDeletAcc(true)
+                    }}
+                  >
+                    Delete account
+                  </Button>
+                  {isWantToDeletAcc && (
+                    <div className='fixed bottom-0 left-0 right-0 top-0 z-50 flex h-full w-full flex-col bg-black bg-opacity-50'>
+                      <div className='flex h-full w-full flex-col items-center justify-center'>
+                        <div className='flex flex-col items-center justify-center rounded-lg border-2 bg-[#111] p-6 text-white shadow-2xl'>
+                          <div
+                            onClick={cancelDelete}
+                            className='flex w-full cursor-pointer justify-end'
+                          >
+                            <X size={24} />
+                          </div>
+                          <h1 className='mb-4 text-2xl'>Are you sure?</h1>
+
+                          <Separator></Separator>
+
+                          <div className='m-7 flex h-[75px] border-2 border-red-700 bg-red-700 bg-opacity-35 p-4'>
+                            <div className='flex items-center space-x-2'>
+                              <TriangleAlert size={24}></TriangleAlert>{' '}
+                              <h1>
+                                Warning: You are about to{' '}
+                                <strong>delete</strong> this account and connections with posts
+                              </h1>
+                            </div>
+                          </div>
+                          <div className='w-[70%]'>
+                            <p>
+                              Deleting this account there will be no going back nor
+                              recovering this account nor the posts you made. this is the last warning
+                            </p>
+                          </div>
+
+                          <div className='mb-3 mt-5 flex space-x-2'>
+                            <input
+                              type='checkbox'
+                              onChange={(e) => setConfirmed(e.target.checked)}
+                            ></input>
+                            <p>Yes, I am sure. I want to delete this account</p>
+                          </div>
+
+                          <div className='ml-2 mr-2 mt-4 flex w-full justify-center'>
+                            <button
+                              onClick={handleSubmiForDeletionAcc}
+                              className='w-full bg-[#1e1e1e] text-base'
+                            >
+                              Delete this post
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </section>
@@ -388,7 +485,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                     <h1 className='mb-3'>My profile:</h1>
                     <Select onValueChange={handleSelectChangePrivacy}>
                       <SelectTrigger className='w-[100px] border-none'>
-                        <span className='text-theme'>
+                        <span className='text-theme '>
                           {profileSettingsCurrentUser?.privacyVisabillity}
                         </span>
                       </SelectTrigger>
