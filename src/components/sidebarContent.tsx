@@ -80,6 +80,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
     useState<UserItems | null>(null)
 
   const [name, setName] = useState(profileSettingsCurrentUser?.name)
+  console.log(name)
 
   let contentToDisplay = ''
   if (params.settingsID === 'general') {
@@ -153,7 +154,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
           >
             <section id='general'>
               <div className='w-[100%] space-y-4'>
-                <Label htmlFor='newName'>{name}</Label>
+                <Label htmlFor='newName'>Name</Label>
                 <Input
                   type='text'
                   name='newName'
