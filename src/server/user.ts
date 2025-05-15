@@ -108,9 +108,7 @@ export async function updateProfilePrivacy(
 
 export async function deleteUser(id: number) {
   try {
-    await prisma.user.delete({ where: { id 
-      
-    }})
+    await prisma.user.delete({ where: { id } })
     return { success: true, message: 'User deleted successfully.' }
   } catch (error) {
     return { success: false, message: 'Error deleting user.' }

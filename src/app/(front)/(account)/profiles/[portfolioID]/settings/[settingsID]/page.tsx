@@ -48,7 +48,6 @@ export default function SettingsPage() {
     profileSettingsCurrentUser.id !== currentUser.id
   ) {
     router.push(`/profiles/${currentUser.id}/settings/general`)
-    console.log('Redirecting unauthorized user...')
   }
 
   return (

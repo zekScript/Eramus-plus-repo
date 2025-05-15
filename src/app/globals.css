@@ -8,8 +8,9 @@
     --foreground: hsl(0 0% 3.9%);
 
     --theme-color: oklch(58.5% 0.233 277.117); /* Default theme color */
-    --brightness-level: oklch(58.5% 0.233 277.117); /* Default brightness level */
-    
+    --brightness-level: oklch(
+      58.5% 0.233 277.117
+    ); /* Default brightness level */
 
     --card: hsl(0 0% 100%);
     --card-foreground: hsl(0 0% 3.9%);
@@ -74,17 +75,15 @@
   color: var(--theme-color);
 }
 
-.brightness-level-text{
+.brightness-level-text {
   color: var(--brightness-level);
 }
 
-.brightness-level-border{
-  
+.brightness-level-border {
   border-color: var(--brightness-level);
 }
 
-.brightness-level-bg{
-  
+.brightness-level-bg {
   background-color: var(--brightness-level);
 }
 

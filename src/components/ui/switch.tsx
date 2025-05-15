@@ -46,7 +46,6 @@ const GlassEffectSwitch = React.forwardRef<
 
   const handleToggle = () => {
     setIsChecked(!isChecked)
-    console.log('Glass effect:', !isChecked) // Logs true/false based on user choice
   }
 
   return (

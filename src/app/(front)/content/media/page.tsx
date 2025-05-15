@@ -35,29 +35,27 @@ const Media: React.FC<SearchParamsProps> = ({ searchParams }) => {
     fetchPosts()
   }, [])
 
-
   const [userNames, setUserNames] = useState<{ [id: number]: string }>({})
 
-useEffect(() => {
-  const fetchUserNames = async () => {
-    const names: { [id: number]: string } = {}
-    for (const post of posts) {
-      if (!names[post.authorId]) {
-        const user = await findUserById(post.authorId)
-        names[post.authorId] = user?.name || 'Unknown'
+  useEffect(() => {
+    const fetchUserNames = async () => {
+      const names: { [id: number]: string } = {}
+      for (const post of posts) {
+        if (!names[post.authorId]) {
+          const user = await findUserById(post.authorId)
+          names[post.authorId] = user?.name || 'Unknown'
+        }
       }
+      setUserNames(names)
     }
-    setUserNames(names)
-  }
-  if (posts.length > 0) fetchUserNames()
-}, [posts])
+    if (posts.length > 0) fetchUserNames()
+  }, [posts])
 
   const [inputValue, setInputValue] = useState('')
 
   const POSTS_PER_PAGE = 5
 
   const [currentPage, setCurrentPage] = useState(1)
-
 
   useEffect(() => {
     const fetchPage = async () => {
@@ -122,7 +120,7 @@ useEffect(() => {
                       {post.title}
                     </h1>
                     <p className='text-sm text-gray-600'>
-                        Posted by {userNames[post.authorId] || 'Loading...'}
+                      Posted by {userNames[post.authorId] || 'Loading...'}
                     </p>
                     <p className='text-md'>
                       {timeAgo(new Date(post.createdAt))}

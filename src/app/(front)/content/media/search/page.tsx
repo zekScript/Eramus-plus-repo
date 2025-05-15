@@ -5,7 +5,7 @@ import { search } from '@/server/search' // Import the server action
 import { useRouter, usePathname } from 'next/navigation'
 import { PostItems } from '@/types'
 import { truncateText } from '@/components/truncateText'
-
+import { findUserById } from '@/server/user'
 import {
   Pagination,
   PaginationContent,
@@ -13,6 +13,8 @@ import {
   PaginationLink,
 } from '@/components/ui/pagination'
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
+import timeAgo from '@/components/time-ago'
+import Link from 'next/link'
 type ResultProps = {
   success: boolean
   message: string
@@ -35,6 +37,7 @@ const SearchQueryPage: React.FC<SearchParamsProps> = () => {
   const searchParams = useSearchParams() // This remains unchanged
   const [result, setResult] = useState<ResultProps | null>(null)
   const q = searchParams.get('q') || ''
+  const [userNames, setUserNames] = useState<{ [id: number]: string }>({})
 
   useEffect(() => {
     const getResults = async () => {
@@ -48,33 +51,24 @@ const SearchQueryPage: React.FC<SearchParamsProps> = () => {
     if (q) getResults()
   }, [q])
 
-  function timeAgo(date: Date): string {
-    const now: Date = new Date()
-    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)
+  // ...existing useEffect for fetching posts...
 
-    const intervals: { [key: string]: number } = {
-      year: 31536000,
-      month: 2592000,
-      week: 604800,
-      day: 86400,
-      hour: 3600,
-      minute: 60,
-      second: 1,
-    }
-
-    if (seconds > intervals.year * 5) {
-      return `Posted on ${date.toLocaleDateString()}`
-    }
-
-    for (const [unit, value] of Object.entries(intervals)) {
-      const count = Math.floor(seconds / value)
-      if (count > 0) {
-        return `Posted ${count} ${unit}${count > 1 ? 's' : ''} ago`
+  // Fetch user names after posts are loaded
+  useEffect(() => {
+    const fetchUserNames = async () => {
+      if (!result?.posts) return
+      const names: { [id: number]: string } = {}
+      for (const post of result.posts) {
+        if (!names[post.authorId]) {
+          const user = await findUserById(post.authorId)
+          names[post.authorId] = user?.name || 'Unknown'
+        }
       }
+      setUserNames(names)
     }
+    if (result?.posts?.length) fetchUserNames()
+  }, [result?.posts])
 
-    return 'Just now'
-  }
   // const [isOpen, setIsOpen] = useState(false) // State to manage dropdown visibility
 
   // const handleChevronClick = () => {
@@ -189,25 +183,18 @@ const SearchQueryPage: React.FC<SearchParamsProps> = () => {
       ) : (
         paginatedPosts.map((post) => (
           <div key={post.id}>
-            <div
-              onClick={() =>
-                router.push(
-                  `/content/media/blog/published/${post.slug}&?p=${post.id}`
-                )
-              }
+            <Link
+              href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
               className='flex w-full cursor-pointer justify-between space-y-2'
             >
               <div className='flex flex-col gap-2'>
                 <div className='w-full'>
-                  <h1
-                    // href={``}
-                    className='text-lg font-semibold text-indigo-500'
-                  >
+                  <h1 className='text-lg font-semibold text-indigo-500'>
                     {post.title}
                   </h1>
-                  {/* <p className='text-sm text-gray-600'>
-                      Posted by {post.authorId}
-                    </p> */}
+                  <p className='text-sm text-gray-600'>
+                    Posted by {userNames[post.authorId] || 'Loading...'}
+                  </p>
                   <p className='text-sm text-gray-600'>
                     {/* Posted by {profiles?.name} */}
                   </p>
@@ -218,7 +205,7 @@ const SearchQueryPage: React.FC<SearchParamsProps> = () => {
                 </div>
               </div>
               <div className='mb-2 space-y-2 text-sm'></div>
-            </div>
+            </Link>
           </div>
         ))
       )}

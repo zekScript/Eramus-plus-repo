@@ -28,7 +28,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { UserItems } from '@/types'
-import { getCurrentUser } from '@/server/currentUser'
 import { useRouter } from 'next/navigation'
 import { useToast } from './ui/use-toast'
 interface SideBarContentProps {
@@ -42,7 +41,6 @@ interface SideBarContentProps {
 // }
 const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
   const [charCounter, setCharCounter] = useState(0)
-  const user = getCurrentUser()
   const router = useRouter()
   const [feedback, setFeedback] = useState({ success: false, message: '' })
   const { toast } = useToast()
@@ -82,7 +80,6 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
     useState<UserItems | null>(null)
 
   const [name, setName] = useState(profileSettingsCurrentUser?.name)
-  console.log(name)
 
   let contentToDisplay = ''
   if (params.settingsID === 'general') {
@@ -117,8 +114,6 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
   const handleSelectChangePrivacy = async (value: string) => {
     await updateProfilePrivacy(profileSettingsCurrentUser?.id as number, value)
   }
-
- 
 
   const handleSubmiForDeletionAcc = async () => {
     if (confirmed) {
@@ -158,7 +153,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
           >
             <section id='general'>
               <div className='w-[100%] space-y-4'>
-                <Label htmlFor='newName'>Name</Label>
+                <Label htmlFor='newName'>{name}</Label>
                 <Input
                   type='text'
                   name='newName'
@@ -221,14 +216,16 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                               <TriangleAlert size={24}></TriangleAlert>{' '}
                               <h1>
                                 Warning: You are about to{' '}
-                                <strong>delete</strong> this account and connections with posts
+                                <strong>delete</strong> this account and
+                                connections with posts
                               </h1>
                             </div>
                           </div>
                           <div className='w-[70%]'>
                             <p>
-                              Deleting this account there will be no going back nor
-                              recovering this account nor the posts you made. this is the last warning
+                              Deleting this account there will be no going back
+                              nor recovering this account nor the posts you
+                              made. this is the last warning
                             </p>
                           </div>
 
@@ -485,7 +482,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                     <h1 className='mb-3'>My profile:</h1>
                     <Select onValueChange={handleSelectChangePrivacy}>
                       <SelectTrigger className='w-[100px] border-none'>
-                        <span className='text-theme '>
+                        <span className='text-theme'>
                           {profileSettingsCurrentUser?.privacyVisabillity}
                         </span>
                       </SelectTrigger>
