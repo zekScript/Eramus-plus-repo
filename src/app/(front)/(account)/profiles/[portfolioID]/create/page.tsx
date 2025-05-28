@@ -84,7 +84,7 @@ export default function CreatePost() {
             <div className='flex justify-between'>
               <button
                 type='submit'
-                className='bg-theme brightness-level-text rounded bg-indigo-500 px-2 py-2'
+                className='bg-theme rounded bg-indigo-500 px-2 py-2'
               >
                 Post your blog
               </button>

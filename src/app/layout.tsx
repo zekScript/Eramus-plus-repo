@@ -28,7 +28,7 @@ export default function RootLayout({
       <body
         // Adjust the body layout to your liking
         className={cn(
-          'relative ml-7 mr-7 mt-44 min-h-screen bg-background font-sans antialiased',
+          'relative ml-7 mr-7 mt-52 min-h-screen bg-background font-sans antialiased',
           inter.variable,
           cal.variable
         )}
