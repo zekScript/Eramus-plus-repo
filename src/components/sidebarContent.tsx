@@ -3,15 +3,21 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from './ui/button'
 import { Textarea } from './ui/textarea'
-import { getCurrentUser } from '@/server/currentUser'
 import * as React from 'react'
-import { GlassEffectSwitch } from './ui/switch'
 import ColorPicker from './ColorPicker'
 import { useState, useEffect } from 'react'
+import Cookies from 'js-cookie'
 import { ChevronUp, ChevronDown } from 'lucide-react'
-import { findUserById, updateUser } from '@/server/user'
+import {
+  deleteUser,
+  findUserById,
+  updateProfilePrivacy,
+  updateUser,
+} from '@/server/user'
 import { useTheme } from 'next-themes'
 import { usePathname } from 'next/navigation'
+import { Separator } from './ui/separator'
+import { X, TriangleAlert } from 'lucide-react'
 
 import {
   Select,
@@ -21,30 +27,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { UserItems } from '@/types'
+import { useRouter } from 'next/navigation'
+import { useToast } from './ui/use-toast'
 interface SideBarContentProps {
   params: {
     settingsID: string
   }
 }
 
-interface UserProfile {
-  name: string
-  id: number
-  password: string
-  email: string
-  accessAdmin: boolean | null
-  createdAt: Date
-  updatedAt: Date
-  role: string
-  followersCount: number
-  followingCount: number
-  postsCount: number
-  profilePic: string | null
-  bio: string | null
-}
+// const pickColorAction = (e) => {
+// e.preventDefault()
+// }
 const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
-  const [feedback, setFeedback] = useState({ success: false, message: '' })
   const [charCounter, setCharCounter] = useState(0)
+  const router = useRouter()
+  const [feedback, setFeedback] = useState({ success: false, message: '' })
+  const { toast } = useToast()
+
+  const [confirmed, setConfirmed] = useState(false) // <-- checkbox state
+  const [isWantToDeletAcc, setisWantToDeletAcc] = useState(false)
   const { setTheme } = useTheme()
   const pathname = usePathname()
   const segments = pathname.split('/')
@@ -60,16 +62,25 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
       })
   }, [userId])
 
+  useEffect(() => {
+    if (feedback.message) {
+      toast({
+        title: feedback.success ? 'Success' : 'Err...',
+        description: feedback.message,
+      })
+    }
+  }, [feedback, toast])
+
   const [isOpen, setIsOpen] = useState(false) // State to manage dropdown visibility
 
   const handleChevronClick = () => {
     setIsOpen((prev) => !prev) // Toggle the dropdown open/close
   }
   const [profileSettingsCurrentUser, setProfileSettingsCurrentUser] =
-    useState<UserProfile | null>(null)
+    useState<UserItems | null>(null)
 
   const [name, setName] = useState(profileSettingsCurrentUser?.name)
-  const [privacy, setPrivacy] = useState('public')
+  console.log(name)
 
   let contentToDisplay = ''
   if (params.settingsID === 'general') {
@@ -91,33 +102,58 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
 
   const handleSubmit = async (formData: FormData, id: number) => {
     const result = await updateUser(formData, id)
-    console.log(result.message)
+    if (result.success && result.token) {
+      Cookies.remove('authToken')
+      Cookies.set('authToken', result.token, { expires: 62, path: '/' })
+    }
   }
 
   const handleSelectChange = (value: string) => {
     setTheme('' + value)
   }
 
-  const handleSelectChangePrivacy = (value: string) => {
-    setPrivacy('' + value)
+  const handleSelectChangePrivacy = async (value: string) => {
+    await updateProfilePrivacy(profileSettingsCurrentUser?.id as number, value)
+  }
+
+  const handleSubmiForDeletionAcc = async () => {
+    if (confirmed) {
+      const result = await deleteUser(profileSettingsCurrentUser?.id as number)
+      setFeedback(result)
+      if (result.success) {
+        router.push(`/signin`)
+        Cookies.remove('authToken')
+      }
+    } else {
+      return null
+    }
+  }
+
+  const cancelDelete = () => {
+    setisWantToDeletAcc(false)
+    return null
   }
 
   return (
     <>
       {/* General Settings */}
       {contentToDisplay === 'general' && (
-        <div className='ml-6 flex h-full w-full flex-col space-y-4 text-[1.4rem] font-bold'>
+        <div className='flex h-full w-full flex-col space-y-4 text-[1.4rem] font-bold'>
           <h1>General Settings</h1>
           <p className='text-sm font-medium text-gray-600'>
             This is where you can change your custom name, Bio, and more.
           </p>
           <form
-            action={(formData) =>
-              handleSubmit(formData, profileSettingsCurrentUser?.id as number)
-            }
+            onSubmit={(e) => {
+              e.preventDefault() // Prevent default form submission
+              handleSubmit(
+                new FormData(e.target as HTMLFormElement),
+                profileSettingsCurrentUser?.id as number
+              )
+            }}
           >
             <section id='general'>
-              <div className='ml-3 w-[100%] space-y-4'>
+              <div className='w-[100%] space-y-4'>
                 <Label htmlFor='newName'>Name</Label>
                 <Input
                   type='text'
@@ -155,6 +191,65 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                   {/* <p>Animations: </p>
                   <p>Images: </p> */}
                   <p>Coming Soon!</p>
+                  <Button
+                    onClick={() => {
+                      setisWantToDeletAcc(true)
+                    }}
+                  >
+                    Delete account
+                  </Button>
+                  {isWantToDeletAcc && (
+                    <div className='fixed bottom-0 left-0 right-0 top-0 z-50 flex h-full w-full flex-col bg-black bg-opacity-50'>
+                      <div className='flex h-full w-full flex-col items-center justify-center'>
+                        <div className='flex flex-col items-center justify-center rounded-lg border-2 bg-[#111] p-6 text-white shadow-2xl'>
+                          <div
+                            onClick={cancelDelete}
+                            className='flex w-full cursor-pointer justify-end'
+                          >
+                            <X size={24} />
+                          </div>
+                          <h1 className='mb-4 text-2xl'>Are you sure?</h1>
+
+                          <Separator></Separator>
+
+                          <div className='m-7 flex h-[75px] border-2 border-red-700 bg-red-700 bg-opacity-35 p-4'>
+                            <div className='flex items-center space-x-2'>
+                              <TriangleAlert size={24}></TriangleAlert>{' '}
+                              <h1>
+                                Warning: You are about to{' '}
+                                <strong>delete</strong> this account and
+                                connections with posts
+                              </h1>
+                            </div>
+                          </div>
+                          <div className='w-[70%]'>
+                            <p>
+                              Deleting this account there will be no going back
+                              nor recovering this account nor the posts you
+                              made. this is the last warning
+                            </p>
+                          </div>
+
+                          <div className='mb-3 mt-5 flex space-x-2'>
+                            <input
+                              type='checkbox'
+                              onChange={(e) => setConfirmed(e.target.checked)}
+                            ></input>
+                            <p>Yes, I am sure. I want to delete this account</p>
+                          </div>
+
+                          <div className='ml-2 mr-2 mt-4 flex w-full justify-center'>
+                            <button
+                              onClick={handleSubmiForDeletionAcc}
+                              className='w-full bg-[#1e1e1e] text-base'
+                            >
+                              Delete this post
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </section>
@@ -276,96 +371,82 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
 
       {/* Theme Settings */}
       {contentToDisplay === 'theme' && (
-        <div className='ml-6 flex h-full w-full flex-col text-[1.4rem] font-bold'>
+        <div className='flex h-full w-full flex-col text-[1.4rem] font-bold'>
           <h1>Custom Themes</h1>
           <p className='mt-3 text-sm font-medium text-gray-600'>
             You can change custom theme colors. also you can change what theme
             mode you prefer
           </p>
-          <form className='mt-3'>
-            {/* Whole container */}
-            <div className='mt-3 h-full w-full'>
-              {/* Container */}
+          {/* <form className='mt-3' action={(e) => pickColorAction(e)}> */}
+          {/* Whole container */}
+          <div className='mt-3 h-full w-full'>
+            {/* Container */}
 
-              <div className='border-settings mt-3 flex h-full w-full p-6'>
-                <div className='h-full w-full'>
-                  <h1 className='text-xl font-medium'>Choose your mode</h1>
-                  <p className='text-sm font-thin'>
-                    Change the colors that appear on your site
-                  </p>
-                </div>
-                {/* Selection */}
-                <div className='mr-3 flex items-center'>
-                  <Select onValueChange={handleSelectChange}>
-                    <SelectTrigger className='w-[140px]'>
-                      <SelectValue placeholder='Dark' />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value='dark'>Dark</SelectItem>
-                        <SelectItem value='light'>Light</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
+            <div className='border-settings mt-3 flex h-full w-full p-6'>
+              <div className='h-full w-full'>
+                <h1 className='text-xl font-medium'>Choose your mode</h1>
+                <p className='text-sm font-thin'>
+                  Change the colors that appear on your site
+                </p>
               </div>
+              {/* Selection */}
+              <div className='mr-3 flex items-center'>
+                <Select onValueChange={handleSelectChange}>
+                  <SelectTrigger className='w-[140px]'>
+                    <SelectValue placeholder='Dark' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value='dark'>Dark</SelectItem>
+                      <SelectItem value='light'>Light</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
 
-              <div className='border-settings mt-3 flex h-full w-full p-6'>
-                <div className='flex h-full w-full flex-col'>
-                  <div className='flex h-full w-full'>
-                    <div className='flex h-full w-full flex-col'>
-                      <h1 className='text-xl font-medium'>Color</h1>
-                    </div>
-
-                    {/* Selection */}
-                    <div className='mr-3 flex items-center gap-4'>
-                      <Select onOpenChange={setIsOpen}>
-                        <SelectTrigger className='w-[140px]'>
-                          <SelectValue placeholder='Manual' />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value='apple' disabled>
-                              Manual
-                            </SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                      {/* Chevron button */}
-                      <div
-                        onClick={handleChevronClick}
-                        className='cursor-pointer'
-                      >
-                        {isOpen ? <ChevronUp /> : <ChevronDown />}{' '}
-                        {/* Toggle Chevron based on isOpen */}
-                      </div>
-                    </div>
+            <div className='border-settings mt-3 flex h-full w-full p-6'>
+              <div className='flex h-full w-full flex-col'>
+                <div className='flex h-full w-full'>
+                  <div className='flex h-full w-full flex-col'>
+                    <h1 className='text-xl font-medium'>Color</h1>
                   </div>
 
-                  {/* Expanded content */}
-
-                  <div>
-                    {/* Color picker templates  */}
-                    {isOpen && (
-                      <div className='flex h-full w-full items-start'>
-                        <ColorPicker />
-                      </div>
-                    )}
+                  {/* Selection */}
+                  <div className='mr-3 flex items-center gap-4'>
+                    <Select onOpenChange={setIsOpen}></Select>
+                    {/* Chevron button */}
+                    <div
+                      onClick={handleChevronClick}
+                      className='cursor-pointer'
+                    >
+                      {isOpen ? <ChevronUp /> : <ChevronDown />}{' '}
+                      {/* Toggle Chevron based on isOpen */}
+                    </div>
                   </div>
+                </div>
+
+                {/* Expanded content */}
+
+                <div>
+                  {/* Color picker templates  */}
+                  {isOpen && (
+                    <div className='flex h-full w-full items-start'>
+                      <ColorPicker />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-            <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
-              <Button variant='secondary'>Save</Button>
-              <Button variant='outline'>Cancel</Button>
-            </div>
-          </form>
+          </div>
+
+          {/* </form> */}
         </div>
       )}
 
       {/* Privacy Settings */}
       {contentToDisplay === 'privacy' && (
-        <div className='ml-6 flex h-full w-full flex-col text-[1.4rem] font-bold'>
+        <div className='flex h-full w-full flex-col text-[1.4rem] font-bold'>
           <h1>Privacy Settings</h1>
           <p className='mt-3 text-sm font-medium text-gray-600'>
             Manage your privacy settings here.
@@ -383,8 +464,7 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                   }}
                 >
                   <h1 className='mb-3'>
-                    Basic details:{' '}
-                    <span className='text-indigo-500'>Public</span>
+                    Basic details: <span className='text-theme'>Public</span>
                     <span className='ml-3 text-sm text-gray-700'>
                       (default)
                     </span>
@@ -403,7 +483,9 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                     <h1 className='mb-3'>My profile:</h1>
                     <Select onValueChange={handleSelectChangePrivacy}>
                       <SelectTrigger className='w-[100px] border-none'>
-                        <span className='text-indigo-500'>Public</span>
+                        <span className='text-theme'>
+                          {profileSettingsCurrentUser?.privacyVisabillity}
+                        </span>
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
@@ -420,10 +502,6 @@ const SideBarContent: React.FC<SideBarContentProps> = ({ params }) => {
                 </div>
               </div>
             </section>
-            <div className='mr-4 mt-4 flex w-full justify-end gap-2'>
-              <Button variant='secondary'>Save</Button>
-              <Button variant='outline'>Cancel</Button>
-            </div>
           </form>
         </div>
       )}

@@ -20,7 +20,7 @@ const Footer: React.FC<Props> = ({ className }) => {
         <Separator orientation='horizontal' />
       </div>
 
-      <div className='mt-14 w-[40%]'>
+      <div className='mt-14 w-[100%]'>
         <h2 className='mb-7 text-xl font-bold'>
           Website designed by Armandas Latanauskas
         </h2>
@@ -36,7 +36,7 @@ const Footer: React.FC<Props> = ({ className }) => {
           with <a href='https://vercel.com/'>Varcel</a>
         </p>
         {/* Socials here */}
-        <div className='mt-7 flex w-[35%] flex-row items-start gap-x-4 md:mt-4 md:items-center lg:flex-row'>
+        <div className='mt-7 flex w-full flex-row items-start justify-center gap-x-3 md:mt-4 md:items-center md:justify-start lg:flex-row'>
           <Link href='https://github.com/zekScript'>
             <Github />
           </Link>
@@ -52,8 +52,8 @@ const Footer: React.FC<Props> = ({ className }) => {
         </div>
       </div>
 
-      <div className='flex h-full flex-col items-end justify-between gap-1 md:flex-row md:items-center'>
-        <Icons.logo className='w-40 fill-primary' />
+      <div className='flex h-full flex-col items-center justify-between gap-1 md:flex-row md:items-end'>
+        <Icons.logo className='logo-icon w-40 fill-primary' />
 
         <div className='mt-1 flex flex-col items-start gap-x-4 md:mt-0 md:flex-row md:items-center'>
           <div className='mt-1 flex flex-col items-start gap-x-4 md:flex-row md:items-center'>
@@ -62,11 +62,11 @@ const Footer: React.FC<Props> = ({ className }) => {
           </div>
           <div className='mt-6 flex h-5 items-center space-x-4 md:ms-2 md:mt-0 md:space-x-2'>
             <P className='hover:text-primary/60 underline'>
-              <Link href='/info/politika-zasebnosti'>Privacy</Link>
+              <Link href='/privacy/privacy'>Privacy</Link>
             </P>
             <Separator orientation='vertical' />
             <P className='hover:text-primary/60 underline'>
-              <Link href='/info/piskotki'>Cookies</Link>
+              <Link href='/privacy/cookies'>Cookies</Link>
             </P>
             <Separator orientation='vertical' />
           </div>

@@ -1,16 +1,17 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { sendMail } from '@/lib/mail'
+import { sendMail } from '@/server/mail'
 import { getCurrentUser } from '@/server/currentUser'
 import { Label } from '@radix-ui/react-dropdown-menu'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function Support() {
+  const { toast } = useToast()
   const [feedback, setFeedback] = useState({ success: false, message: '' })
 
   const user = getCurrentUser()
 
-  // Comunicate with back-end server
   const send = async (formData: FormData) => {
     const result = await sendMail(formData)
     if (result) {
@@ -18,27 +19,36 @@ export default function Support() {
     }
   }
 
+  useEffect(() => {
+    if (feedback.message) {
+      toast({
+        title: feedback.success ? 'Success' : 'Err...',
+        description: feedback.message,
+      })
+    }
+  }, [feedback, toast])
+
   return (
     <div>
       {/* Title page */}
-      <div className='h-full w-full bg-gray-500 text-center'>
-        <h1 className='p-7 text-3xl'>Contact us</h1>
+      <div className='h-full w-full bg-neutral-900 text-center'>
+        <h1 className='p-7 text-3xl text-white'>Contact us</h1>
       </div>
-      <div className='mt-7 flex h-full w-full flex-col'>
-        <form className='contactContainer w-full text-xl'>
+      <div className='flex h-full w-full flex-col'>
+        <form className='contactContainer mt-6 w-full space-y-5 text-xl'>
           {/* In the input should be from the db current user his name and mail inside the input */}
           <Label>Your Name</Label>
           <input
             type='text'
             placeholder='Your Name'
-            defaultValue={user?.name}
+            value={user?.name}
             name='name'
           />
           <Label>Your Email address</Label>
           <input
             type='text'
             placeholder='Your Email address'
-            defaultValue={user?.email}
+            value={user?.email}
             name='email'
           />
           <Label>Subject</Label>
@@ -61,15 +71,6 @@ export default function Support() {
             >
               Send Message
             </Button>
-            {feedback.message && (
-              <div
-                className={`ml-5 mt-4 w-full p-3 text-start ${
-                  feedback.success ? 'text-green-700' : 'text-red-700'
-                }`}
-              >
-                {feedback.message}
-              </div>
-            )}
           </div>
         </form>
       </div>

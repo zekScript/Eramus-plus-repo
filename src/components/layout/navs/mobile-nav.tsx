@@ -9,19 +9,7 @@ import { Icons } from '@/components/icons'
 import { usePathname } from 'next/navigation'
 import ThemeToggle from '@/components/theme-switch'
 import Cookies from 'js-cookie'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Headset, LogOut, Plus, Settings, User } from 'lucide-react'
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { useRouter } from 'next/navigation'
+import UserNav from '@/components/userNav'
 
 interface NavProps {
   items?: NavItem[]
@@ -29,13 +17,6 @@ interface NavProps {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const MobileNav: React.FC<NavProps> = ({ items }) => {
-  const router = useRouter()
-  const logout = () => {
-    Cookies.remove('authToken')
-    window.location.reload()
-    router.push('/')
-  }
-
   const isLoggedIn = Cookies.get('authToken') ? true : false
   const pathname = usePathname() || '/'
 
@@ -45,9 +26,9 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
         <SheetTrigger aria-controls={'mobile-nav'}>
           <Menu />
         </SheetTrigger>
-        <SheetContent side='left' className='w-3/5'>
+        <SheetContent side='right' className='w-3/5'>
           <Link href='/'>
-            <Icons.logo className='w-40 cursor-pointer fill-primary pb-6' />
+            <Icons.logo className='logo-icon w-40 cursor-pointer fill-primary pb-6' />
           </Link>
           {/* MENU Items */}
           <div className='flex w-14 flex-col gap-y-4 text-xl font-bold'>
@@ -71,51 +52,14 @@ const MobileNav: React.FC<NavProps> = ({ items }) => {
             <ThemeToggle></ThemeToggle>
           </div>
           {!isLoggedIn ? (
-            <div className='mt-12 gap-x-8'>
+            <div className='mt-6 flex flex-col gap-y-2'>
               <Link href='/signin'>Sign in</Link>
               <Link href='/login'>Log in</Link>
             </div>
           ) : (
             <div className='mt-12 gap-x-4'>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Avatar className='cursor-pointer'>
-                    <AvatarImage
-                      src='https://i.pinimg.com/564x/9f/e2/43/9fe24317d8363d84b3eb3b93b9c756ae.jpg'
-                      alt='Profile avatar'
-                    />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className='w-56'>
-                  <DropdownMenuLabel>Admin</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                      <User />
-                      <span>Profile</span>
-                    </DropdownMenuItem>
-
-                    <DropdownMenuItem>
-                      <Settings />
-                      <span>Settings</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Plus />
-                      <span>Create</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <Headset />
-                    <span>Support</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={logout}>
-                    <LogOut />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              {/* Import nav here */}
+              <UserNav />
             </div>
           )}
         </SheetContent>

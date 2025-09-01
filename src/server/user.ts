@@ -44,29 +44,65 @@ export async function createUser(formData: FormData) {
     })
     return { success: true, message: 'User created successfully.' }
   } catch (error) {
-    return { success: false, message: 'Error creating user.' }
+    return { success: false, message: 'Error creating user. ' + error }
   }
 }
 
 export async function updateUser(formData: FormData, id: number) {
+  const secretToken = process.env.SESSION_SECRET as string
   const name = formData.get('newName') as string
   const textAbout = formData.get('textAbout') as string
 
-  if (textAbout.length > 250) {
+  const user = await findUserById(id)
+  if (!user) return { success: false, message: 'Invalid email or password.' }
+
+  if (textAbout.length > 500) {
     return {
       success: false,
-      message: 'Bio is too long, please keep it under 250 characters.',
+      message: 'Bio is too long, please keep it under 500 characters.',
     }
   }
+
+  const tokenPayload = {
+    id: user.id,
+    email: user.email,
+    role: user.role,
+    name: user.name,
+    updatedAt: user.updatedAt,
+    createdAt: user.createdAt,
+    followersCount: user.followersCount,
+    followingCount: user.followingCount,
+    postsCount: user.postsCount,
+    profilePic: user.profilePic,
+    bio: user.bio,
+  }
+
+  const token = jwt.sign(tokenPayload, secretToken, { expiresIn: '62d' })
 
   try {
     await prisma.user.update({
       where: { id },
       data: { name: name, bio: textAbout },
     })
-    return { success: true, message: 'User updated successfully.' }
+    return { success: true, message: 'User updated successfully.', token }
   } catch (error) {
     return { success: false, message: 'Error updating user.' }
+  }
+}
+
+export async function updateProfilePrivacy(
+  id: number,
+  privacySettings: string
+) {
+  try {
+    await prisma.user.update({
+      where: { id },
+      data: {
+        privacyVisabillity: privacySettings as string,
+      },
+    })
+  } catch (error) {
+    console.error('Error updating post visibility:', error)
   }
 }
 
@@ -126,8 +162,5 @@ export async function loginUser(formData: FormData) {
 }
 
 export async function findUserById(id: number) {
-  // if(!id){
-  //   return { success: false, message: 'Wooooooooooooooooow no user here' }
-  // }
   return await prisma.user.findUnique({ where: { id } })
 }

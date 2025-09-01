@@ -7,6 +7,11 @@
     --background: hsl(0, 0%, 100%);
     --foreground: hsl(0 0% 3.9%);
 
+    --theme-color: oklch(58.5% 0.233 277.117); /* Default theme color */
+    --brightness-level: oklch(
+      58.5% 0.233 277.117
+    ); /* Default brightness level */
+
     --card: hsl(0 0% 100%);
     --card-foreground: hsl(0 0% 3.9%);
 
@@ -66,6 +71,72 @@
   }
 }
 
+.text-theme {
+  color: var(--theme-color);
+}
+
+.brightness-level-text {
+  color: var(--brightness-level);
+}
+
+.brightness-level-border {
+  border-color: var(--brightness-level);
+}
+
+.brightness-level-bg {
+  background-color: var(--brightness-level);
+}
+
+.bg-theme {
+  background-color: var(--theme-color);
+}
+
+.border-theme {
+  border-color: var(--theme-color);
+}
+
+svg.logo-icon {
+  color: var(--primary) !important;
+  stroke: var(--primary) !important;
+}
+
+svg {
+  color: var(--theme-color);
+  stroke: var(--theme-color);
+}
+
+.focus\:border-theme:focus {
+  --tw-border-opacity: 1;
+  border-color: var(--theme-color) /* #000000 */;
+}
+
+.\[\&\.active\]\:text-theme.active {
+  --tw-text-opacity: 1;
+  color: var(--theme-color);
+}
+
+.fill-theme {
+  fill: var(--theme-color);
+}
+
+.light ::placeholder {
+  color: var(--theme-color);
+  opacity: 1; /* Ensure the placeholder color is fully visible */
+}
+
+/* For input fields in dark mode */
+.dark ::placeholder {
+  color: var(--theme-color);
+  opacity: 1;
+}
+
+::-webkit-input-placeholder {
+  color: var(--theme-color);
+}
+:-ms-input-placeholder {
+  color: var(--theme-color);
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -101,7 +172,7 @@
 }
 
 .border-settings {
-  border: 0.2px solid gray;
+  border: 1px solid var(--theme-color);
 }
 
 .color-box {
@@ -112,9 +183,15 @@
 }
 
 .contactContainer > input {
-  width: 100%;
+  width: 69%;
   height: 2rem;
   margin-top: 1rem;
+  border-bottom: 2px solid gray;
+  background: transparent;
+}
+
+.contactContainer > input:focus {
+  outline: none;
 }
 
 .contactContainer > label {
@@ -123,5 +200,28 @@
 }
 
 .contactContainer > textarea {
+  width: 69%;
+  border-bottom: 2px solid gray;
+  background: transparent;
+}
+
+.contactContainer > textarea:focus {
+  outline: none;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
   width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: var(--background);
 }

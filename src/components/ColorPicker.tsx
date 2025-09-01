@@ -1,12 +1,20 @@
 'use client'
 import ColorPalletes from './colorPalletes'
-import { useState, useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 
 const ColorPicker = () => {
   const colorInputRef = useRef<HTMLInputElement | null>(null) // Reference to the hidden input
+  const [selectedColor, setSelectedColor] = useState<string | null>(null)
 
-  const [color, setColor] = useState('#000000') // Default color (black)
+  // Load the saved color from localStorage on mount
+  useEffect(() => {
+    const savedColor = localStorage.getItem('themeColor')
+    if (savedColor) {
+      setSelectedColor(savedColor)
+      document.documentElement.style.setProperty('--theme-color', savedColor)
+    }
+  }, [])
 
   const handleButtonClick = () => {
     if (colorInputRef.current) {
@@ -14,17 +22,38 @@ const ColorPicker = () => {
     }
   }
 
+  function isColorBright(hex: string): boolean {
+    hex = hex.replace('#', '')
+    const r = parseInt(hex.substring(0, 2), 16)
+    const g = parseInt(hex.substring(2, 4), 16)
+    const b = parseInt(hex.substring(4, 6), 16)
+    // Standard luminance formula
+    const luminance = 0.299 * r + 0.587 * g + 0.114 * b
+
+    return luminance > 186
+  }
+
   const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
-    setColor(event.target.value) // Get the color hex code
-    console.log('Selected Color:', event.target.value) // Log the selected color
+    const color = event.target.value
+    setSelectedColor(color)
+    localStorage.setItem('themeColor', color) // Save the color to localStorage
+    document.documentElement.style.setProperty('--theme-color', color) // Update the CSS variable
+    const brightnessLevel =
+      selectedColor && isColorBright(selectedColor) ? 'black' : 'white'
+    localStorage.setItem('brightnessLevel', brightnessLevel) // Save the brightness level to localStorage
+    document.documentElement.style.setProperty(
+      '--brightness-level',
+      brightnessLevel
+    ) // Update the CSS variable
   }
+
   return (
     <>
       <div className='flex flex-col space-y-4'>
         <p className='mb-3 mt-12 text-sm font-normal'>Portfolio colors</p>
         {/* Color Template boxes */}
-        <div className='grid grid-cols-3 gap-1 md:grid-cols-4 md:gap-4 lg:grid-cols-7 lg:gap-1'>
+        <div className='grid grid-cols-5 gap-1 sm:grid-cols-4 md:gap-2 lg:grid-cols-7 lg:gap-1'>
           {/* Color boxes */}
           <ColorPalletes></ColorPalletes>
         </div>
@@ -45,7 +74,7 @@ const ColorPicker = () => {
               <input
                 ref={colorInputRef}
                 type='color'
-                value={color}
+                value={selectedColor || '#000000'} // Default to black if no color is selected
                 onChange={handleColorChange}
                 style={{ display: 'none' }} // Hide the input element
               />

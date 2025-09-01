@@ -1,26 +1,21 @@
-
 import { findUserById } from '@/server/user'
-import { getPostsMadeByYou } from './all-posts/actions'
+import { getPostsMadeByYou } from './actions'
 import Link from 'next/link'
-import { getCurrentUser } from '@/server/currentUser'
+import { getCurrentUserServer } from '@/server/currentUserServer'
+import { truncateText } from '@/components/truncateText'
 
 interface ProfileProps {
-  params: { portfolioID: string }
+  params: Promise<{ portfolioID: string }>
 }
 
 export default async function Profiles({ params }: ProfileProps) {
-  const user = getCurrentUser()
-  console.log(user)
-
+  const currentUser = await getCurrentUserServer()
   const posts = await getPostsMadeByYou()
 
-  const truncateText = (text: string, length: number) =>
-    text.length > length ? `${text.slice(0, length)}...` : text
-  const isPrivate = false // debug
-  const profileID: number = parseInt(params.portfolioID, 10)
+  const resolvedParams = await params
+  const profileID: number = parseInt(resolvedParams.portfolioID, 10)
 
-
-  const profiles: any = await findUserById(profileID)
+  const profiles = await findUserById(profileID)
 
   function timeAgo(date: Date): string {
     const now: Date = new Date()
@@ -50,36 +45,35 @@ export default async function Profiles({ params }: ProfileProps) {
     return 'Just now'
   }
 
+  const profilePrivacy = profiles?.privacyVisabillity
   return (
     <div className='m-auto h-full w-[90%] justify-center'>
       <div className='flex h-full w-full'>
         {/* Avatar */}
-        <div className='mb-4 ml-4 mr-6 mt-4 flex'>
+        <div className='mb-4 mt-4 flex'>
           <img
-            src={profiles.profilePic ?? undefined}
-            width={210}
-            height={200}
+            src={profiles?.profilePic ?? undefined}
             alt='Avatar'
-            className='rounded-[100%]'
+            className='h-full w-[150px] rounded-[100%] sm:w-[210px]'
           />
           {/* User Details */}
 
           <div className='ml-8 mt-4 flex h-full w-[95%] flex-col'>
             <h1 className='text-3xl font-bold'>{profiles?.name}</h1>
-            {!isPrivate ? (
+            {profilePrivacy !== 'private' || currentUser?.id == profiles?.id ? (
               <div>
                 <p className='text-break text-md mt-4'>
                   {profiles?.bio ? (
                     profiles.bio
                   ) : (
-                    <p className='text-red-500'>
+                    <p className='text-theme'>
                       No bio information available yet
                     </p>
                   )}
                 </p>
               </div>
             ) : (
-              <p className='mt-4 text-red-500'>
+              <p className='text-theme mt-4'>
                 This profile is set to private by {profiles?.name}
               </p>
             )}
@@ -91,49 +85,38 @@ export default async function Profiles({ params }: ProfileProps) {
         </div>
       </div>
 
-      {!isPrivate ? (
-        <div className='mt-12'>
-          <div className='mb-12 flex w-[90%] border-b-2 border-indigo-500'>
-            <Link
-              className='mb-2 text-2xl font-medium'
-              href={`/profiles/${profiles.id}/all-posts`}
-            >
-              All posts
-            </Link>
+      {profilePrivacy === 'public' || currentUser?.id == profiles?.id ? (
+        <div className='mt-4'>
+          <div className='border-theme mb-6 flex w-[100%] space-y-2 border-b-2 text-2xl font-bold'>
+            <h1 className='mb-2'>Posts made by {profiles?.name}</h1>
           </div>
-          <div className='grid h-full w-full  overflow-hidden '>
+          <div className='h-full w-full'>
             {posts.length === 0 ? (
               <p>No posts available</p>
             ) : (
-              posts.map((post) => (
-                <div>
+              posts.slice(0, 8).map((post) => (
+                <div key={post.id}>
                   {post.authorId === profiles?.id && (
-                    <div
-                      key={post.id}
-                      className='mb-6 flex w-[80%] justify-between space-x-3 space-y-6 border-b pb-4'
-                    >
-                      <div className='flex flex-col gap-2'>
-                        <div className='w-full'>
-                          {/* <h2 >
-                        {post.title}
-                      </h2> */}
-                          {/* fix it here */}
-                          <Link
-                            href={`/content/media/blog/published/${post?.slug}`}
-                            className='text-lg font-semibold text-indigo-500'
-                          >
-                            {post.title}
-                          </Link>
-                          <p className='text-sm text-gray-600'>
-                            Posted by {profiles?.name}
-                          </p>
-                          <p className='text-md'>
-                            {timeAgo(new Date(post.createdAt))}
-                          </p>
-                          <p className='font-sm h-full w-full text-sm text-neutral-400'>
-                            {truncateText(post.content, 200)}
-                          </p>
-                        </div>
+                    <div className='mb-6 flex w-[100%] justify-between space-x-3 space-y-6 pb-4'>
+                      <div className='flex w-[80%] flex-col gap-2'>
+                        <Link
+                          href={`/content/media/blog/published/${post.slug}&?p=${post.id}`}
+                        >
+                          <div className='w-full'>
+                            <h1 className='text-lg font-semibold text-indigo-500'>
+                              {post.title}
+                            </h1>
+                            <p className='text-sm text-gray-600'>
+                              Posted by {profiles?.name}
+                            </p>
+                            <p className='text-md'>
+                              {timeAgo(new Date(post.createdAt))}
+                            </p>
+                            <p className='font-sm text-break h-full w-full text-sm text-neutral-400'>
+                              {truncateText(post.content, 200)}
+                            </p>
+                          </div>
+                        </Link>
 
                         <div className='flex gap-3 text-sm font-semibold text-indigo-500'>
                           {/* Extra options */}
@@ -143,23 +126,33 @@ export default async function Profiles({ params }: ProfileProps) {
                         <p>Dislikes: 999</p> */}
                         </div>
                       </div>
-
-                      {post.authorId === profiles?.id && (
-                        <div className='mb-2 space-y-2 text-sm'>
-                          {/* <Link href={`/content/blogitems/edit?p=${post.id}`} className='flex text-sm'>
-                            Post settings
-                            
-                          </Link> */}
-
-                  
+                      {post.authorId == currentUser?.id ? (
+                        <div className='mb-2 h-full space-y-2 pr-4 text-sm'>
+                          <Link
+                            href={`/content/blogitems/edit?p=${post.id}`}
+                            className='flex text-sm'
+                          >
+                            Post Properties
+                          </Link>
                         </div>
+                      ) : (
+                        <span></span>
                       )}
                     </div>
                   )}
                 </div>
               ))
             )}
-            {/* <BlogCard blogItems={blogPostSources.blogItems} /> */}
+            {posts.length > 8 && (
+              <div className='mt-4'>
+                <Link
+                  href={`/profiles/${profiles?.id}/all-posts`}
+                  className='text-indigo-500'
+                >
+                  Checkout more posts
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       ) : (

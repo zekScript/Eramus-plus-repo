@@ -40,12 +40,35 @@ export default function ColorPalletes() {
     '#708090', // Slate Gray
   ]
 
+  function isColorBright(hex: string): boolean {
+    hex = hex.replace('#', '')
+    const r = parseInt(hex.substring(0, 2), 16)
+    const g = parseInt(hex.substring(2, 4), 16)
+    const b = parseInt(hex.substring(4, 6), 16)
+    // Standard luminance formula
+    const luminance = 0.299 * r + 0.587 * g + 0.114 * b
+
+    return luminance > 186
+  }
+
+  const changeColorWithPalettes = (value: string) => {
+    localStorage.setItem('themeColor', value)
+    document.documentElement.style.setProperty('--theme-color', value)
+    const brightnessLevel = value && isColorBright(value) ? 'black' : 'white'
+    localStorage.setItem('brightnessLevel', brightnessLevel) // Save the brightness level to localStorage
+    document.documentElement.style.setProperty(
+      '--brightness-level',
+      brightnessLevel
+    ) // Update the CSS variable
+  }
+
   return (
     <>
       {colors.map((color) => (
         <div
           key={color}
           className='h-16 w-16 rounded border shadow-md transition-transform hover:scale-105'
+          onClick={() => changeColorWithPalettes(color)}
           style={{ backgroundColor: color }}
           title={color}
         ></div>

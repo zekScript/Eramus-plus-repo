@@ -37,7 +37,7 @@ const FadeInContent: React.FC<CarouselProps> = ({ carouselItems }) => {
   return (
     <>
       <motion.div
-        className='absolute right-[50%] ml-12 mt-36 overflow-hidden'
+        className='absolute right-[50%] ml-12 w-[40%] overflow-hidden'
         initial={{ opacity: 0, scale: 0.95, x: -100 }}
         animate={{ opacity: 1, scale: 1, x: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -79,7 +79,7 @@ const FadeInContent: React.FC<CarouselProps> = ({ carouselItems }) => {
       </motion.div>
 
       <motion.div
-        className='relative left-[40%] top-[100px] ml-0 hidden h-[400px] w-[960px] md:flex'
+        className='relative left-[50%] ml-0 hidden w-[80%] md:flex'
         initial={{ x: 80, scale: 0.9, opacity: 0 }}
         animate={{
           x: 0,

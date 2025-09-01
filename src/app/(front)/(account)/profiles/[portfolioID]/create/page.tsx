@@ -3,31 +3,24 @@
 import { createPost } from '@/server/post'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import SidebarForPosts from '@/components/sidebar-for-posts'
+import ReactMarkdown from 'react-markdown'
+import Link from 'next/link'
+import { useMDXComponentsPost } from '../../../../../../../mdx-components-post'
+import { useEffect } from 'react'
+import { useToast } from '@/components/ui/use-toast'
+import { cn } from '@/lib/utils'
 
-interface UserProfile {
-  name: string
-  id: number
-  password: string
-  email: string
-  accessAdmin: boolean | null
-  createdAt: Date
-  updatedAt: Date
-  role: string
-  followersCount: number
-  followingCount: number
-  postsCount: number
-  profilePic: string | null
-  bio: string | null
-}
 export default function CreatePost() {
+  const { toast } = useToast()
   const pathname = usePathname()
   const segments = pathname.split('/')
   const userId: number = parseInt(segments[2], 10)
+  const MDXcomponents = useMDXComponentsPost({})
+
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
 
   const [feedback, setFeedback] = useState({ success: false, message: '' })
-
-  const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (formData: FormData) => {
     try {
@@ -35,124 +28,80 @@ export default function CreatePost() {
       if (result) {
         setFeedback(result)
       }
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err) {
+      console.error(err)
     }
   }
 
+  useEffect(() => {
+    if (feedback.message) {
+      toast({
+        title: feedback.success ? 'Success' : 'Err...',
+        description: feedback.message,
+      })
+    }
+  }, [feedback, toast])
+
   return (
     <div className='h-full w-full'>
-      {/* NOT FINISHED */}
-      {/* TODO: add a sidebar where u can edit text in real time like word */}
-      {/* TODO: add a window where a user can enter text in markdown and color it in markdown */}
-      {/* TODO: and in real time always check how is the output */}
-      <div className='flex'>
+      <div className='md:flex'>
         {/* Sidebar */}
-        <div className='w-[30%]'>
+        {/* <div className='w-[15%]'>
           <SidebarForPosts />
-        </div>
-        <div className='h-full w-full bg-neutral-900'>
-          <div>
-            <h1 className='w-[20%] bg-background text-center text-2xl text-foreground'>
-              Input
-            </h1>
-          </div>
+        </div> */}
 
-          <div className='h-full w-full'>
-            {/* Title input */}
-            <form action={handleSubmit} className='mt-4'>
-              <input type='hidden' name='userID' value={userId}></input>
-              <input
-                name='title'
-                type='text'
-                className='h-[35px] w-full bg-background text-xl'
-                placeholder='Title'
-              />
+        {/* Editor */}
+        <div className='light:bg-neutral-900 w-full p-4 md:w-[50%]'>
+          <form action={handleSubmit} className='space-y-4'>
+            <input type='hidden' name='userID' value={userId} />
 
-              <div>
-                <textarea
-                  name='content'
-                  className='h-screen w-full bg-background'
-                  placeholder='Write your blog here ex. trump is great in my opinion because...'
-                ></textarea>
-              </div>
+            <h1 className='text-2xl font-semibold'>Write Your Post</h1>
+
+            <input
+              name='title'
+              type='text'
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className={cn(
+                'border-theme w-full rounded border-b-2 bg-background p-3 text-xl shadow-sm transition focus:outline-none',
+                'focus:border-theme border-gray-300 focus:ring-2 focus:ring-transparent',
+                'bg-transparent'
+              )}
+              placeholder='Title'
+            />
+
+            <textarea
+              name='content'
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className={cn(
+                'border-theme h-[400px] w-full resize-none rounded border-b-2 bg-background p-3 shadow-sm transition focus:outline-none',
+                'focus:border-theme border-gray-300 focus:ring-2 focus:ring-transparent',
+                'bg-transparent'
+              )}
+              placeholder='Supports markdown, check documentation below for more details'
+            ></textarea>
+            <div className='flex justify-between'>
               <button
                 type='submit'
-                className='mt-4 w-full rounded bg-blue-600 p-2 text-white'
+                className='bg-theme rounded bg-indigo-500 px-2 py-2'
               >
-                Send data
+                Post your blog
               </button>
-            </form>
-            {feedback.message && (
-              <div
-                className={`ml-5 mt-4 w-full p-3 text-start ${
-                  feedback.success ? 'text-green-700' : 'text-red-700'
-                }`}
-              >
-                {feedback.message}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Input window */}
-        <div className='h-full w-full border-l-2'>
-          <div className='bg-neutral-900'>
-            <h1 className='w-[20%] bg-background text-center text-2xl text-foreground'>
-              Output
-            </h1>
-          </div>
-
-          <div className='m-0 h-full w-full'>
-            {/* Title input */}
-
-            <div className='h-screen w-full border-r-2'>
-              {/* Output window */}
-              <div className='flex h-full w-full items-center justify-center text-4xl text-muted'>
-                <h1>This is the final output of your blog</h1>
-              </div>
+              <Link href='/docs/mdx'>Markdown documentation</Link>
             </div>
-          </div>
+          </form>
         </div>
 
-        {/* Output window */}
+        {/* Output Preview */}
+        <div className='h-full w-[50%] border-l-2 p-4'>
+          <h1 className='text-2xl font-semibold'>Live Preview</h1>
+          <h2 className='mt-4 text-center text-3xl font-bold'>{title}</h2>
+          <div className='prose prose-invert text-break max-w-none'>
+            <ReactMarkdown components={MDXcomponents}>{content}</ReactMarkdown>
+          </div>
+        </div>
       </div>
     </div>
   )
 }
-
-// <div className='m-auto w-[90%] max-w-2xl p-6'>
-//       <h1 className='text-2xl font-bold'>Create a New Blog Post</h1>
-//       {error && <p className='text-red-500'>{error}</p>}
-//       <form action={handleSubmit} className='mt-4'>
-//         <input type='hidden' disabled name='userID' defaultValue={userId}></input>
-//         <input
-//           type='text'
-//           name='title'
-//           placeholder='Post Title'
-//           className='mb-4 w-full rounded border p-2'
-//           required
-//         />
-//         <textarea
-//           name='content'
-//           placeholder='Write your post in Markdown...'
-//           className='h-40 w-full rounded border p-2'
-//           required
-//         />
-//         <button
-//           type='submit'
-//           className='mt-4 w-full rounded bg-blue-600 p-2 text-white'
-//         >
-//           Send data
-//         </button>
-//         {feedback.message && (
-//           <div
-//             className={`ml-5 mt-4 w-full p-3 text-start ${
-//               feedback.success ? 'text-green-700' : 'text-red-700'
-//             }`}
-//           >
-//             {feedback.message}
-//           </div>
-//         )}
-//       </form>
-//     </div>

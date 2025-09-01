@@ -30,7 +30,9 @@
     "src/app/(front)/content/jobs/page.mdx",
     "src/app/(front)/content/our-work/page.mdx",
     "src/app/(front)/content/media/page.tsx",
-    "src/app/(front)/content/our-work/n/[slug]/page.mdx"
+    "src/app/(front)/content/our-work/n/[slug]/page.mdx",
+    "src/app/(front)/content/media/blog/published/[blogID]/page.tsx",
+    "src/app/(front)/(user-privacy-pages)/privacy/cookies/page.mdx"
   ],
   "exclude": ["node_modules"]
 }

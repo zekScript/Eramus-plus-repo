@@ -5,22 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { findUserById } from '@/server/user'
 import { getCurrentUser } from '@/server/currentUser'
-
-interface UserProfile {
-  name: string
-  id: number
-  password: string
-  email: string
-  accessAdmin: boolean | null
-  createdAt: Date
-  updatedAt: Date
-  role: string
-  followersCount: number
-  followingCount: number
-  postsCount: number
-  profilePic: string | null
-  bio: string | null
-}
+import { UserItems } from '@/types'
 
 export default function SettingsPage() {
   const router = useRouter()
@@ -29,7 +14,7 @@ export default function SettingsPage() {
   const segments = pathname.split('/')
   const userId = parseInt(segments[2], 10)
   const [profileSettingsCurrentUser, setProfileSettingsCurrentUser] =
-    useState<UserProfile | null>(null)
+    useState<UserItems | null>(null)
 
   useEffect(() => {
     findUserById(userId)
@@ -63,12 +48,11 @@ export default function SettingsPage() {
     profileSettingsCurrentUser.id !== currentUser.id
   ) {
     router.push(`/profiles/${currentUser.id}/settings/general`)
-    console.log('Redirecting unauthorized user...')
   }
 
   return (
     <>
-      <div className='m-auto h-full w-[60%] justify-center'>
+      <div className='m-auto h-full w-full justify-center sm:w-[70%]'>
         <div className='flex h-full w-full'>
           {/* Avatar */}
           <div className='mb-4 ml-4 mr-6 mt-4 flex'>
@@ -76,7 +60,10 @@ export default function SettingsPage() {
               src={profileSettingsCurrentUser?.profilePic as string}
               width={128}
               height={128}
-              // className="w-[184px] h-[184px]"
+              onClick={() =>
+                router.push(`/profiles/${profileSettingsCurrentUser?.id}`)
+              }
+              className='h-[128px] w-[128px] cursor-pointer sm:h-[184px] sm:w-[184px]'
               alt='Avatar'
             ></img>
             {/* User Details */}
